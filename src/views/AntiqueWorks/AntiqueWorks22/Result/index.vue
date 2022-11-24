@@ -8,7 +8,7 @@
 						<div class="ImageHover">
 							<div
 								class="RedButton SeeImage"
-								@click="GoToPage('PkuPeople3')"
+								@click="GoToPage('AntiqueWorks32')"
 							>
 								查看大图
 							</div>
@@ -21,7 +21,19 @@
 					<div class="TextContainer">
 						<div class="TextTitle">{{ item.Title }}</div>
 						<div class="TextDescription">
-							{{ item.Description }}
+							<div
+								v-for="(item_, index_) in Description"
+								:key="index_"
+							>
+								<div class="NameContainer">
+									<div class="TextNameZH">
+										{{ item_.NameZH }}：
+									</div>
+									<div class="TextNameEN">
+										{{ item[item_.NameEN] }}
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -61,19 +73,91 @@ export default {
 		return {
 			NowIndex: 1,
 			TotalPages: 1,
-			// 访谈列表
+			// 搜索结果
 			SearchResult: [
 				{
-					Title: "季先生之女给季先生的信件",
-					Description:
-						"季先生之女给季先生的信件 此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
-					Image: "PkuPeople2-Image1.jpg",
+					Title: "粵東皇華集：第一卷",
+					Time: "清光绪七至八年（1881-1882）",
+					People: "李调元",
+					VersionType: "刻本",
+					ExternalForm: "线装2册",
+					Language: "汉文",
+					Seal: "张礼千",
+					TypeNumber: "K254.9",
+					Source: "张礼千赠书",
+					Image: "AntiqueImage1.jpg",
 				},
 				{
-					Title: "文艺社给季先生的信",
-					Description:
-						"此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
-					Image: "PkuPeople2-Image2.jpg",
+					Title: "粵東皇華集：第一卷",
+					Time: "清光绪七至八年（1881-1882）",
+					People: "李调元",
+					VersionType: "刻本",
+					ExternalForm: "线装2册",
+					Language: "汉文",
+					Seal: "张礼千",
+					TypeNumber: "K254.9",
+					Source: "张礼千赠书",
+					Image: "AntiqueImage2.jpg",
+				},
+				{
+					Title: "粵東皇華集：第一卷",
+					Time: "清光绪七至八年（1881-1882）",
+					People: "李调元",
+					VersionType: "刻本",
+					ExternalForm: "线装2册",
+					Language: "汉文",
+					Seal: "张礼千",
+					TypeNumber: "K254.9",
+					Source: "张礼千赠书",
+					Image: "AntiqueImage3.jpg",
+				},
+				{
+					Title: "粵東皇華集：第一卷",
+					Time: "清光绪七至八年（1881-1882）",
+					People: "李调元",
+					VersionType: "刻本",
+					ExternalForm: "线装2册",
+					Language: "汉文",
+					Seal: "张礼千",
+					TypeNumber: "K254.9",
+					Source: "张礼千赠书",
+					Image: "AntiqueImage4.jpg",
+				},
+			],
+
+			// 搜索条目描述类型
+			Description: [
+				{
+					NameZH: "出版时间",
+					NameEN: "Time",
+				},
+				{
+					NameZH: "主要责任人",
+					NameEN: "People",
+				},
+				{
+					NameZH: "版本类别",
+					NameEN: "VersionType",
+				},
+				{
+					NameZH: "外观形态",
+					NameEN: "ExternalForm",
+				},
+				{
+					NameZH: "古籍语种",
+					NameEN: "Language",
+				},
+				{
+					NameZH: "印章",
+					NameEN: "Seal",
+				},
+				{
+					NameZH: "分类号",
+					NameEN: "TypeNumber",
+				},
+				{
+					NameZH: "来源",
+					NameEN: "Source",
 				},
 			],
 		};
@@ -168,13 +252,33 @@ export default {
 
 /* 标题 */
 .TextTitle {
+	height: 4vw;
 	font-size: 1.5vw;
-	line-height: 300%;
+	font-weight: bold;
 }
-/* 时间、地点 */
+/* 其他描述信息 */
 .TextDescription {
-	font-size: 1.3vw;
-	line-height: 120%;
-	color: #9f9e9e;
+	position: relative;
+	width: 30vw;
+	height: 14vw;
+	/* background-color: lightblue; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.NameContainer {
+	position: relative;
+	height: auto;
+	display: flex;
+	align-items: center;
+	font-size: 1vw;
+	/* line-height: 150%; */
+}
+.TextNameZH {
+	color: rgba(0, 0, 0, 0.6);
+}
+.TextNameEN {
+	color: rgba(0, 0, 0);
 }
 </style>

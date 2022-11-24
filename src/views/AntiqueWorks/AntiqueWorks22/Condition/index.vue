@@ -1,8 +1,21 @@
 <template>
 	<div class="Container">
+        <!-- 出版者 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">出版者</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputPeople"
+					v-model="Arguments.People"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 出版日期 -->
 		<div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">访谈时间</div>
-			<div class="SearchTime">
+			<div class="SearchType">出版日期</div>
+			<div class="InputContainer">
 				<input
 					class="AdvancedSearchInput InputTime"
 					v-model="Arguments.TimeFrom"
@@ -16,14 +29,29 @@
 				/>
 			</div>
 		</div>
-		<div class="SearchBlock">
-			<div class="SearchType">访谈地点</div>
-			<div v-for="(item, index) in Locations" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Location" :label="item.Value">{{
+
+        <!-- 分类号 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">分类号</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputTypeNumber"
+					v-model="Arguments.TypeNumber"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 语种 -->
+        <div class="SearchBlock">
+			<div class="SearchType">语种</div>
+			<div v-for="(item, index) in Language" :key="index">
+				<el-radio class="SelectItem" v-model="Arguments.Language" :label="item.Value">{{
 					item.Title
 				}}</el-radio>
 			</div>
 		</div>
+
 		<div class="RedButton FilterButton">筛选</div>
 	</div>
 </template>
@@ -38,13 +66,13 @@ export default {
 	},
 	data() {
 		return {
-			Locations: [
+			Language: [
 				{
-					Title: "外文楼",
+					Title: "中文",
 					Value: "1",
 				},
 				{
-					Title: "红楼",
+					Title: "英文",
 					Value: "2",
 				},
 			],
@@ -58,6 +86,7 @@ export default {
 	position: relative;
 	width: 12vw;
 	/* background-color: lightblue; */
+
 }
 .SearchBlock {
 	position: relative;
@@ -65,8 +94,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-
-    margin-bottom: 3vw;
+    margin-bottom: 2vw;
 	/* background-color: lightgreen; */
 }
 .SelectItem{
@@ -79,7 +107,7 @@ export default {
 .SearchText {
 	font-size: 1.5vw;
 }
-.SearchTime {
+.InputContainer {
 	position: relative;
 	width: 12vw;
 	height: 4vw;
@@ -90,8 +118,11 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 }
-.InputTime{
-    width: 4.2vw;
+.InputTime {
+	width: 4.2vw;
+}
+.InputPeople, .InputTypeNumber {
+    width: 12vw;
 }
 .FilterButton {
 	position: relative;

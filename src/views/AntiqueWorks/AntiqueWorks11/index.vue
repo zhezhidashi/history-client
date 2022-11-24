@@ -24,6 +24,8 @@ export default {
 <style scoped>
 .AntiqueWorks {
     position: relative;
+
+    height: 70vw;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

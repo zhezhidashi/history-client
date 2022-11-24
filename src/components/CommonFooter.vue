@@ -8,8 +8,9 @@
 			<div @click="GoToPage('ContactUs')" class="FooterItem">联系我们</div>
 		</div>
 		<div class="FooterDescription">
-			版权所有@北京大学外国语学院&emsp;&emsp;建设单位：北京大学东方文学研究中心&emsp;/&emsp;北京大学外国语学院
+			版权所有@北京大学外国语学院&emsp;建设单位：北京大学东方文学研究中心&ensp;/&ensp;北京大学外国语学院
 		</div>
+        <img class="FooterLogo" src="FooterLogo.svg">
 	</div>
 </template>
 
@@ -64,6 +65,13 @@ export default {
 	font-size: 1.5vw;
 	line-height: 96%;
 	color: #ffffff;
+    text-align: center;
+}
+.FooterLogo{
+    position: absolute;
+    width: 10vw;
+    right: 0;
+    bottom: 0;
 }
 </style>
 

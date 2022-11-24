@@ -1,18 +1,8 @@
 <template>
 	<div class="Container">
-        <!-- 资源类型 -->
-        <div class="SearchBlock">
-			<div class="SearchType">资源类型</div>
-			<div v-for="(item, index) in ResourceType" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Resource" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
-			</div>
-		</div>
-
-        <!-- 时间 -->
+        <!-- 出版日期 -->
 		<div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">时间</div>
+			<div class="SearchType">出版日期</div>
 			<div class="InputContainer">
 				<input
 					class="AdvancedSearchInput InputTime"
@@ -28,13 +18,13 @@
 			</div>
 		</div>
 
-        <!-- 地点 -->
+        <!-- 分类号 -->
         <div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">地点</div>
+			<div class="SearchType">分类号</div>
 			<div class="InputContainer">
 				<input
-					class="AdvancedSearchInput InputLocation"
-					v-model="Arguments.Location"
+					class="AdvancedSearchInput InputTypeNumber"
+					v-model="Arguments.TypeNumber"
 					placeholder=""
 				/>
 			</div>
@@ -50,35 +40,33 @@
 			</div>
 		</div>
 
-        <!-- 人物 -->
+        <!-- 印章 -->
         <div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">人物</div>
+			<div class="SearchType">印章</div>
 			<div class="InputContainer">
 				<input
-					class="AdvancedSearchInput InputPeople"
-					v-model="Arguments.People"
+					class="AdvancedSearchInput InputSeal"
+					v-model="Arguments.Seal"
 					placeholder=""
 				/>
 			</div>
 		</div>
 
-        <!-- 事件 -->
-        <div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">事件</div>
-			<div class="InputContainer">
-				<input
-					class="AdvancedSearchInput InputEvent"
-					v-model="Arguments.Event"
-					placeholder=""
-				/>
-			</div>
-		</div>
-
-        <!-- 来源 -->
+        <!-- 版本类别 -->
         <div class="SearchBlock">
-			<div class="SearchType">来源</div>
-			<div v-for="(item, index) in Source" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Source" :label="item.Value">{{
+			<div class="SearchType">版本类别</div>
+			<div v-for="(item, index) in VersionType" :key="index">
+				<el-radio class="SelectItem" v-model="Arguments.VersionType" :label="item.Value">{{
+					item.Title
+				}}</el-radio>
+			</div>
+		</div>
+
+        <!-- 外部形态 -->
+        <div class="SearchBlock">
+			<div class="SearchType">外部形态</div>
+			<div v-for="(item, index) in ExternalForm" :key="index">
+				<el-radio class="SelectItem" v-model="Arguments.ExternalForm" :label="item.Value">{{
 					item.Title
 				}}</el-radio>
 			</div>
@@ -98,44 +86,6 @@ export default {
 	},
 	data() {
 		return {
-			ResourceType: [
-				{
-					Title: "信件信函",
-					Value: "1",
-				},
-				{
-					Title: "书稿",
-					Value: "2",
-				},
-				{
-					Title: "手稿",
-					Value: "3",
-				},
-				{
-					Title: "日记",
-					Value: "4",
-				},
-				{
-					Title: "笔记",
-					Value: "5",
-				},
-				{
-					Title: "公文",
-					Value: "6",
-				},
-				{
-					Title: "会议资料",
-					Value: "7",
-				},
-				{
-					Title: "出版合同",
-					Value: "8",
-				},
-				{
-					Title: "其他",
-					Value: "9",
-				},
-			],
 			Language: [
 				{
 					Title: "中文",
@@ -146,16 +96,26 @@ export default {
 					Value: "2",
 				},
 			],
-			Source: [
-				{
-					Title: "赠书",
-					Value: "1",
-				},
-				{
-					Title: "馆藏",
-					Value: "2",
-				},
-			],
+			VersionType: [
+                {
+                    Title: "刻本",
+                    Value: "1",
+                },
+                {
+                    Title: "印刷本",
+                    Value: "2",
+                },
+            ],
+            ExternalForm: [
+                {
+                    Title: "刻本",
+                    Value: "1",
+                },
+                {
+                    Title: "印刷本",
+                    Value: "2",
+                },
+            ],
 		};
 	},
 };
@@ -201,7 +161,7 @@ export default {
 .InputTime {
 	width: 4.2vw;
 }
-.InputLocation, .InputPeople, .InputEvent, .InputSource {
+.InputTypeNumber, .InputSeal, .InputEvent, .InputSource {
     width: 12vw;
 }
 .FilterButton {

@@ -1,9 +1,12 @@
 <template>
 	<div class="SearchContainer">
-        <div class="Choice1Container">古籍</div>
-        <div class="Choice2Container" @click="GoToPage('AntiqueWorks12')" >特藏</div>
+		<div class="Choice1Container" @click="GoToPage('AntiqueWorks21')">
+			古籍
+		</div>
+		<div class="Choice2Container">特藏</div>
+
 		<div class="SelectContainer">
-			<el-select v-model="SelectValue" placeholder="请选择">
+			<el-select v-model="Arguments.SelectValue" placeholder="请选择">
 				<el-option
 					v-for="item in options"
 					:key="item.value"
@@ -17,13 +20,13 @@
 			<input
 				class="SearchContentStyle SearchContent"
 				type="search"
-				v-model="Keywords"
+				v-model="Arguments.Keywords"
 				placeholder="请输入关键词"
 			/>
 		</div>
 
 		<div
-			@click="GoToPage('AntiqueWorks21')"
+			@click="ChangeArguments"
 			class="SearchLogoContainer"
 			style="position: relative"
 		>
@@ -35,6 +38,11 @@
 <script>
 export default {
 	name: "Search",
+	props: {
+		Arguments: {
+			type: Object,
+		},
+	},
 	data() {
 		return {
 			options: [
@@ -44,22 +52,19 @@ export default {
 				},
 				{
 					value: "2",
-					label: "责任者",
+					label: "著者",
 				},
 				{
 					value: "3",
 					label: "主题词",
 				},
-				{
-					value: "4",
-					label: "来源",
-				},
 			],
-			SelectValue: "1",
-			Keywords: "",
 		};
 	},
 	methods: {
+		ChangeArguments() {
+			this.$emit("ChangeArguments", this.Arguments);
+		},
 		GoToPage(name) {
 			this.$router.push({ name });
 		},
@@ -70,8 +75,12 @@ export default {
 <style scoped>
 .SearchContainer {
 	position: relative;
+	left: 0;
+	right: 0;
 	width: 80vw;
 	height: 4.5vw;
+	top: 5vw;
+	left: 10vw;
 	/* background-color: lightblue; */
 
 	display: flex;
@@ -80,33 +89,34 @@ export default {
 	justify-content: center;
 }
 
-.Choice1Container{
-    position: relative;
-    width: 8vw;
-    height: 4.3vw;
-    background-color: #e3e3e3;
-    color: #9B0000;
-    border-bottom: 0.2vw solid #9B0000;
-    cursor: pointer;
+.Choice1Container {
+	position: relative;
+	width: 8vw;
+	height: 4.5vw;
+	background-color: #e3e3e3;
 
-    font-size: 1.5vw;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.Choice2Container{
-    position: relative;
-    width: 8vw;
-    height: 4.5vw;
-    background-color: #e3e3e3;
-    cursor: pointer;
+.Choice2Container {
+	position: relative;
+	width: 8vw;
+	height: 4.3vw;
+	background-color: #e3e3e3;
 
-    font-size: 1.5vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	font-size: 1.5vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+    color: #9b0000;
+	border-bottom: 0.2vw solid #9b0000;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 1.5vw;
 }
 
 .SelectContainer {
@@ -121,7 +131,7 @@ export default {
 	width: 49vw;
 	height: 4.5vw;
 	border: 1px solid #dcdfe6;
-    box-sizing: border-box;
+	box-sizing: border-box;
 	/* background-color: lightcoral; */
 
 	display: flex;

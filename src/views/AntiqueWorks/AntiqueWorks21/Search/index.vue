@@ -1,9 +1,10 @@
 <template>
 	<div class="SearchContainer">
         <div class="Choice1Container">古籍</div>
-        <div class="Choice2Container" @click="GoToPage('AntiqueWorks12')" >特藏</div>
+        <div class="Choice2Container" @click="GoToPage('AntiqueWorks22')" >特藏</div>
+
 		<div class="SelectContainer">
-			<el-select v-model="SelectValue" placeholder="请选择">
+			<el-select v-model="Arguments.SelectValue" placeholder="请选择">
 				<el-option
 					v-for="item in options"
 					:key="item.value"
@@ -17,16 +18,12 @@
 			<input
 				class="SearchContentStyle SearchContent"
 				type="search"
-				v-model="Keywords"
+				v-model="Arguments.Keywords"
 				placeholder="请输入关键词"
 			/>
 		</div>
 
-		<div
-			@click="GoToPage('AntiqueWorks21')"
-			class="SearchLogoContainer"
-			style="position: relative"
-		>
+		<div @click="ChangeArguments" class="SearchLogoContainer" style="position: relative;">
 			<img class="SearchLogo" src="SearchLogo.svg" alt="" />
 		</div>
 	</div>
@@ -35,6 +32,11 @@
 <script>
 export default {
 	name: "Search",
+    props: {
+        Arguments: {
+            type: Object,
+        },
+    },
 	data() {
 		return {
 			options: [
@@ -55,23 +57,28 @@ export default {
 					label: "来源",
 				},
 			],
-			SelectValue: "1",
-			Keywords: "",
 		};
 	},
-	methods: {
-		GoToPage(name) {
+    methods: {
+        ChangeArguments() {
+            this.$emit("ChangeArguments", this.Arguments);
+        },
+        GoToPage(name) {
 			this.$router.push({ name });
 		},
-	},
+    },
 };
 </script>
 
 <style scoped>
 .SearchContainer {
 	position: relative;
+	left: 0;
+	right: 0;
 	width: 80vw;
 	height: 4.5vw;
+    top: 5vw;
+    left: 10vw;
 	/* background-color: lightblue; */
 
 	display: flex;
@@ -124,14 +131,15 @@ export default {
     box-sizing: border-box;
 	/* background-color: lightcoral; */
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
-.SearchContent {
-	position: relative;
-	width: 45vw;
+.SearchContent{
+    position: relative;
+    width: 45vw;
 }
+
 </style>
