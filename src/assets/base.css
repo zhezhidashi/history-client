@@ -1,0 +1,160 @@
+.Background{
+    position: relative;
+    min-height: 80vh;
+}
+
+/* 大标题 */
+.Heading {
+    position: relative;
+    width: 100vw;
+    height: auto;
+    text-align: center;
+    top: 10vw;
+    font-size: 3vw;
+    line-height: 150%;
+    color: #9B0000;
+    font-weight: bold;
+}
+
+.UnderLine {
+    padding-bottom: 0.1vw;
+    border-bottom: 0.1vw solid #ffffff;
+}
+
+/* Tab 悬浮效果 */
+.HoverTab {
+    /* 需要参与过渡的属性 */
+    transition-property: background, border-top, border-bottom;
+    /* 过渡动画的持续时间 */
+    transition-duration: 0.5s;
+}
+
+.HoverTab:hover {
+    background: white;
+    border-top: 0.2vw solid #ffffff;
+    border-bottom: 0.2vw solid #9B0000;
+}
+
+/* 背景图片裁剪 */
+.BackgroundImage {
+    width: 100%;
+    height: 0;
+    /* padding-bottom: 100%; */
+    overflow: hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+
+    /* 通常上半部分有圆角 */
+    border-radius: 0.5vw 0.5vw 0 0;
+}
+
+/* 上半裁剪图片下半文字 */
+.Card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(159, 158, 158, 0.42);
+    font-size: 1.5vw;
+    /* 需要参与过渡的属性 */
+    transition-property: background-color, color;
+    /* 过渡动画的持续时间 */
+    transition-duration: 0.5s;
+}
+
+.Card:hover{
+    background-color: #9B0000;
+    color: white;
+}
+
+/* 搜索框选择器高度 */
+.el-input__inner{
+    height: 4.5vw;
+    font-size: 1.5vw;
+    border-radius: 4px 0 0 4px;
+}
+
+/* 搜索框样式 */
+.SearchContentStyle{
+    line-height: 100%;
+	border: none;
+    outline: none;
+    font-size: 1.5vw;
+    height: 3vw;
+}
+
+.SearchLogoContainer {
+	right: 0;
+	width: 5vw;
+	height: 4.5vw;
+	background-color: #9b0000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    cursor: pointer;
+
+    border-radius: 0 4px 4px 0;
+}
+.SearchLogo {
+	width: 60%;
+}
+
+/* 切换页码的按钮 */
+.ShiftContainer{
+    position: relative;
+    width: 35vw;
+    height: 4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: lightgreen; */
+}
+
+.ShiftPages{
+    position: relative;
+    line-height: 100%;
+    font-size: 1.5vw;
+    font-weight: bold;
+}
+.ShiftLeft, .ShiftRight{
+    position: relative;
+    height: 3.5vw;
+    cursor: pointer;
+}
+
+/* 高级搜索-输入框 */
+.AdvancedSearchInput{
+    height: 2vw;
+    font-size: 1.5vw;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 高级搜索-选择器 */
+.el-radio__inner{
+    width: 1.5vw;
+    height: 1.5vw;
+}
+.el-radio__label{
+    font-size: 1.5vw;
+}
+
+/* 红色框按钮 */
+.RedButton{
+    font-size: 1.5vw;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9B0000;
+    color: white;
+}

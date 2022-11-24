@@ -1,0 +1,69 @@
+<template>
+	<div class="FooterStyle">
+		<div class="FooterContainer">
+			<div @click="GoToPage('WebIntroduction')" class="FooterItem">学科简介</div>
+			<div class="FooterLine"></div>
+			<div @click="GoToPage('Privacy')" class="FooterItem">政策声明</div>
+			<div class="FooterLine"></div>
+			<div @click="GoToPage('ContactUs')" class="FooterItem">联系我们</div>
+		</div>
+		<div class="FooterDescription">
+			版权所有@北京大学外国语学院&emsp;&emsp;建设单位：北京大学东方文学研究中心&emsp;/&emsp;北京大学外国语学院
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	name: "CommonFooter",
+	data() {
+		return {
+			menu: [],
+		};
+	},
+    methods: {
+        GoToPage(name){
+            this.$router.push({name})
+        },
+    }
+};
+</script>
+
+<style>
+.FooterStyle {
+	width: 100%;
+	height: inherit;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	background: #9b0000;
+}
+.FooterContainer {
+	position: relative;
+	width: 410px;
+	height: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.5vw;
+	line-height: 96%;
+	color: #ffffff;
+}
+.FooterItem{
+    cursor: pointer;
+}
+.FooterLine {
+	width: 0;
+	height: 26px;
+	border: 0.7px solid #ffffff;
+}
+.FooterDescription {
+	position: relative;
+	height: auto;
+	font-size: 1.5vw;
+	line-height: 96%;
+	color: #ffffff;
+}
+</style>
+
