@@ -1,20 +1,37 @@
 <template>
 	<div class="Container">
-        <div class="PeopleBlock">
-            <div v-for="(item, index) in People[NowIndex]" :key="index">
-                <div class="Card PeopleContainer" @click="GoToPage()">
-                    <div class="BackgroundImage PeopleImage" :style="`background-image:url(${item.Image})`">
-                    </div>
-                    <div class="PeopleTitle">{{item.Title}}</div>
-                </div>
-            </div>
-        </div>
-        <div class="ShiftContainer">
-            <img @click="ImageShift(-1)" class="ShiftLeft" src="ShiftLeft.svg" alt="">
-            <div class="ShiftPages">{{NowIndex + 1}} &emsp; / &emsp; {{TotalPages}}</div>
-            <img @click="ImageShift(1)" class="ShiftRight" src="ShiftRight.svg" alt="">
-        </div>
-    </div>
+		<div class="PeopleBlock">
+			<div v-for="(item, index) in People[NowIndex]" :key="index">
+				<div
+					class="Card PeopleContainer"
+					@click="GoToPage('OralHistory3')"
+				>
+					<div
+						class="BackgroundImage PeopleImage"
+						:style="`background-image:url(${item.Image})`"
+					></div>
+					<div class="PeopleTitle">{{ item.Title }}</div>
+				</div>
+			</div>
+		</div>
+		<div class="ShiftContainer">
+			<img
+				@click="ImageShift(-1)"
+				class="ShiftLeft"
+				src="ShiftLeft.svg"
+				alt=""
+			/>
+			<div class="ShiftPages">
+				{{ NowIndex + 1 }} &emsp; / &emsp; {{ TotalPages }}
+			</div>
+			<img
+				@click="ImageShift(1)"
+				class="ShiftRight"
+				src="ShiftRight.svg"
+				alt=""
+			/>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -23,40 +40,40 @@ export default {
 	name: "Search",
 	data() {
 		return {
-            TotalPages: 1,
-            NowIndex: 0,
-            People: [
-                [
-                    {
-                        Title: '李明滨口述史',
-                        Image: '李明滨.jpg',
-                        ID: '0',
-                    },
-                    {
-                        Title: '韦旭升口述史',
-                        Image: '韦旭升.jpg',
-                        ID: '1',
-                    },
-                    {
-                        Title: '梁立基口述史',
-                        Image: '梁立基.jpg',
-                        ID: '2',
-                    },
-                    {
-                        Title: '张鸿年口述史',
-                        Image: '张鸿年.jpg',
-                        ID: '3',
-                    }
-                ],
-            ]
-        };
+			TotalPages: 1,
+			NowIndex: 0,
+			People: [
+				[
+					{
+						Title: "李明滨口述史",
+						Image: "李明滨.jpg",
+						ID: "0",
+					},
+					{
+						Title: "韦旭升口述史",
+						Image: "韦旭升.jpg",
+						ID: "1",
+					},
+					{
+						Title: "梁立基口述史",
+						Image: "梁立基.jpg",
+						ID: "2",
+					},
+					{
+						Title: "张鸿年口述史",
+						Image: "张鸿年.jpg",
+						ID: "3",
+					},
+				],
+			],
+		};
 	},
-    methods: {
-        GoToPage(){
-            this.$router.push({ name: "OralHistory3" });
-        },
+	methods: {
+		GoToPage(name) {
+			this.$router.push({ name });
+		},
 
-        // 人物图片按钮切换
+		// 人物图片按钮切换
 		ImageShift: throttle(function (d) {
 			let Images = document.querySelectorAll(".PeopleImage");
 			let Titles = document.querySelectorAll(".PeopleTitle");
@@ -86,51 +103,49 @@ export default {
 				opa--;
 			}
 		}, 2000),
-    },
+	},
 };
 </script>
 
 <style scoped>
-.Container{
-    width: 80vw;
-    height: 35vw;
-    /* background-color: lightblue; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+.Container {
+	width: 80vw;
+	height: 35vw;
+	/* background-color: lightblue; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
 }
-.PeopleBlock{
-    position: relative;
-    width: 80vw;
-    height: 25vw;
-    /* background-color: lightcyan; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.PeopleContainer{
-    position: relative;
-    width: 17vw;
-    height: 25vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+.PeopleBlock {
+	position: relative;
+	width: 80vw;
+	height: 25vw;
+	/* background-color: lightcyan; */
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 
-.PeopleImage{
-    position: relative;
-    width: 17vw;
-    height: 20vw;
+.PeopleContainer {
+	position: relative;
+	width: 17vw;
+	height: 25vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
 }
 
-.PeopleTitle{
-    position: relative;
-    line-height: 5vw;
+.PeopleImage {
+	position: relative;
+	width: 17vw;
+	height: 20vw;
 }
 
-
+.PeopleTitle {
+	position: relative;
+	line-height: 5vw;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
-	<div class="Background Container">
-		<div class="Heading">网站简介</div>
+	<div class="Background WebIntroductionContainer">
+		<div class="Heading" style="font-size: 2.5vw">网站简介</div>
 		<div class="Text">
 			<div v-for="(item, index) in Paragraphs" :key="index">
 				<div class="Paragraph">&emsp;&emsp;{{ item }}</div>
@@ -15,8 +15,8 @@ export default {
 	data() {
 		return {
 			Paragraphs: [
-				"特别感谢荣宏君先生、魏時煜女士、胡壮麟先生、胡蔚老师等馈赠原始手稿、档案文献！",
-				"深荷厚意、以资谢旌！",
+				"本数据库是北京大学外国语学院陈明教授主持的北京大学社会科学学部项目“北京大学外国语言文学学科史”的主要成果之一。",
+				"本数据库是一个承载多语种、多类型原始史料档案，全面揭示北京大学外国语言文学学科史发展，提供北大外院人查阅检索、全面展示与学术研究的信息化平台。",
 			],
 		};
 	},
@@ -24,8 +24,9 @@ export default {
 </script>
 
 <style scoped>
-.Container {
+.WebIntroductionContainer {
 	position: relative;
+	height: 80vw;
 	display: block;
 }
 .Text {

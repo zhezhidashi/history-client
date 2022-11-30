@@ -1,9 +1,9 @@
 <template>
 	<div class="FooterStyle">
 		<div class="FooterContainer">
-			<div @click="GoToPage('WebIntroduction')" class="FooterItem">学科简介</div>
+			<div @click="GoToPage('Privacy')" class="FooterItem">隐私声明</div>
 			<div class="FooterLine"></div>
-			<div @click="GoToPage('Privacy')" class="FooterItem">政策声明</div>
+			<div @click="GoToPage('CopyRight')" class="FooterItem">版权说明</div>
 			<div class="FooterLine"></div>
 			<div @click="GoToPage('ContactUs')" class="FooterItem">联系我们</div>
 		</div>

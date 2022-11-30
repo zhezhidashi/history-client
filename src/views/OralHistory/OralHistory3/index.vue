@@ -1,15 +1,29 @@
 <template>
 	<div class="Background Container">
-		<!-- <div class="WebPath">
+		<div class="WebPath">
 			<div @click="GoToPage('OralHistory2')" style="cursor: pointer">
 				口述档案
 			</div>
 			&ensp;>&ensp;
 			<div>李明滨口述史</div>
-		</div> -->
+		</div>
 		<div class="VideoBlock">
 			<div v-for="(item, index) in Videos" :key="index">
 				<div class="ItemContainer">
+					<video
+						width="100%"
+						controls="true"
+						controlslist="nodownload"
+						autoplay="autoplay"
+					>
+						<source src="movie.mp4" type="video/mp4" />
+						<source src="movie.mp4" type="video/mp4" />
+						<source src="movie.webm" type="video/webm" />
+						<object data="movie.mp4" width="320" height="240">
+							<embed width="320" height="240" src="movie.swf" />
+						</object>
+					</video>
+
 					<div class="InfoContainer">
 						<div class="TimeLocation">
 							访谈时间：{{ item.Time }} &emsp; 访谈地点：{{
@@ -17,9 +31,6 @@
 							}}
 						</div>
 					</div>
-					<video width="100%" controls>
-						<source src="movie.mp4" type="video/mp4" />
-					</video>
 					<div class="IntroContainer">
 						简介：{{ item.Description }}
 					</div>
@@ -70,9 +81,9 @@ export default {
 }
 .WebPath {
 	position: relative;
-    font-size: 1.5vw;
+	font-size: 1.2vw;
 	width: 50vw;
-	line-height: 200%;
+	line-height: 400%;
 	display: flex;
 }
 .VideoBlock {

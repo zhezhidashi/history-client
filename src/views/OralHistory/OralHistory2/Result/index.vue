@@ -6,7 +6,12 @@
 					<div class="ImageItem">
 						<!-- 鼠标悬停查看详情 -->
 						<div class="ImageHover">
-							<div class="RedButton SeeVideo">查看视频</div>
+							<div
+								class="RedButton SeeVideo"
+								@click="GoToPage('OralHistory3')"
+							>
+								查看视频
+							</div>
 						</div>
 						<div
 							class="BackgroundImage ImageContainer"
@@ -21,7 +26,7 @@
 				</div>
 			</div>
 
-            <!-- 翻页器 -->
+			<!-- 翻页器 -->
 			<div class="ShiftContainer">
 				<img
 					@click="PageShift(-1)"
@@ -46,15 +51,15 @@
 <script>
 export default {
 	name: "Result",
-    props: {
-        Arguments:{
-            type: Object,
-        },
-    },
+	props: {
+		Arguments: {
+			type: Object,
+		},
+	},
 	data() {
 		return {
-            NowIndex: 1,
-            TotalPages: 1,
+			NowIndex: 1,
+			TotalPages: 1,
 			// 访谈列表
 			SearchResult: [
 				{
@@ -73,15 +78,20 @@ export default {
 		};
 	},
 	methods: {
-        PageShift(d){
-            if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages){
-                this.NowIndex += d;
-            }
-            else{
-                this.$message({ type: "warning", message: "已经是第一页或最后一页" });
-            }
-        }
-    },
+		PageShift(d) {
+			if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
+				this.NowIndex += d;
+			} else {
+				this.$message({
+					type: "warning",
+					message: "已经是第一页或最后一页",
+				});
+			}
+		},
+		GoToPage(name) {
+			this.$router.push({ name });
+		},
+	},
 };
 </script>
 
@@ -89,9 +99,9 @@ export default {
 .Container {
 	position: relative;
 	width: 60vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	/* background-color: lightblue; */
 }
 .ItemContainer {
@@ -100,7 +110,7 @@ export default {
 	height: 22vw;
 	margin-bottom: 4vw;
 	border-radius: 4px;
-	background-color: #f4f4f4;
+	/* background-color: white; */
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
 
 	display: flex;

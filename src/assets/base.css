@@ -158,3 +158,27 @@
     background-color: #9B0000;
     color: white;
 }
+
+/* 修改 v-viewer 样式 */
+.viewer-list>li {
+    width: 50px;
+}
+
+.viewer-toolbar {
+    text-align: center;
+}
+
+.viewer-button {
+    background-color: red;
+}
+
+/* 文字只显示若干行 */
+.LineLimit {
+    /*最多显示x行文字，否则就是省略号*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /* -webkit-line-clamp: 2; */
+    -webkit-box-orient: vertical;
+}

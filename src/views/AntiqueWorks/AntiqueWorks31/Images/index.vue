@@ -18,7 +18,6 @@
 				<vue-scroll class="ImageListContainer" :ops="ops">
 					<div v-for="item in ImageList" :key="item.ImageID">
 						<div
-							@click="ImageListBtn(item)"
 							:class="
 								item.Index === MainImageIndex
 									? 'ClickImage'
@@ -26,6 +25,7 @@
 							"
 						>
 							<div
+								@click="ImageListBtn(item)"
 								class="ImageListImg"
 								:style="`background-image:url(${item.ImageUrl})`"
 							></div>
@@ -79,7 +79,7 @@ export default {
 					hoverStyle: true,
 					onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
 					// opacity: 0, //滚动条透明度
-                    background: "#9F9E9E",
+					background: "#9F9E9E",
 					"overflow-x": "hidden",
 				},
 			},

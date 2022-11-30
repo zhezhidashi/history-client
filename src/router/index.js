@@ -67,6 +67,15 @@ const routes = [
                 component: () => import('@/views/PkuPeople/PkuPeople3')
             },
             {
+                path: '/PkuPeople4',
+                name: 'PkuPeople4',
+                meta: {
+                    title: '北大外语人',
+                    PageType: 1,
+                },
+                component: () => import('@/views/PkuPeople/PkuPeople4')
+            },
+            {
                 path: '/OralHistory1',
                 name: 'OralHistory1',
                 meta: {
@@ -180,24 +189,6 @@ const routes = [
                     PageType: 1,
                 },
                 component: () => import('@/views/Other/Privacy')
-            },
-            {
-                path: '/Thanks',
-                name: 'Thanks',
-                meta: {
-                    title: '特别鸣谢',
-                    PageType: 1,
-                },
-                component: () => import('@/views/Other/Thanks')
-            },
-            {
-                path: '/WebIntroduction',
-                name: 'WebIntroduction',
-                meta: {
-                    title: '网站简介',
-                    PageType: 1,
-                },
-                component: () => import('@/views/Other/WebIntroduction')
             },
             {
                 path: '/Login',
