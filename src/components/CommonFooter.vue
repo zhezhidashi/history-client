@@ -3,7 +3,7 @@
 		<div class="FooterContainer">
 			<div @click="GoToPage('Privacy')" class="FooterItem">隐私声明</div>
 			<div class="FooterLine"></div>
-			<div @click="GoToPage('CopyRight')" class="FooterItem">版权说明</div>
+			<div @click="GoToPage('Copyright')" class="FooterItem">版权说明</div>
 			<div class="FooterLine"></div>
 			<div @click="GoToPage('ContactUs')" class="FooterItem">联系我们</div>
 		</div>

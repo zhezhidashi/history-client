@@ -115,7 +115,7 @@ export default {
 .WebPath {
 	position: relative;
 	height: 3vw;
-	font-size: 1vw;
+	font-size: 1.2vw;
 	line-height: 300%;
 
 	display: flex;

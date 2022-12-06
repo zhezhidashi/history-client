@@ -2,7 +2,7 @@
 	<div class="Container">
         <div class="PeopleBlock">
             <div v-for="(item, index) in People[NowIndex]" :key="index">
-                <div class="Card PeopleContainer">
+                <div class="Card PeopleContainer" @click="GoToPage('PkuPeople3')">
                     <div class="BackgroundImage PeopleImage" :style="`background-image:url(${item.Image})`">
                     </div>
                     <div class="PeopleTitle">{{item.Title}}</div>
@@ -82,6 +82,10 @@ export default {
 				opa--;
 			}
 		}, 2000),
+
+        GoToPage(name){
+            this.$router.push({ name });
+        },
     },
 };
 </script>

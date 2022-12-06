@@ -1,6 +1,6 @@
 <template>
 	<div class="Background PkuPeople3Container">
-		<TabChoices :Tabs="Tabs" :TabsTotalPages="TabsTotalPages" :TabIndex="TabIndex" @ChangeTab="ChangeTabIndex(index)" />
+		<TabChoices :Tabs="Tabs" :TabsTotalPages="TabsTotalPages" :TabIndex="TabIndex" :ContentStatus="ContentStatus" @ChangeTabIndex="ChangeTabIndex" @ChangeContentStatus="ChangeContentStatus"/>
 		<Content :Contents="Contents" :People="People" :ContentTotalPages="ContentTotalPages" />
 	</div>
 </template>
@@ -19,56 +19,50 @@ export default {
 			Tabs: [
 				[
 					{
-						NameZH: "信件信函",
-						NameEN: "Letters",
-                        Index: 0,
+						Title: "信件信函",
 					},
 					{
-						NameZH: "书稿",
-						NameEN: "Books",
-                        Index: 1,
+						Title: "书稿",
 					},
 					{
-						NameZH: "手稿",
-						NameEN: "Manuscripts",
-                        Index: 2,
+						Title: "手稿",
 					},
 					{
-						NameZH: "日记",
-                        NameEN: "Diaries",
-                        Index: 3,
+						Title: "日记",
+					},
+					{
+						Title: "笔记",
+					},
+					{
+						Title: "公文",
+					},
+				],
+				[
+					{
+						Title: "日记",
+					},
+					{
+						Title: "笔记",
+					},
+					{
+						Title: "公文",
+					},
+					{
+						Title: "会议资料",
+					},
+					{
+						Title: "出版合同",
 					},
                     {
-                        NameZH: "笔记",
-                        NameEN: "Notes",
-                        Index: 4,
+                        Title: "其他",
                     },
 				],
-                [
-                    {
-                        NameZH: "公文",
-                        NameEN: "OfficialDocuments",
-                        Index: 5,
-                    },
-                    {
-                        NameZH: "会议资料",
-                        NameEN: "MeetingMaterials",
-                        Index: 6,
-                    },
-                    {
-                        NameZH: "出版合同",
-                        NameEN: "PublishingContracts",
-                        Index: 7,
-                    },
-                    {
-                        NameZH: "其他",
-                        NameEN: "Others",
-                        Index: 8,
-                    }
-                ]
 			],
-            TabsTotalPages: 2,
+            // 页码
             TabIndex: 0,
+            // 记录点击某个Tab后的状态
+            ContentStatus: 0,
+
             // Contents[x][y].ItemID 是在数据库中的主键
 			Contents: [
                 [
@@ -184,6 +178,9 @@ export default {
 	methods: {
         ChangeTabIndex(index) {
             this.TabIndex = index;
+        },
+        ChangeContentStatus(index) {
+            this.ContentStatus = index;
         },
     },
 };

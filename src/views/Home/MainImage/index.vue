@@ -53,7 +53,7 @@ export default {
 	z-index: 10;
 	top: 1vw;
 	left: 3vw;
-	width: 15vw;
+	width: 10vw;
 }
 .Title {
 	position: absolute;

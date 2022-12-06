@@ -21,25 +21,25 @@ export default {
 		return {
 			Choices: [
 				{
-					title: "北大外语人",
+					title: "档案/手稿",
 					name: "PkuPeople1",
 					path: "/PkuPeople1",
 					image: "HomeImage1.jpg",
 				},
 				{
-					title: "红楼/燕园足迹",
+					title: "照片/图像",
 					name: "",
 					path: "",
 					image: "HomeImage2.jpg",
 				},
 				{
-					title: "口述档案",
+					title: "口述/访谈",
 					name: "OralHistory1",
 					path: "/OralHistory1",
 					image: "HomeImage3.jpg",
 				},
 				{
-					title: "古籍特藏",
+					title: "古籍/特藏",
 					name: "AntiqueWorks11",
 					path: "/AntiqueWorks11",
 					image: "HomeImage4.jpg",
