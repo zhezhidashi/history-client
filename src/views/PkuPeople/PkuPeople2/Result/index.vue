@@ -8,7 +8,7 @@
 						<div class="ImageHover">
 							<div
 								class="RedButton SeeImage"
-								@click="GoToPage('PkuPeople3')"
+								@click="GoToPage('PkuPeople4')"
 							>
 								查看大图
 							</div>
@@ -19,7 +19,7 @@
 						></div>
 					</div>
 					<div class="TextContainer">
-						<div class="TextTitle">{{ item.Title }}</div>
+						<div class="TextTitle" @click="GoToPage('PkuPeople4')">{{ item.Title }}</div>
 						<div class="TextDescription">
 							{{ item.Description }}
 						</div>
@@ -168,11 +168,14 @@ export default {
 
 /* 标题 */
 .TextTitle {
+    position: relative;
 	font-size: 1.5vw;
 	line-height: 300%;
+    cursor: pointer;
 }
 /* 时间、地点 */
 .TextDescription {
+    position: relative;
 	font-size: 1.3vw;
 	line-height: 120%;
 	color: #9f9e9e;

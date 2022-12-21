@@ -12,7 +12,7 @@
 					v-model="Keywords"
 					placeholder="搜索档案"
 				/>
-				<div @click="GoToPage('PkuPeople2')" class="SearchLogoContainer" style="position: absolute;">
+				<div @click="GoToPage('MainSearch')" class="SearchLogoContainer" style="position: absolute;">
 					<img class="SearchLogo" src="SearchLogo.svg" alt="" />
 				</div>
 			</div>
@@ -51,9 +51,9 @@ export default {
 .Logo {
 	position: absolute;
 	z-index: 10;
-	top: 1vw;
+	top: 1.5vw;
 	left: 3vw;
-	width: 10vw;
+	width: 7vw;
 }
 .Title {
 	position: absolute;

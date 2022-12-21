@@ -12,7 +12,6 @@
 			<Images
 				:ImageList="ImageList"
 				:WebPath="WebPath"
-				:TotalImage="TotalImage"
 				:Description="Description"
 			/>
 			<Content :ContentInfo="ContentInfo" />
@@ -106,28 +105,7 @@ export default {
 					Index: 3,
 					ImageID: "3",
 				},
-				{
-					ImageUrl: "PkuPeople4Image1.jpg",
-					Index: 4,
-					ImageID: "4",
-				},
-				{
-					ImageUrl: "PkuPeople4Image2.jpg",
-					Index: 5,
-					ImageID: "5",
-				},
-				{
-					ImageUrl: "PkuPeople4Image3.jpg",
-					Index: 6,
-					ImageID: "6",
-				},
-				{
-					ImageUrl: "PkuPeople4Image4.jpg",
-					Index: 7,
-					ImageID: "7",
-				},
 			],
-			TotalImage: 8,
 			Description:
 				"某月某月季先生之女给季先生的信，主要内容为想在周六上午来看您。",
 

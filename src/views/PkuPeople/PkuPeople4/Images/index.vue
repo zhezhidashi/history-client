@@ -69,7 +69,7 @@
 <script>
 export default {
 	name: "Image",
-	props: ["ImageList", "WebPath", "TotalImage", "Description"],
+	props: ["ImageList", "WebPath", "Description"],
 	data() {
 		return {
 			MainImageIndex: 0,
@@ -104,7 +104,7 @@ export default {
 		// 左右按钮切换图片
 		ImageShift(d) {
 			this.MainImageIndex =
-				(this.MainImageIndex + d + this.TotalImage) % this.TotalImage;
+				(this.MainImageIndex + d + this.ImageList.length) % this.ImageList.length;
 			// console.log(this.PictureID);
 		},
 	},

@@ -19,7 +19,7 @@
 						></div>
 					</div>
 					<div class="TextContainer">
-						<div class="TextTitle">{{ item.Title }}</div>
+						<div class="TextTitle" @click="GoToPage('AntiqueWorks31')">{{ item.Title }}</div>
 						<div class="TextDescription">
 							<div
 								v-for="(item_, index_) in Description"
@@ -255,6 +255,7 @@ export default {
 	height: 4vw;
 	font-size: 1.5vw;
 	font-weight: bold;
+    cursor: pointer;
 }
 /* 其他描述信息 */
 .TextDescription {

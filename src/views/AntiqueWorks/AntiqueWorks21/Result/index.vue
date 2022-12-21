@@ -19,7 +19,7 @@
 						></div>
 					</div>
 					<div class="TextContainer">
-						<div class="TextTitle">{{ item.Title }}</div>
+						<div class="TextTitle" @click="GoToPage('AntiqueWorks31')">{{ item.Title }}</div>
 						<div class="TextDescription">
 							<div
 								v-for="(item_, index_) in Description"
@@ -76,51 +76,59 @@ export default {
 			// 搜索结果
 			SearchResult: [
 				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
+					Title: "从征缅甸记畧：1卷",
+					Publish: "",
+					People: "（清）冯鲁严撰",
+					VersionType: "",
+					ExternalForm: "线装，外加硬皮重新装订，1册，26.8 x 15cm",
+					GeneralNote: "内夹页题：清嘉庆刊本",
+                    Subject: "笔记，史料，中国，清代",
+                    FourLibrary: "史部，政书类，军政之属，边政",
+                    Language: "汉文",
 					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
+					TypeNumber: "",
 					Image: "AntiqueImage1.jpg",
 				},
 				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
+					Title: "2.	芦浦笔记：10卷",
+					Publish: "清嘉庆三年[1798]",
+					People: "（宋）刘昌诗撰",
 					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
-					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
+					ExternalForm: "线装，1册，19.4 x 11.8cm",
+					GeneralNote: "",
+                    Subject: "",
+                    FourLibrary: "",
+                    Language: "汉文",
+					Seal: "张礼千、**、******",
+					TypeNumber: "",
 					Image: "AntiqueImage2.jpg",
 				},
 				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
+					Title: "舟车所至（上下）",
+					Publish: "清道光二十三年[1843]青玉山房",
+					People: "（清）郑光祖辑",
 					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
+					ExternalForm: "线装，2册（1函），24.5 x 15.5cm",
+					GeneralNote: "",
+                    Subject: "",
+                    FourLibrary: "",
+                    Language: "汉文",
 					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
+					TypeNumber: "",
 					Image: "AntiqueImage3.jpg",
 				},
 				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
+					Title: "使西纪程：1卷",
+					Publish: "清末民初[1821-1927]",
+					People: "（清）郭嵩焘撰",
+					VersionType: "铅印本",
+					ExternalForm: "线装，外加硬皮精装装订，1册，25 x 16.5cm",
+					GeneralNote: "",
+                    Subject: "",
+                    FourLibrary: "",
+                    Language: "汉文",
 					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
+					TypeNumber: "",
 					Image: "AntiqueImage4.jpg",
 				},
 			],
@@ -128,12 +136,12 @@ export default {
 			// 搜索条目描述类型
 			Description: [
 				{
-					NameZH: "出版时间",
-					NameEN: "Time",
-				},
-				{
 					NameZH: "主要责任人",
 					NameEN: "People",
+				},
+                {
+					NameZH: "出版",
+					NameEN: "Publish",
 				},
 				{
 					NameZH: "版本类别",
@@ -143,6 +151,18 @@ export default {
 					NameZH: "外观形态",
 					NameEN: "ExternalForm",
 				},
+                {
+                    NameZH: "一般附注",
+                    NameEN: "GeneralNote"
+                },
+                {
+                    NameZH: "主题词",
+                    NameEN: "Subject"
+                },
+                {
+                    NameZH: "四库类名",
+                    NameEN: "FourLibrary"
+                },
 				{
 					NameZH: "古籍语种",
 					NameEN: "Language",
@@ -154,10 +174,6 @@ export default {
 				{
 					NameZH: "分类号",
 					NameEN: "TypeNumber",
-				},
-				{
-					NameZH: "来源",
-					NameEN: "Source",
 				},
 			],
 		};
@@ -252,15 +268,16 @@ export default {
 
 /* 标题 */
 .TextTitle {
-	height: 4vw;
+	height: 3vw;
 	font-size: 1.5vw;
 	font-weight: bold;
+    cursor: pointer;
 }
 /* 其他描述信息 */
 .TextDescription {
 	position: relative;
 	width: 30vw;
-	height: 14vw;
+	height: 15vw;
 	/* background-color: lightblue; */
 
 	display: flex;

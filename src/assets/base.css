@@ -1,12 +1,15 @@
 .Background{
     position: relative;
-    min-height: 80vh;
+    /* min-height: 80vh; */
 }
 
 /* 大标题 */
 .Heading {
     position: relative;
-    width: 100vw;
+    width: 90vw;
+    left: 0;
+    right: 0;
+    margin: auto;
     height: auto;
     text-align: center;
     top: 10vw;

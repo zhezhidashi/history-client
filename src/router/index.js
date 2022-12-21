@@ -43,7 +43,7 @@ const routes = [
                 path: '/PkuPeople1',
                 name: 'PkuPeople1',
                 meta: {
-                    title: '北大外语人',
+                    title: '档案/手稿',
                     PageType: 1,
                 },
                 component: () => import('@/views/PkuPeople/PkuPeople1')
@@ -52,7 +52,7 @@ const routes = [
                 path: '/PkuPeople2',
                 name: 'PkuPeople2',
                 meta: {
-                    title: '北大外语人',
+                    title: '档案/手稿',
                     PageType: 1,
                 },
                 component: () => import('@/views/PkuPeople/PkuPeople2')
@@ -61,7 +61,7 @@ const routes = [
                 path: '/PkuPeople3',
                 name: 'PkuPeople3',
                 meta: {
-                    title: '北大外语人',
+                    title: '档案/手稿',
                     PageType: 1,
                 },
                 component: () => import('@/views/PkuPeople/PkuPeople3')
@@ -70,7 +70,7 @@ const routes = [
                 path: '/PkuPeople4',
                 name: 'PkuPeople4',
                 meta: {
-                    title: '北大外语人',
+                    title: '档案/手稿',
                     PageType: 1,
                 },
                 component: () => import('@/views/PkuPeople/PkuPeople4')
@@ -79,7 +79,7 @@ const routes = [
                 path: '/OralHistory1',
                 name: 'OralHistory1',
                 meta: {
-                    title: '口述史',
+                    title: '口述/访谈',
                     PageType: 1,
                 },
                 component: () => import('@/views/OralHistory/OralHistory1')
@@ -88,7 +88,7 @@ const routes = [
                 path: '/OralHistory2',
                 name: 'OralHistory2',
                 meta: {
-                    title: '口述史',
+                    title: '口述/访谈',
                     PageType: 1,
                 },
                 component: () => import('@/views/OralHistory/OralHistory2')
@@ -97,7 +97,7 @@ const routes = [
                 path: '/OralHistory3',
                 name: 'OralHistory3',
                 meta: {
-                    title: '口述史',
+                    title: '口述/访谈',
                     PageType: 1,
                 },
                 component: () => import('@/views/OralHistory/OralHistory3')
@@ -107,7 +107,7 @@ const routes = [
                 path: '/AntiqueWorks11',
                 name: 'AntiqueWorks11',
                 meta: {
-                    title: '古籍特藏',
+                    title: '古籍',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks11')
@@ -117,7 +117,7 @@ const routes = [
                 path: '/AntiqueWorks12',
                 name: 'AntiqueWorks12',
                 meta: {
-                    title: '古籍特藏',
+                    title: '特藏',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks12')
@@ -127,7 +127,7 @@ const routes = [
                 path: '/AntiqueWorks21',
                 name: 'AntiqueWorks21',
                 meta: {
-                    title: '古籍特藏',
+                    title: '古籍',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks21')
@@ -137,7 +137,7 @@ const routes = [
                 path: '/AntiqueWorks22',
                 name: 'AntiqueWorks22',
                 meta: {
-                    title: '古籍特藏',
+                    title: '特藏',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks22')
@@ -147,7 +147,7 @@ const routes = [
                 path: '/AntiqueWorks31',
                 name: 'AntiqueWorks31',
                 meta: {
-                    title: '古籍特藏',
+                    title: '古籍',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks31')
@@ -157,7 +157,7 @@ const routes = [
                 path: '/AntiqueWorks32',
                 name: 'AntiqueWorks32',
                 meta: {
-                    title: '古籍特藏',
+                    title: '特藏',
                     PageType: 1,
                 },
                 component: () => import('@/views/AntiqueWorks/AntiqueWorks32')
@@ -199,6 +199,15 @@ const routes = [
                 },
                 component: () => import('@/views/Other/Login')
             },
+            {
+                path: 'MainSearch',
+                name: 'MainSearch',
+                meta: {
+                    title: '综合搜索',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Other/MainSearch')
+            }
         ]
     },
 ]

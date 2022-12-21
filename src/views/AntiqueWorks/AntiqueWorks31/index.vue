@@ -21,87 +21,77 @@ export default {
 		return {
 			ImageList: [
                 {
-                    ImageUrl: "AntiqueImage1.jpg",
+                    ImageUrl: "古籍详情01.jpg",
                     Index: 0,
                     ImageID: "0",
                 },
                 {
-                    ImageUrl: "AntiqueImage2.jpg",
+                    ImageUrl: "古籍详情02.jpg",
                     Index: 1,
                     ImageID: "1",
                 },
                 {
-                    ImageUrl: "AntiqueImage3.jpg",
+                    ImageUrl: "古籍详情03.jpg",
                     Index: 2,
                     ImageID: "2",
                 },
                 {
-                    ImageUrl: "AntiqueImage4.jpg",
+                    ImageUrl: "古籍详情04.jpg",
                     Index: 3,
                     ImageID: "3",
-                },
-                {
-                    ImageUrl: "AntiqueImage1.jpg",
-                    Index: 4,
-                    ImageID: "4",
-                },
-                {
-                    ImageUrl: "AntiqueImage2.jpg",
-                    Index: 5,
-                    ImageID: "5",
-                },
-                {
-                    ImageUrl: "AntiqueImage3.jpg",
-                    Index: 6,
-                    ImageID: "6",
-                },
-                {
-                    ImageUrl: "AntiqueImage4.jpg",
-                    Index: 7,
-                    ImageID: "7",
                 },
             ],
 			ContentInfo: [
 				{
-                    NameEN: "Time",
-                    NameZH: "出版时间",
-                    Value: "清光绪七至八年（1881-1882）"
+					NameZH: "主要责任人",
+					NameEN: "People",
+                    Value: "（清）冯鲁严撰"
+				},
+                {
+					NameZH: "出版",
+					NameEN: "Publish",
+                    Value: "",
+				},
+				{
+					NameZH: "版本类别",
+					NameEN: "VersionType",
+                    Value: "",
+				},
+				{
+					NameZH: "外观形态",
+					NameEN: "ExternalForm",
+                    Value: "线装，外加硬皮重新装订，1册，26.8 x 15cm",
+				},
+                {
+                    NameZH: "一般附注",
+                    NameEN: "GeneralNote",
+                    Value: "内夹页题：清嘉庆刊本",
                 },
                 {
-                    NameEN: "People",
-                    NameZH: "主要责任人",
-                    Value: "李调元",
+                    NameZH: "主题词",
+                    NameEN: "Subject",
+                    Value: "笔记，史料，中国，清代",
                 },
                 {
-                    NameEN: "VersionType",
-                    NameZH: "版本类别",
-                    Value: "刻本",
+                    NameZH: "四库类名",
+                    NameEN: "FourLibrary",
+                    Value: "史部，政书类，军政之属，边政",
                 },
-                {
-                    NameEN: "ExternalForm",
-                    NameZH: "外观形态",
-                    Value: "线装2册",
-                },
-                {
-                    NameEN: "古籍语种",
-                    NameZH: "Language",
+				{
+					NameZH: "古籍语种",
+					NameEN: "Language",
                     Value: "汉文",
-                },
-                {
-                    NameEN: "Seal",
-                    NameZH: "印章",
+				},
+				{
+					NameZH: "印章",
+					NameEN: "Seal",
                     Value: "张礼千",
-                },
-                {
-                    NameEN: "TypeNumber",
-                    NameZH: "分类号",
-                    Value: "K254.9",
-                },
-                {
-                    NameEN: "Source",
-                    NameZH: "来源",
-                    Value: "张礼千赠书"
-                },
+				},
+				{
+					NameZH: "分类号",
+					NameEN: "TypeNumber",
+                    Value: "",
+				},
             ],
             Title: "粵東皇華集：第一卷",
             TotalImage: 8,

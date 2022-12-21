@@ -68,16 +68,16 @@ export default {
 			],
 			Images2: [
 				{
-					Image: "AntiqueImage4.jpg",
+					Image: "特藏01.jpg",
 				},
 				{
-					Image: "AntiqueImage3.jpg",
+					Image: "特藏02.jpg",
 				},
 				{
-					Image: "AntiqueImage2.jpg",
+					Image: "特藏03.jpg",
 				},
 				{
-					Image: "AntiqueImage1.jpg",
+					Image: "特藏04.jpg",
 				},
 			],
 		};

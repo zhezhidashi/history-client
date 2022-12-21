@@ -1,5 +1,5 @@
 <template>
-	<div class="Background">
+	<div class="Background" style="height: 70vw;">
 		<div class="Heading">联系我们</div>
 		<div class="FeedbackContainer">
 			<div class="FeedbackInput" style="margin-top: 2vw">

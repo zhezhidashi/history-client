@@ -50,7 +50,7 @@ export default {
     font-size: 2.5vw;
     font-weight: bold;
     line-height: 200%;
-    color: #9B0000;
+    color: #333333;
 }
 .ItemPart{
     position: relative;
