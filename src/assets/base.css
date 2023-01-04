@@ -1,4 +1,4 @@
-.Background{
+.Background {
     position: relative;
     /* min-height: 80vh; */
 }
@@ -55,7 +55,7 @@
 }
 
 /* 上半裁剪图片下半文字 */
-.Card{
+.Card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,45 +69,46 @@
     transition-duration: 0.5s;
 }
 
-.Card:hover{
+.Card:hover {
     background-color: #9B0000;
     color: white;
 }
 
 /* 搜索框选择器高度 */
-.el-input__inner{
+.el-input__inner {
     height: 4.5vw;
     font-size: 1.5vw;
     border-radius: 4px 0 0 4px;
 }
 
 /* 搜索框样式 */
-.SearchContentStyle{
+.SearchContentStyle {
     line-height: 100%;
-	border: none;
+    border: none;
     outline: none;
     font-size: 1.5vw;
     height: 3vw;
 }
 
 .SearchLogoContainer {
-	right: 0;
-	width: 5vw;
-	height: 4.5vw;
-	background-color: #9b0000;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    right: 0;
+    width: 5vw;
+    height: 4.5vw;
+    background-color: #9b0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 
     border-radius: 0 4px 4px 0;
 }
+
 .SearchLogo {
-	width: 60%;
+    width: 60%;
 }
 
 /* 切换页码的按钮 */
-.ShiftContainer{
+.ShiftContainer {
     position: relative;
     width: 35vw;
     height: 4vw;
@@ -117,20 +118,22 @@
     /* background-color: lightgreen; */
 }
 
-.ShiftPages{
+.ShiftPages {
     position: relative;
     line-height: 100%;
     font-size: 1.5vw;
     font-weight: bold;
 }
-.ShiftLeft, .ShiftRight{
+
+.ShiftLeft,
+.ShiftRight {
     position: relative;
     height: 3.5vw;
     cursor: pointer;
 }
 
 /* 高级搜索-输入框 */
-.AdvancedSearchInput{
+.AdvancedSearchInput {
     height: 2vw;
     font-size: 1.5vw;
     border: none;
@@ -140,21 +143,22 @@
 }
 
 /* 高级搜索-选择器 */
-.el-radio__inner{
+.el-radio__inner {
     width: 1.5vw;
     height: 1.5vw;
 }
-.el-radio__label{
+
+.el-radio__label {
     font-size: 1.5vw;
 }
 
 /* 红色框按钮 */
-.RedButton{
+.RedButton {
     font-size: 1.5vw;
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,4 +194,4 @@
 ::-webkit-scrollbar {
     width: 0;
     height: 0;
-} 
+}

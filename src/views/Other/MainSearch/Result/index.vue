@@ -19,7 +19,12 @@
 						></div>
 					</div>
 					<div class="TextContainer">
-						<div class="TextTitle" @click="GoToPage('OralHistory3')">{{ item.Title }}</div>
+						<div
+							class="TextTitle"
+							@click="GoToPage('OralHistory3')"
+						>
+							{{ item.Title }}
+						</div>
 						<div class="TextTime">{{ item.Time }}</div>
 						<div class="TextLocation">{{ item.Location }}</div>
 					</div>
@@ -169,7 +174,7 @@ export default {
 .TextTitle {
 	font-size: 1.5vw;
 	line-height: 300%;
-    cursor: pointer;
+	cursor: pointer;
 }
 /* 时间、地点 */
 .TextTime,

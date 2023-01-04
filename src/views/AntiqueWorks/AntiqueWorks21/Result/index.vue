@@ -19,7 +19,12 @@
 						></div>
 					</div>
 					<div class="TextContainer">
-						<div class="TextTitle" @click="GoToPage('AntiqueWorks31')">{{ item.Title }}</div>
+						<div
+							class="TextTitle"
+							@click="GoToPage('AntiqueWorks31')"
+						>
+							{{ item.Title }}
+						</div>
 						<div class="TextDescription">
 							<div
 								v-for="(item_, index_) in Description"
@@ -82,9 +87,9 @@ export default {
 					VersionType: "",
 					ExternalForm: "线装，外加硬皮重新装订，1册，26.8 x 15cm",
 					GeneralNote: "内夹页题：清嘉庆刊本",
-                    Subject: "笔记，史料，中国，清代",
-                    FourLibrary: "史部，政书类，军政之属，边政",
-                    Language: "汉文",
+					Subject: "笔记，史料，中国，清代",
+					FourLibrary: "史部，政书类，军政之属，边政",
+					Language: "汉文",
 					Seal: "张礼千",
 					TypeNumber: "",
 					Image: "AntiqueImage1.jpg",
@@ -96,9 +101,9 @@ export default {
 					VersionType: "刻本",
 					ExternalForm: "线装，1册，19.4 x 11.8cm",
 					GeneralNote: "",
-                    Subject: "",
-                    FourLibrary: "",
-                    Language: "汉文",
+					Subject: "",
+					FourLibrary: "",
+					Language: "汉文",
 					Seal: "张礼千、**、******",
 					TypeNumber: "",
 					Image: "AntiqueImage2.jpg",
@@ -110,9 +115,9 @@ export default {
 					VersionType: "刻本",
 					ExternalForm: "线装，2册（1函），24.5 x 15.5cm",
 					GeneralNote: "",
-                    Subject: "",
-                    FourLibrary: "",
-                    Language: "汉文",
+					Subject: "",
+					FourLibrary: "",
+					Language: "汉文",
 					Seal: "张礼千",
 					TypeNumber: "",
 					Image: "AntiqueImage3.jpg",
@@ -124,9 +129,9 @@ export default {
 					VersionType: "铅印本",
 					ExternalForm: "线装，外加硬皮精装装订，1册，25 x 16.5cm",
 					GeneralNote: "",
-                    Subject: "",
-                    FourLibrary: "",
-                    Language: "汉文",
+					Subject: "",
+					FourLibrary: "",
+					Language: "汉文",
 					Seal: "张礼千",
 					TypeNumber: "",
 					Image: "AntiqueImage4.jpg",
@@ -139,7 +144,7 @@ export default {
 					NameZH: "主要责任人",
 					NameEN: "People",
 				},
-                {
+				{
 					NameZH: "出版",
 					NameEN: "Publish",
 				},
@@ -151,18 +156,18 @@ export default {
 					NameZH: "外观形态",
 					NameEN: "ExternalForm",
 				},
-                {
-                    NameZH: "一般附注",
-                    NameEN: "GeneralNote"
-                },
-                {
-                    NameZH: "主题词",
-                    NameEN: "Subject"
-                },
-                {
-                    NameZH: "四库类名",
-                    NameEN: "FourLibrary"
-                },
+				{
+					NameZH: "一般附注",
+					NameEN: "GeneralNote",
+				},
+				{
+					NameZH: "主题词",
+					NameEN: "Subject",
+				},
+				{
+					NameZH: "四库类名",
+					NameEN: "FourLibrary",
+				},
 				{
 					NameZH: "古籍语种",
 					NameEN: "Language",
@@ -271,7 +276,7 @@ export default {
 	height: 3vw;
 	font-size: 1.5vw;
 	font-weight: bold;
-    cursor: pointer;
+	cursor: pointer;
 }
 /* 其他描述信息 */
 .TextDescription {
