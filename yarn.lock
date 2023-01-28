@@ -2670,10 +2670,10 @@
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.199.tgz"
   "version" "1.4.199"
 
-"element-ui@^2.15.9":
-  "integrity" "sha512-dx45nQLt4Hn87/Z9eRr3ex6KFZbxlFAwEU3QoW3wA5EsYftvHTyL9Pq7VnXXD7hu1Eiaup2jcs6kp+/VSFmXuA=="
-  "resolved" "https://registry.npmmirror.com/element-ui/-/element-ui-2.15.9.tgz"
-  "version" "2.15.9"
+"element-ui@^2.15.12":
+  "integrity" "sha512-Y5FMT2BPOindU2GkDEQ5ZKUVxDawKONRNMh2eL3uBx1FOtvUJ+L6IxXLVsNxq4WnaX/UnVNgWXebl7DobygZMg=="
+  "resolved" "https://registry.npmjs.org/element-ui/-/element-ui-2.15.12.tgz"
+  "version" "2.15.12"
   dependencies:
     "async-validator" "~1.8.1"
     "babel-helper-vue-jsx-merge-props" "^2.0.0"
@@ -3476,7 +3476,7 @@
 
 "js-cookie@^3.0.1":
   "integrity" "sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw=="
-  "resolved" "https://registry.npmmirror.com/js-cookie/-/js-cookie-3.0.1.tgz"
+  "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.1.tgz"
   "version" "3.0.1"
 
 "js-message@1.0.7":

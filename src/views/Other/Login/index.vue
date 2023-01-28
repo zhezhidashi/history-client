@@ -24,7 +24,7 @@
 				</el-input>
 			</div>
 
-			<div class="RedButton SubmitButton">提交</div>
+			<div class="RedButton SubmitButton" @click="Submit">提交</div>
 		</div>
 	</div>
 </template>
@@ -38,6 +38,12 @@ export default {
             Password: "",
 		};
 	},
+    methods: {
+        Submit() {
+            this.$store.commit('setToken', '111');
+            this.$router.push({name: 'Home'});
+        },
+    },
 };
 </script>
 

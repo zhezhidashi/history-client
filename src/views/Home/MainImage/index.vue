@@ -4,7 +4,7 @@
 			<img class="MainImage" src="HomeMainImage.jpg" alt="MainImage" />
 			<img class="Logo" src="HomeLogo.svg" alt="HomeLogo" />
 			<div class="Title">北京大学外国语言文学学科史电子资源库</div>
-            <div class="RedButton Login" @click="GoToPage('Login')">登录</div>
+            <div class="RedButton Login" @click="LogInOut()" >{{LogStatus}}</div>
 			<div class="SearchContainer">
 				<input
 					class="SearchContentStyle SearchContentContainer"
@@ -27,13 +27,33 @@ export default {
 	data() {
 		return {
 			Keywords: "",
+            LogStatus: "",
 		};
 	},
     methods: {
         GoToPage(name) {
             this.$router.push({name});
         },
-    }
+        LogInOut() {
+            if (this.LogStatus == "登录") {
+                this.GoToPage('Login');
+            } else {
+                this.$store.commit('clearToken');
+                this.LogStatus = "登出";
+                location.reload();
+            }
+        },
+    },
+    mounted() {
+        this.$store.commit('getToken')
+        const TokenValue = this.$store.state.user.token;
+        console.log(this.$store.state)
+        if (TokenValue != undefined) {
+            this.LogStatus = "登出";
+        } else {
+            this.LogStatus = "登录";
+        }
+    },
 };
 </script>
 
