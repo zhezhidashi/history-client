@@ -1,0 +1,1 @@
+nohup sh zzhshell.sh > hdfs-small.txt 2>&1 &

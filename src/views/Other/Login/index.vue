@@ -1,5 +1,5 @@
 <template>
-	<div class="Background" style="height: 70vw;">
+	<div class="Background" style="height: 70vw">
 		<div class="Heading">登录</div>
 		<div class="FeedbackContainer">
 			<div class="FeedbackInput">
@@ -7,7 +7,7 @@
 					type="textarea"
 					autosize
 					placeholder="请输入用户名"
-					style="width: 30vw;"
+					style="width: 30vw"
 					v-model="Username"
 				>
 				</el-input>
@@ -18,7 +18,7 @@
 					type="textarea"
 					autosize
 					placeholder="请输入密码"
-					style="width: 30vw;"
+					style="width: 30vw"
 					v-model="Password"
 				>
 				</el-input>
@@ -30,20 +30,48 @@
 </template>
 
 <script>
+import { postForm } from "@/api/data.js";
 export default {
 	name: "ContactUs",
 	data() {
 		return {
 			Username: "",
-            Password: "",
+			Password: "",
 		};
 	},
-    methods: {
-        Submit() {
-            this.$store.commit('setToken', '111');
-            this.$router.push({name: 'Home'});
-        },
-    },
+	methods: {
+		Submit() {
+            let _this = this;
+            let url = '/user/login'
+            let DataForm = {
+                username: _this.Username,
+                password: _this.Password
+            }
+
+            postForm(url, DataForm, function (res) {
+                if(res.code === 400){
+                    _this.$message({
+                        message: res.msg,
+                        type: 'error'
+                    });
+                }
+                else if(res.code === 0){
+                    _this.$message({
+                        message: res.msg,
+                        type: 'success'
+                    });
+                    _this.$store.commit("setToken", res.data);
+                    _this.$router.push({ name: "Home" });
+                }
+                else{
+                    _this.$message({
+                        message: '未知错误',
+                        type: 'error'
+                    });
+                }
+            });
+		},
+	},
 };
 </script>
 
@@ -73,8 +101,8 @@ export default {
 	flex-direction: row;
 }
 
-.SubmitButton{
-    width: 9vw;
-    height: 3vw;
+.SubmitButton {
+	width: 9vw;
+	height: 3vw;
 }
 </style>

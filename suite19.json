@@ -1,0 +1,7 @@
+{
+	"file_formats": {
+		"query": ["q19.*"],
+		"schema": ["tpcdssf1alluxio"],
+		"session": {}
+	}
+}

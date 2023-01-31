@@ -9,7 +9,6 @@ export const baseUrl = '/api'
 // export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
 
 
-
 // 向指定的 url 提交数据表单
 export const postForm = (requestUrl, params, callback) => {
     nprogress.start();
