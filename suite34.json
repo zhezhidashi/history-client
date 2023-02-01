@@ -1,7 +1,0 @@
-{
-	"file_formats": {
-		"query": ["q34.*"],
-		"schema": ["tpcdssf1alluxio"],
-		"session": {}
-	}
-}

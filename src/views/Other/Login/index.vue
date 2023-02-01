@@ -48,26 +48,14 @@ export default {
                 password: _this.Password
             }
 
-            postForm(url, DataForm, function (res) {
-                if(res.code === 400){
-                    _this.$message({
-                        message: res.msg,
-                        type: 'error'
-                    });
-                }
-                else if(res.code === 0){
+            postForm(url, DataForm, _this, function (res) {
+                if(res.code === 0){
                     _this.$message({
                         message: res.msg,
                         type: 'success'
                     });
                     _this.$store.commit("setToken", res.data);
                     _this.$router.push({ name: "Home" });
-                }
-                else{
-                    _this.$message({
-                        message: '未知错误',
-                        type: 'error'
-                    });
                 }
             });
 		},

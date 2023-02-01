@@ -4,7 +4,7 @@
 			<div v-for="(item, index) in People[NowIndex]" :key="index">
 				<div
 					class="Card PeopleContainer"
-					@click="GoToPage('PkuPeople3')"
+					@click="GoToPage('PkuPeople3', item)"
 				>
 					<div
 						class="BackgroundImage PeopleImage"
@@ -36,7 +36,7 @@
 
 <script>
 import { throttle } from "lodash";
-import { postForm, getForm } from "@/api/data";
+import { postForm, getForm, GetType } from "@/api/data";
 export default {
 	name: "Search",
 	data() {
@@ -86,58 +86,83 @@ export default {
 			}
 		}, 2000),
 
-		GoToPage(name) {
-			this.$router.push({ name });
+		GoToPage(name, item) {
+			this.$router.push({
+				name: name,
+				query: { 
+                    Path: item.Path,
+                    TabIndex: 0,
+                    ContentStatus: 0,
+                },
+			});
 		},
 	},
 	mounted() {
-        let _this = this;
+		let _this = this;
 		// 首先查询 archive，获得其模版；
 		let DataForm = {
 			path: "root/archives",
 		};
-		postForm("/data/node", DataForm, function (res) {
+		postForm("/data/node", DataForm, _this, function (res) {
 			let ParentTemplate = res.data.template_id;
 
 			//然后根据模版查询子模板
-			getForm(`/template/one?main_id=${ParentTemplate}`, function (res) {
-				let ChildrenTemplateID = res.data.children_template_limit;
+			getForm(
+				`/template/one?main_id=${ParentTemplate}`,
+				_this,
+				function (res) {
+					let ChildrenTemplateID = res.data.children_template_limit;
 
-				//最后根据子模板查询 archive 下的数据
-				for (let ChildID of ChildrenTemplateID) {
-					let DataForm = {
-						location_id: 99999999,
-						page_index: 1,
-						page_size: 15,
-						sort_by: "-show_time",
-						path: "root/archives",
-						deep_range: 0,
-						filter_rule: {},
-						order_rule: {
-							method: "show_time",
-							order: "+",
-						},
-						template_id: ChildID,
-					};
-					postForm(`/data/list`, DataForm, function (res) {
-						let List = res.data.list;
-                        
-                        _this.TotalPages = Math.ceil(List.length / 4);
-                        _this.People = [];
-                        let j = 0;
-                        for (let i = 0; i < _this.TotalPages; i++) {
-                            _this.People.push([]);
-                            for(; j < List.length && j < (i + 1) * 4; j++) {
-                                _this.People[i].push({
-                                    Title: List[j].content.attr0,
-                                    Image: List[j].content.attr1,
-                                    Path: List[j].path,
-                                });
-                            }
-                        }
-					});
+					//最后根据子模板查询 archive 下的数据
+					for (let ChildID of ChildrenTemplateID) {
+						let DataForm = {
+							location_id: 99999999,
+							page_index: 1,
+							page_size: 99999,
+							sort_by: "-show_time",
+							path: "root/archives",
+							deep_range: 0,
+							filter_rule: {},
+							order_rule: {
+								method: "show_time",
+								order: "+",
+							},
+							template_id: ChildID,
+						};
+						postForm(`/data/list`, DataForm, _this, function (res) {
+							let List = res.data.list;
+
+							_this.TotalPages = Math.ceil(List.length / 4);
+							_this.People = [];
+							let j = 0;
+							for (let i = 0; i < _this.TotalPages; i++) {
+								_this.People.push([]);
+								for (
+									;
+									j < List.length && j < (i + 1) * 4;
+									j++
+								) {
+                                    let ItemForm = {
+                                        Path: List[j].path,
+                                        Title: '',
+                                        Image: '',
+                                    }
+                                    
+                                    for(let key in List[j].content){
+                                        if(GetType(key) === 'title'){
+                                            ItemForm.Title = List[j].content[key]
+                                        }
+                                        else if(GetType(key) === 'img'){
+                                            ItemForm.Image = List[j].content[key]
+                                        }
+                                    }
+                                    _this.People[i].push(ItemForm)
+								}
+							}
+						});
+					}
 				}
-			});
+			);
 		});
 	},
 };
@@ -168,7 +193,7 @@ export default {
 	position: relative;
 	width: 17vw;
 	height: 25vw;
-    margin: 0 1.5vw;
+	margin: 0 1.5vw;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

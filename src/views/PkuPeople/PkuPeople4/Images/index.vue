@@ -55,7 +55,7 @@
 						class="MainImage"
 						v-for="item in ImageList"
 						:src="item.ImageUrl"
-						:key="item.ImageID"
+						:key="item.ImagePath"
 						v-show="item.Index === MainImageIndex"
 					/>
 				</viewer>
@@ -68,7 +68,7 @@
 
 <script>
 export default {
-	name: "Image",
+    name: "Images",
 	props: ["ImageList", "WebPath", "Description"],
 	data() {
 		return {

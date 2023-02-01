@@ -10,7 +10,7 @@ export const baseUrl = '/api'
 
 
 // 向指定的 url 提交数据表单
-export const postForm = (requestUrl, params, callback) => {
+export const postForm = (requestUrl, params, This, callback) => {
     nprogress.start();
     console.log('postForm 的表单', requestUrl, params)
     store.commit('getToken')
@@ -25,12 +25,25 @@ export const postForm = (requestUrl, params, callback) => {
     }).then(({ data: res }) => {
         nprogress.done()
         console.log('postForm 的 response', res);
-        callback(res);
+        if (res.code === 0) { callback(res) }
+        else if(res.code === 403){
+            console.log(This)
+            This.$message({
+                message: "请重新登录",
+                type: 'error'
+            });
+        }
+        else {
+            This.$message({
+                message: res.msg,
+                type: 'error'
+            });
+        }
     })
 }
 
 // 向指定的 url 获取数据表单
-export const getForm = (requestUrl, callback) => {
+export const getForm = (requestUrl, This, callback) => {
     nprogress.start();
     store.commit('getToken')
     const TokenValue = store.state.user.token
@@ -43,7 +56,24 @@ export const getForm = (requestUrl, callback) => {
     }).then(({ data: res }) => {
         nprogress.done()
         console.log('getForm 的 response', res);
-        callback(res)
+        if (res.code === 0) { callback(res) }
+        else if(res.code === 403){
+            This.$message({
+                message: "请登录",
+                type: 'error'
+            });
+        }
+        else {
+            This.$message({
+                message: res.msg,
+                type: 'error'
+            });
+        }
     })
 }
 
+// 提取字段种类
+export const GetType = (words) => {
+    let Result = words.split('&');
+    return Result[0];
+}
