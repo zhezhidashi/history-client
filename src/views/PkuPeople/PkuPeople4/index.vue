@@ -13,6 +13,9 @@
 				:ImageList="ImageList"
 				:WebPath="WebPath"
 				:Description="Description"
+                :Paths="Paths"
+                :TabIndex="TabIndex"
+                :ContentStatus="ContentStatus"
 			/>
 			<Content :ContentInfo="ContentInfo" />
 		</div>
@@ -23,7 +26,7 @@
 import TabChoices from "./TabChoices";
 import Images from "./Images";
 import Content from "./Content";
-import { getForm, postForm, GetType } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem } from "@/api/data";
 export default {
 	name: "PkuPeople4",
 	components: {
@@ -39,46 +42,11 @@ export default {
 			ArchiveTemplateID: "",
 
 			Tabs: [
-				[
-					{
-						Title: "信件信函",
-					},
-					{
-						Title: "书稿",
-					},
-					{
-						Title: "手稿",
-					},
-					{
-						Title: "日记",
-					},
-					{
-						Title: "笔记",
-					},
-					{
-						Title: "公文",
-					},
-				],
-				[
-					{
-						Title: "日记",
-					},
-					{
-						Title: "笔记",
-					},
-					{
-						Title: "公文",
-					},
-					{
-						Title: "会议资料",
-					},
-					{
-						Title: "出版合同",
-					},
-					{
-						Title: "其他",
-					},
-				],
+				// [
+				// 	{
+				// 		Title: "信件信函",
+				// 	},
+				// ],
 			],
 			// 页码
 			TabIndex: 0,
@@ -113,6 +81,14 @@ export default {
 		},
 		ChangeContentStatus(index) {
 			this.ContentStatus = index;
+            this.$router.push({
+                name: "PkuPeople3",
+                query: {
+                    Path: this.Paths[0],
+                    TabIndex: this.TabIndex,
+                    ContentStatus: this.ContentStatus,
+                }
+            })
 		},
 	},
 	mounted() {
@@ -131,6 +107,56 @@ export default {
 					_this.WebPath.push(List[key]);
 				}
 			}
+			// 获取Tabs
+			// 查询父节点的子节点模板
+			getForm(
+				`/template/one?main_id=${res.data.template_id}`,
+				_this,
+				function (res) {
+					let ChildrenTemplateID = res.data.children_template_limit;
+
+					//最后根据子模板查询 archive 下的数据
+					for (let ChildID of ChildrenTemplateID) {
+						let DataForm = {
+							location_id: 99999999,
+							page_index: 1,
+							page_size: 99999,
+							sort_by: "-show_time",
+							path: _this.Paths[0],
+							deep_range: 0,
+							filter_rule: {},
+							order_rule: {
+								method: "show_time",
+								order: "+",
+							},
+							template_id: ChildID,
+						};
+						postForm(`/data/list`, DataForm, _this, function (res) {
+							let List = res.data.list;
+
+							for (let item of List) {
+								let ItemForm = {
+									Path: item.path,
+									Title: "",
+									TemplateID: item.template_id,
+								};
+								for (let key in item.content) {
+									if (GetType(key) === "other") {
+										ItemForm.Title = item.content[key];
+									}
+								}
+								_this.TabTotalPages = MergeItem(
+									ItemForm,
+									_this.Tabs,
+									_this.TabTotalPages,
+									6
+								);
+							}
+						});
+					}
+				}
+			);
+
 			postForm(
 				"/data/node",
 				{ path: _this.Paths[1] },
@@ -138,11 +164,12 @@ export default {
 				function (res) {
 					let List = res.data.content;
 					for (let key in List) {
-						if (GetType(key) === "title") {
+						if (GetType(key) === "other") {
 							_this.WebPath.push(List[key]);
 						}
 					}
-					//
+
+					// 查询档案相关信息
 					postForm(
 						"/data/node",
 						{ path: _this.Paths[2] },

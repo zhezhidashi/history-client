@@ -4,7 +4,9 @@
 			<!-- 精选古籍和查看全部 -->
 			<div class="TextBlock">
 				<div>精选古籍</div>
-				<div class="SeeAll" @click="GoToPage('AntiqueWorks21')">查看全部</div>
+				<div class="SeeAll" @click="GoToPage('AntiqueWorks21', {})">
+					查看全部
+				</div>
 			</div>
 			<!-- 图片列表 -->
 			<div class="ImageBlock">
@@ -12,7 +14,16 @@
 					<div class="ImageItem">
 						<!-- 鼠标悬停查看详情 -->
 						<div class="ImageHover">
-							<div class="RedButton SeeDetails" @click="GoToPage('AntiqueWorks31')">查看古籍</div>
+							<div
+								class="RedButton SeeDetails"
+								@click="
+									GoToPage('AntiqueWorks31', {
+										Path: item.Path,
+									})
+								"
+							>
+								查看古籍
+							</div>
 						</div>
 						<div
 							class="BackgroundImage ImageContainer"
@@ -26,7 +37,9 @@
 			<!-- 精选特藏和查看全部 -->
 			<div class="TextBlock">
 				<div>精选特藏</div>
-				<div class="SeeAll" @click="GoToPage('AntiqueWorks22')">查看全部</div>
+				<div class="SeeAll" @click="GoToPage('AntiqueWorks22', {})">
+					查看全部
+				</div>
 			</div>
 			<!-- 图片列表 -->
 			<div class="ImageBlock">
@@ -34,7 +47,16 @@
 					<div class="ImageItem">
 						<!-- 鼠标悬停查看详情 -->
 						<div class="ImageHover">
-							<div class="RedButton SeeDetails" @click="GoToPage('AntiqueWorks32')">查看特藏</div>
+							<div
+								class="RedButton SeeDetails"
+								@click="
+									GoToPage('AntiqueWorks32', {
+										Path: item.Path,
+									})
+								"
+							>
+								查看特藏
+							</div>
 						</div>
 						<div
 							class="BackgroundImage ImageContainer"
@@ -48,44 +70,95 @@
 </template>
 
 <script>
+import { postForm, getForm, GetType, MergeItem } from "@/api/data";
 export default {
 	name: "Content",
 	data() {
 		return {
 			Images1: [
-				{
-					Image: "AntiqueImage1.jpg",
-				},
-				{
-					Image: "AntiqueImage2.jpg",
-				},
-				{
-					Image: "AntiqueImage3.jpg",
-				},
-				{
-					Image: "AntiqueImage4.jpg",
-				},
+				// {
+				// 	Image: "AntiqueImage1.jpg",
+				// 	Path: "",
+				// },
 			],
 			Images2: [
-				{
-					Image: "特藏01.jpg",
-				},
-				{
-					Image: "特藏02.jpg",
-				},
-				{
-					Image: "特藏03.jpg",
-				},
-				{
-					Image: "特藏04.jpg",
-				},
+				// {
+				// 	Image: "特藏01.jpg",
+				//     Path: "",
+				// },
 			],
 		};
 	},
 	methods: {
-		GoToPage(name) {
-			this.$router.push({ name });
+		GoToPage(name, query) {
+			this.$router.push({ name, query });
 		},
+		GetList(ParentPath, ImageList) {
+			let _this = this;
+			// 首先查询 archive，获得其模版；
+			let DataForm = {
+				path: ParentPath,
+			};
+			postForm("/data/node", DataForm, _this, function (res) {
+				let ParentTemplate = res.data.template_id;
+
+				//然后根据模版查询子模板
+				getForm(
+					`/template/one?main_id=${ParentTemplate}`,
+					_this,
+					function (res) {
+						let ChildrenTemplateID =
+							res.data.children_template_limit;
+
+						//最后根据子模板查询 archive 下的数据
+						for (let ChildID of ChildrenTemplateID) {
+							if (ImageList.length == 4) break;
+
+							let DataForm = {
+								location_id: 99999999,
+								page_index: 1,
+								page_size: 4,
+								sort_by: "-show_time",
+								path: ParentPath,
+								deep_range: 0,
+								filter_rule: {},
+								order_rule: {
+									method: "show_time",
+									order: "+",
+								},
+								template_id: ChildID,
+							};
+							postForm(
+								`/data/list`,
+								DataForm,
+								_this,
+								function (res) {
+									let List = res.data.list;
+									for (let item of List) {
+										let ItemForm = {
+											Path: item.path,
+											Image: "",
+										};
+										for (let key in item.content) {
+											if (GetType(key) === "img") {
+												ItemForm.Image =
+													item.content[key];
+											}
+										}
+										ImageList.push(ItemForm);
+										if (ImageList.length == 4) break;
+									}
+								}
+							);
+						}
+					}
+				);
+			});
+		},
+	},
+	mounted() {
+		this.GetList("root/ancient_book", this.Images1);
+		this.GetList("root/reservation", this.Images2);
 	},
 };
 </script>
@@ -124,7 +197,6 @@ export default {
 	height: 17vw;
 	/* background-color: lightgreen; */
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 }
 
@@ -133,6 +205,7 @@ export default {
 	position: absolute;
 	width: 17vw;
 	height: 17vw;
+	margin: 0 1.5vw;
 	overflow: hidden;
 	border-radius: 4px;
 	background: rgba(95, 95, 95, 0.37);
@@ -157,6 +230,7 @@ export default {
 	position: relative;
 	width: 17vw;
 	height: 17vw;
+	margin: 0 1.5vw;
 	border-radius: 4px;
 }
 </style>

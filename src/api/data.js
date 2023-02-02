@@ -77,3 +77,14 @@ export const GetType = (words) => {
     let Result = words.split('&');
     return Result[0];
 }
+
+// 将不同模板的Item合并到同一个数组中，Item 数据、List 数组、Len1 一维数组大小、Len2 二维数组大小
+// 我发现 js 传递数组是引用传递，传递普通变量是值传递
+export const MergeItem = (Item, List, Len1, Len2) => {
+    if(List.length === 0 || List[List.length - 1].length === Len2) {
+        List.push([])
+        Len1++;
+    }
+    List[List.length - 1].push(Item);
+    return Len1;
+}

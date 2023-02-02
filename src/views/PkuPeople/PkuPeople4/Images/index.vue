@@ -1,15 +1,24 @@
 <template>
 	<div class="ImagesContainer">
 		<div class="WebPath">
-			<div @click="GoToPage('PkuPeople1')" style="cursor: pointer">
+			<div @click="GoToPage('PkuPeople1', {})" style="cursor: pointer">
 				{{ WebPath[0] }}
 			</div>
 			&ensp;&gt;&ensp;
-			<div @click="GoToPage('PkuPeople2')" style="cursor: pointer">
+			<div @click="GoToPage('PkuPeople2', {})" style="cursor: pointer">
 				{{ WebPath[1] }}
 			</div>
 			&ensp;&gt;&ensp;
-			<div @click="GoToPage('PkuPeople3')" style="cursor: pointer">
+			<div
+				@click="
+					GoToPage('PkuPeople3', {
+						Path: Paths[0],
+						TabIndex: TabIndex,
+						ContentStatus: ContentStatus,
+					})
+				"
+				style="cursor: pointer"
+			>
 				{{ WebPath[2] }}
 			</div>
 			&ensp;&gt;&ensp;
@@ -62,14 +71,14 @@
 			</div>
 		</div>
 
-        <div class="DescriptionContainer">{{Description}}</div>
+		<div class="DescriptionContainer">{{ Description }}</div>
 	</div>
 </template>
 
 <script>
 export default {
-    name: "Images",
-	props: ["ImageList", "WebPath", "Description"],
+	name: "Images",
+	props: ["ImageList", "WebPath", "Description", "Paths", "TabIndex", "ContentStatus"],
 	data() {
 		return {
 			MainImageIndex: 0,
@@ -92,8 +101,8 @@ export default {
 		};
 	},
 	methods: {
-		GoToPage(name) {
-			this.$router.push({ name });
+		GoToPage(name, query) {
+			this.$router.push({ name, query });
 		},
 
 		// 点击下方列表的图片，修改大图的url
@@ -104,7 +113,8 @@ export default {
 		// 左右按钮切换图片
 		ImageShift(d) {
 			this.MainImageIndex =
-				(this.MainImageIndex + d + this.ImageList.length) % this.ImageList.length;
+				(this.MainImageIndex + d + this.ImageList.length) %
+				this.ImageList.length;
 			// console.log(this.PictureID);
 		},
 	},
@@ -226,12 +236,11 @@ export default {
 }
 
 .DescriptionContainer {
-    position: relative;
-    width: 80vw;
-    height: 6vw;
-    font-size: 1.2vw;
-    line-height: 200%;
-    /* background-color: lightgreen; */
+	position: relative;
+	width: 80vw;
+	height: 6vw;
+	font-size: 1.2vw;
+	line-height: 200%;
+	/* background-color: lightgreen; */
 }
-
 </style>

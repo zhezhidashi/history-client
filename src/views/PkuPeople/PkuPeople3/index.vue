@@ -10,10 +10,10 @@
 		<Content
 			:Contents="Contents"
 			:People="People"
-            :ParentPath="ParentPath"
-            :TabPath="TabPath"
-            :TabIndex="TabIndex"
-            :ContentStatus="ContentStatus"
+			:ParentPath="ParentPath"
+			:TabPath="TabPath"
+			:TabIndex="TabIndex"
+			:ContentStatus="ContentStatus"
 			:ContentTotalPages="ContentTotalPages"
 		/>
 	</div>
@@ -22,7 +22,7 @@
 <script>
 import TabChoices from "./TabChoices";
 import Content from "./Content";
-import { getForm, postForm, GetType } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem } from "@/api/data";
 export default {
 	name: "PkuPeople3",
 	components: {
@@ -63,10 +63,10 @@ export default {
 				// ],
 			],
 			People: "",
-			ContentTotalPages: 2,
+			ContentTotalPages: 0,
 
-            // 选中 Tab 的 Path
-            TabPath: "",
+			// 选中 Tab 的 Path
+			TabPath: "",
 		};
 	},
 	methods: {
@@ -78,17 +78,22 @@ export default {
 			this.ContentStatus = index;
 			let NowTab = this.Tabs[this.TabIndex][this.ContentStatus % 6];
 
-            // 修改 TabPath
-            this.TabPath = NowTab.Path;
-            // 查询当前 tab 的内容
-            
-            postForm(`/data/node`, {path: NowTab.Path}, _this, function(res){
-                for(let key in res.data.content){
-                    if(GetType(key) === 'title'){
-                        _this.People = res.data.content[key];
-                    }
-                }
-            });
+			// 修改 TabPath
+			this.TabPath = NowTab.Path;
+			// 查询当前 tab 的内容
+
+			postForm(
+				`/data/node`,
+				{ path: NowTab.Path },
+				_this,
+				function (res) {
+					for (let key in res.data.content) {
+						if (GetType(key) === "title") {
+							_this.People = res.data.content[key];
+						}
+					}
+				}
+			);
 
 			// 查询当前 tab 的子节点模版
 			getForm(
@@ -115,29 +120,23 @@ export default {
 						};
 						postForm(`/data/list`, DataForm, _this, function (res) {
 							let List = res.data.list;
-							_this.ContentTotalPages = Math.ceil(List.length / 16);
-							let j = 0;
-							for (let i = 0; i < _this.ContentTotalPages; i++) {
-								_this.Contents.push([]);
-								for (
-									;
-									j < List.length && j < (i + 1) * 16;
-									j++
-								) {
-									let ItemForm = {
-										Path: List[j].path,
-										Title: "",
-										TemplateID: List[j].template_id,
-									};
-
-									for (let key in List[j].content) {
-										if (GetType(key) === "title") {
-											ItemForm.Title =
-												List[j].content[key];
-										}
+							for (let item of List) {
+								let ItemForm = {
+									Path: item.path,
+									Title: "",
+									TemplateID: item.template_id,
+								};
+								for (let key in item.content) {
+									if (GetType(key) === "title") {
+										ItemForm.Title = item.content[key];
 									}
-									_this.Contents[i].push(ItemForm);
 								}
+								_this.ContentTotalPages = MergeItem(
+									ItemForm,
+									_this.Contents,
+									_this.ContentTotalPages,
+									16
+								);
 							}
 						});
 					}
@@ -147,9 +146,8 @@ export default {
 	},
 	mounted() {
 		this.ParentPath = this.$route.query.Path;
-        this.TabIndex = parseInt(this.$route.query.TabIndex);
-        this.ContentStatus = parseInt(this.$route.query.ContentStatus);
-
+		this.TabIndex = parseInt(this.$route.query.TabIndex);
+		this.ContentStatus = parseInt(this.$route.query.ContentStatus);
 
 		let _this = this;
 		// 查询父节点
@@ -190,39 +188,32 @@ export default {
 								_this,
 								function (res) {
 									let List = res.data.list;
-									_this.TabTotalPages = Math.ceil(
-										List.length / 6
-									);
-									let j = 0;
-									for (
-										let i = 0;
-										i < _this.TabTotalPages;
-										i++
-									) {
-										_this.Tabs.push([]);
-										for (
-											;
-											j < List.length && j < (i + 1) * 6;
-											j++
-										) {
-											let ItemForm = {
-												Path: List[j].path,
-												Title: "",
-												TemplateID: List[j].template_id,
-											};
 
-											for (let key in List[j].content) {
-												if (GetType(key) === "other") {
-													ItemForm.Title =
-														List[j].content[key];
-												}
+									for (let item of List) {
+										let ItemForm = {
+											Path: item.path,
+											Title: "",
+											TemplateID: item.template_id,
+										};
+										for (let key in item.content) {
+											if (GetType(key) === "other") {
+												ItemForm.Title =
+													item.content[key];
 											}
-											_this.Tabs[i].push(ItemForm);
 										}
+										_this.TabTotalPages = MergeItem(
+											ItemForm,
+											_this.Tabs,
+											_this.TabTotalPages,
+											6
+										);
 									}
+
 									// 默认页面展示第一个Tab
-                                    _this.ChangeTabIndex(_this.TabIndex)
-									_this.ChangeContentStatus(_this.ContentStatus);
+									_this.ChangeTabIndex(_this.TabIndex);
+									_this.ChangeContentStatus(
+										_this.ContentStatus
+									);
 								}
 							);
 						}

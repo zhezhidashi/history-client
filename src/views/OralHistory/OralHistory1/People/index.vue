@@ -4,7 +4,7 @@
 			<div v-for="(item, index) in People[NowIndex]" :key="index">
 				<div
 					class="Card PeopleContainer"
-					@click="GoToPage('OralHistory3')"
+					@click="GoToPage('OralHistory3', item)"
 				>
 					<div
 						class="BackgroundImage PeopleImage"
@@ -36,6 +36,7 @@
 
 <script>
 import { throttle } from "lodash";
+import { postForm, getForm, GetType, MergeItem } from "@/api/data";
 export default {
 	name: "Search",
 	data() {
@@ -43,34 +44,25 @@ export default {
 			TotalPages: 1,
 			NowIndex: 0,
 			People: [
-				[
-					{
-						Title: "李明滨口述史",
-						Image: "李明滨.jpg",
-						ID: "0",
-					},
-					{
-						Title: "韦旭升口述史",
-						Image: "韦旭升.jpg",
-						ID: "1",
-					},
-					{
-						Title: "梁立基口述史",
-						Image: "梁立基.jpg",
-						ID: "2",
-					},
-					{
-						Title: "张鸿年口述史",
-						Image: "张鸿年.jpg",
-						ID: "3",
-					},
-				],
+				// [
+				// 	{
+				// 		Title: "李明滨口述史",
+				// 		Image: "李明滨.jpg",
+				// 		Path: "0",
+				// 	},
+				// ],
 			],
 		};
 	},
 	methods: {
-		GoToPage(name) {
-			this.$router.push({ name });
+		GoToPage(name, item) {
+			this.$router.push({
+				name,
+                query: {
+                    Path1: 'root/interview',
+                    Path2: item.Path,
+                }
+			});
 		},
 
 		// 人物图片按钮切换
@@ -104,6 +96,66 @@ export default {
 			}
 		}, 2000),
 	},
+	mounted() {
+		let _this = this;
+		// 首先查询 archive，获得其模版；
+		let DataForm = {
+			path: "root/interview",
+		};
+		postForm("/data/node", DataForm, _this, function (res) {
+			let ParentTemplate = res.data.template_id;
+
+			//然后根据模版查询子模板
+			getForm(
+				`/template/one?main_id=${ParentTemplate}`,
+				_this,
+				function (res) {
+					let ChildrenTemplateID = res.data.children_template_limit;
+
+					//最后根据子模板查询 archive 下的数据
+					for (let ChildID of ChildrenTemplateID) {
+						let DataForm = {
+							location_id: 99999999,
+							page_index: 1,
+							page_size: 99999,
+							sort_by: "-show_time",
+							path: "root/interview",
+							deep_range: 0,
+							filter_rule: {},
+							order_rule: {
+								method: "show_time",
+								order: "+",
+							},
+							template_id: ChildID,
+						};
+						postForm(`/data/list`, DataForm, _this, function (res) {
+							let List = res.data.list;
+							for (let item of List) {
+								let ItemForm = {
+									Path: item.path,
+									Title: "",
+									Image: "",
+								};
+								for (let key in item.content) {
+									if (GetType(key) === "title") {
+										ItemForm.Title = item.content[key];
+									} else if (GetType(key) === "img") {
+										ItemForm.Image = item.content[key];
+									}
+								}
+								_this.TotalPages = MergeItem(
+									ItemForm,
+									_this.People,
+									_this.TotalPages,
+									4
+								);
+							}
+						});
+					}
+				}
+			);
+		});
+	},
 };
 </script>
 
@@ -125,12 +177,12 @@ export default {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
 }
 
 .PeopleContainer {
 	position: relative;
 	width: 17vw;
+	margin: 0 1.5vw;
 	height: 25vw;
 	display: flex;
 	flex-direction: column;

@@ -36,12 +36,12 @@
 
 <script>
 import { throttle } from "lodash";
-import { postForm, getForm, GetType } from "@/api/data";
+import { postForm, getForm, GetType, MergeItem } from "@/api/data";
 export default {
 	name: "Search",
 	data() {
 		return {
-			TotalPages: 1,
+			TotalPages: 0,
 			NowIndex: 0,
 			People: [
 				// [
@@ -89,11 +89,11 @@ export default {
 		GoToPage(name, item) {
 			this.$router.push({
 				name: name,
-				query: { 
-                    Path: item.Path,
-                    TabIndex: 0,
-                    ContentStatus: 0,
-                },
+				query: {
+					Path: item.Path,
+					TabIndex: 0,
+					ContentStatus: 0,
+				},
 			});
 		},
 	},
@@ -131,33 +131,20 @@ export default {
 						};
 						postForm(`/data/list`, DataForm, _this, function (res) {
 							let List = res.data.list;
-
-							_this.TotalPages = Math.ceil(List.length / 4);
-							_this.People = [];
-							let j = 0;
-							for (let i = 0; i < _this.TotalPages; i++) {
-								_this.People.push([]);
-								for (
-									;
-									j < List.length && j < (i + 1) * 4;
-									j++
-								) {
-                                    let ItemForm = {
-                                        Path: List[j].path,
-                                        Title: '',
-                                        Image: '',
-                                    }
-                                    
-                                    for(let key in List[j].content){
-                                        if(GetType(key) === 'title'){
-                                            ItemForm.Title = List[j].content[key]
-                                        }
-                                        else if(GetType(key) === 'img'){
-                                            ItemForm.Image = List[j].content[key]
-                                        }
-                                    }
-                                    _this.People[i].push(ItemForm)
+							for (let item of List) {
+								let ItemForm = {
+									Path: item.path,
+									Title: "",
+									Image: "",
+								};
+								for (let key in item.content) {
+									if (GetType(key) === "title") {
+										ItemForm.Title = item.content[key];
+									} else if (GetType(key) === "img") {
+										ItemForm.Image = item.content[key];
+									}
 								}
+                                _this.TotalPages = MergeItem(ItemForm, _this.People, _this.TotalPages, 4);
 							}
 						});
 					}
