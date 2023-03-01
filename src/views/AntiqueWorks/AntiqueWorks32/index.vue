@@ -15,7 +15,7 @@ import Images from "@/views/AntiqueWorks/AntiqueWorks31/Images";
 import Content from "@/views/AntiqueWorks/AntiqueWorks31/Content";
 import { postForm, getForm, GetType } from "@/api/data";
 export default {
-	name: "AntiqueWorks31",
+	name: "AntiqueWorks32",
 	components: {
 		Images,
 		Content,

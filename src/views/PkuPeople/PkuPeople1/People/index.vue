@@ -36,7 +36,7 @@
 
 <script>
 import { throttle } from "lodash";
-import { postForm, getForm, GetType, MergeItem } from "@/api/data";
+import { postForm, getForm, GetType, MergeItem, MatchName } from "@/api/data";
 export default {
 	name: "Search",
 	data() {
@@ -104,50 +104,139 @@ export default {
 			path: "root/archives",
 		};
 		postForm("/data/node", DataForm, _this, function (res) {
-			let ParentTemplate = res.data.template_id;
+			let ArchiveTemplateID = res.data.template_id;
 
-			//然后根据模版查询子模板
+			//然后查询 People 模板ID
 			getForm(
-				`/template/one?main_id=${ParentTemplate}`,
+				`/template/one?main_id=${ArchiveTemplateID}`,
 				_this,
 				function (res) {
-					let ChildrenTemplateID = res.data.children_template_limit;
+					let PeopleTemplateID = res.data.children_template_limit[0];
 
-					//最后根据子模板查询 archive 下的数据
-					for (let ChildID of ChildrenTemplateID) {
-						let DataForm = {
-							location_id: 99999999,
-							page_index: 1,
-							page_size: 99999,
-							sort_by: "-show_time",
-							path: "root/archives",
-							deep_range: 0,
-							filter_rule: {},
-							order_rule: {
-								method: "show_time",
-								order: "+",
-							},
-							template_id: ChildID,
-						};
-						postForm(`/data/list`, DataForm, _this, function (res) {
-							let List = res.data.list;
-							for (let item of List) {
-								let ItemForm = {
-									Path: item.path,
-									Title: "",
-									Image: "",
-								};
-								for (let key in item.content) {
-									if (GetType(key) === "title") {
-										ItemForm.Title = item.content[key];
-									} else if (GetType(key) === "img") {
-										ItemForm.Image = item.content[key];
+					// 查询 People 所在 Path
+					let DataForm = {
+						location_id: 99999999,
+						page_index: 1,
+						page_size: 99999,
+						sort_by: "-show_time",
+						path: "root/archives",
+						deep_range: 0,
+						filter_rule: {},
+						order_rule: {
+							method: "show_time",
+							order: "+",
+						},
+						template_id: PeopleTemplateID,
+					};
+
+					postForm("/data/list", DataForm, _this, function (res) {
+						for (
+							let PeopleIndex = 0;
+							PeopleIndex < res.data.list.length;
+							PeopleIndex++
+						) {
+							let PeoplePath = res.data.list[PeopleIndex].path;
+
+							// 查询 People 拥有的字段的模板
+							getForm(
+								`/template/one?main_id=${PeopleTemplateID}`,
+								_this,
+								function (res) {
+									// filed 意为字段
+									let FiledTemplateID =
+										res.data.children_template_limit;
+
+									let ItemForm = {
+										Path: PeoplePath,
+										Title: "",
+										Image: "",
+									};
+
+									// 查询每个字段模板信息，如模板名字
+									for (
+										let i = 0;
+										i < FiledTemplateID.length;
+										i++
+									) {
+										let FiledID = FiledTemplateID[i];
+										getForm(
+											`/template/one?main_id=${FiledID}`,
+											_this,
+											function (res) {
+												let FiledName = res.data.name;
+
+												// 查询当前字段所在数据
+												let DataForm = {
+													location_id: 99999999,
+													page_index: 1,
+													page_size: 99999,
+													sort_by: "-show_time",
+													path: PeoplePath,
+													deep_range: 0,
+													filter_rule: {},
+													order_rule: {
+														method: "show_time",
+														order: "+",
+													},
+													template_id: FiledID,
+												};
+												postForm(
+													`/data/list`,
+													DataForm,
+													_this,
+													function (res) {
+														let item =
+															res.data.list[0];
+														for (let key in item.content) {
+															if (
+																GetType(key) !==
+																"name"
+															) {
+																if (
+																	MatchName(
+																		FiledName,
+																		"图片"
+																	)
+																) {
+																	ItemForm.Image =
+																		item.content[
+																			key
+																		];
+																} else if (
+																	MatchName(
+																		FiledName,
+																		"标题"
+																	)
+																) {
+																	ItemForm.Title =
+																		item.content[
+																			key
+																		];
+																}
+															}
+														}
+
+														if (
+															i + 1 ===
+															FiledTemplateID.length
+														) {
+															_this.TotalPages =
+																MergeItem(
+																	ItemForm,
+																	_this.People,
+																	_this.TotalPages,
+																	4
+																);
+														}
+													}
+												);
+											}
+										);
 									}
 								}
-                                _this.TotalPages = MergeItem(ItemForm, _this.People, _this.TotalPages, 4);
-							}
-						});
-					}
+							);
+						}
+					});
 				}
 			);
 		});

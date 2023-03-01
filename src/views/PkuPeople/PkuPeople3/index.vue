@@ -22,7 +22,7 @@
 <script>
 import TabChoices from "./TabChoices";
 import Content from "./Content";
-import { getForm, postForm, GetType, MergeItem } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName } from "@/api/data";
 export default {
 	name: "PkuPeople3",
 	components: {
@@ -77,6 +77,9 @@ export default {
 			let _this = this;
 			this.ContentStatus = index;
 			let NowTab = this.Tabs[this.TabIndex][this.ContentStatus % 6];
+            
+            // 清空内容
+            this.Contents = [];
 
 			// 修改 TabPath
 			this.TabPath = NowTab.Path;
@@ -158,7 +161,7 @@ export default {
 			function (res) {
 				// 获取父节点的模板ID
 				_this.ParentTemplateID = res.data.template_id;
-				// 查询父节点的子节点模板
+				// 查询 Tab 模板ID
 				getForm(
 					`/template/one?main_id=${_this.ParentTemplateID}`,
 					_this,
@@ -166,57 +169,96 @@ export default {
 						let ChildrenTemplateID =
 							res.data.children_template_limit;
 
-						//最后根据子模板查询 archive 下的数据
-						for (let ChildID of ChildrenTemplateID) {
-							let DataForm = {
-								location_id: 99999999,
-								page_index: 1,
-								page_size: 99999,
-								sort_by: "-show_time",
-								path: _this.ParentPath,
-								deep_range: 0,
-								filter_rule: {},
-								order_rule: {
-									method: "show_time",
-									order: "+",
-								},
-								template_id: ChildID,
-							};
-							postForm(
-								`/data/list`,
-								DataForm,
-								_this,
-								function (res) {
-									let List = res.data.list;
+                        // 请求Tab的父节点数据，可获取 Tab 的 Path
+                        // 注意，这个 Tab 里面不全是 Tab，还有 人物的标题、图片！！
+                        for(let TabTemplateID of ChildrenTemplateID){
+                            let PeopleDataForm = {
+                            location_id: 99999999,
+                            page_index: 1,
+                            page_size: 99999,
+                            sort_by: "-show_time",
+                            path: _this.ParentPath,
+                            deep_range: 0,
+                            filter_rule: {},
+                            order_rule: {
+                                method: "show_time",
+                                order: "+",
+                            },
+                            template_id: TabTemplateID,
+                        };
 
-									for (let item of List) {
-										let ItemForm = {
-											Path: item.path,
-											Title: "",
-											TemplateID: item.template_id,
-										};
-										for (let key in item.content) {
-											if (GetType(key) === "other") {
-												ItemForm.Title =
-													item.content[key];
-											}
-										}
-										_this.TabTotalPages = MergeItem(
-											ItemForm,
-											_this.Tabs,
-											_this.TabTotalPages,
-											6
-										);
-									}
+                        postForm(`/data/list`, PeopleDataForm, _this, function (res) {
+                            let TabItemList = res.data.list;
+                            for(let TabIndex = 0; TabIndex < TabItemList.length; TabIndex++){
+                                let TabPath = TabItemList[TabIndex].path;
 
-									// 默认页面展示第一个Tab
-									_this.ChangeTabIndex(_this.TabIndex);
-									_this.ChangeContentStatus(
-										_this.ContentStatus
-									);
-								}
-							);
-						}
+                                // 查询每个 Tab 拥有的子模板
+                                getForm(`/template/one?main_id=${TabTemplateID}`, _this, function(res){
+                                    let TabFieldTemplateID = res.data.children_template_limit;
+                                    let TabName = res.data.name;
+
+                                    
+                                    
+                                    if(!MatchName(TabName, "标题") && !MatchName(TabName, "图片")) {
+                                        console.log("TabFieldTemplate", TabFieldTemplateID, TabName);
+                                        // console.log("^^^", TabName)
+                                        // 查询每个 Tab 的子模板下的数据
+                                        let ItemForm = {
+                                            Path: TabPath,
+                                            Title: "",
+                                            TemplateID: res.data.template_id,
+                                        };
+
+                                        for(let TabFieldIndex = 0; TabFieldIndex < TabFieldTemplateID.length; TabFieldIndex++){
+                                            // 查询每个字段模板信息，如模板名字
+                                            getForm(`/template/one?main_id=${TabFieldTemplateID[TabFieldIndex]}`, _this, function(res){
+                                                let TabFieldName = res.data.name;
+
+                                                // 查询当前字段所在数据
+                                                let TabDataForm = {
+                                                    location_id: 99999999,
+                                                    page_index: 1,
+                                                    page_size: 99999,
+                                                    sort_by: "-show_time",
+                                                    path: TabPath,
+                                                    deep_range: 0,
+                                                    filter_rule: {},
+                                                    order_rule: {
+                                                        method: "show_time",
+                                                        order: "+",
+                                                    },
+                                                    template_id: TabFieldTemplateID[TabFieldIndex],
+                                                };
+                                                
+                                                postForm(`/data/list`, TabDataForm, _this, function (res) {
+                                                    let item = res.data.list[0];
+                                                    if (MatchName(TabFieldName, "标题")) {
+                                                        for (let key in item.content) {
+                                                            ItemForm.Title = item.content[key];
+                                                        }
+                                                    }
+                                                })
+
+                                                if(TabFieldIndex === TabFieldTemplateID.length - 1){
+                                                    _this.TabTotalPages = MergeItem(ItemForm, _this.Tabs, _this.TabTotalPages, 6);
+                                                }
+                                                if(TabIndex === TabItemList.length - 1 && TabFieldIndex === TabFieldTemplateID.length - 1){
+                                                    // 默认页面展示第一个Tab
+                                                    // _this.ChangeTabIndex(_this.TabIndex);
+                                                    // _this.ChangeContentStatus(
+                                                    //     _this.ContentStatus
+                                                    // );
+                                                }
+                                            })
+                                        }
+                                    }
+                                    
+                                }) 
+                            }
+                        });
+                        }
+                        
+
 					}
 				);
 			}

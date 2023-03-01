@@ -88,3 +88,9 @@ export const MergeItem = (Item, List, Len1, Len2) => {
     List[List.length - 1].push(Item);
     return Len1;
 }
+
+// 匹配模版名字 Name1 包含 Name2 返回 true
+export const MatchName = (Name1, Name2) => {
+    if(Name1.indexOf(Name2) !== -1) return true;
+    else return false;
+}
