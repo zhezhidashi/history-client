@@ -93,6 +93,7 @@ export default {
 					Path: item.Path,
 					TabIndex: 0,
 					ContentStatus: 0,
+                    PeopleName: item.Title,
 				},
 			});
 		},

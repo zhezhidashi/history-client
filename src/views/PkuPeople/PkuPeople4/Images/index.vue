@@ -14,6 +14,7 @@
 					GoToPage('PkuPeople3', {
 						Path: Paths[0],
 						TabIndex: TabIndex,
+                        PeopleName: WebPath[1],
 						ContentStatus: ContentStatus,
 					})
 				"

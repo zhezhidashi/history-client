@@ -94,3 +94,8 @@ export const MatchName = (Name1, Name2) => {
     if(Name1.indexOf(Name2) !== -1) return true;
     else return false;
 }
+
+export const FromPathGetTitle = (path) => {
+    let Result = path.split('/');
+    return Result[Result.length - 1];
+}

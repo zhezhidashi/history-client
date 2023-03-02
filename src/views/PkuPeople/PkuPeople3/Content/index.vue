@@ -40,6 +40,7 @@ export default {
         "ParentPath",
 		"TabPath",
 		"TabIndex",
+        "TabName", 
 		"ContentStatus",
 	],
 	data() {
@@ -57,6 +58,10 @@ export default {
                     Path1: this.ParentPath,
 					Path2: this.TabPath,
 					Path3: item.Path,
+                    PeopleName: this.People,
+                    TabName: this.TabName,
+                    LetterName: item.Title,
+                    LetterTemplateID: item.TemplateID
 				},
 			});
 		},
