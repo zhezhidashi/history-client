@@ -85,11 +85,11 @@ export default {
 			this.TabPath = NowTab.Path;
 			// 查询当前 tab 的内容
             // 找到一封信件信函的模版ID
-            getForm(`template/one?main_id=${NowTab.TemplateID}`, _this, function(res){
+            getForm(`/template/one?main_id=${NowTab.TemplateID}`, _this, function(res){
                 let ChildTemplateID = res.data.children_template_limit;
                 for(let ChildID of ChildTemplateID){
                     // 查找子模板的名字，由名字定位到一封信件信函的模板ID
-                    getForm(`template/one?main_id=${ChildID}`, _this, function(res){
+                    getForm(`/template/one?main_id=${ChildID}`, _this, function(res){
                         let LetterTemplateName = res.data.name;
                         if(!MatchName(LetterTemplateName, "标题")){
                             let LetterTemplateID = ChildID;
@@ -122,10 +122,10 @@ export default {
                                     }; 
 
                                     // 查找一封信件信函的标题对应的模板ID
-                                    getForm(`template/one?main_id=${LetterTemplateID}`, _this, function(res){
+                                    getForm(`/template/one?main_id=${LetterTemplateID}`, _this, function(res){
                                         let LetterChildrenTemplateID = res.data.children_template_limit;
                                         for(let ChildID of LetterChildrenTemplateID){
-                                            getForm(`template/one?main_id=${ChildID}`, _this, function(res){
+                                            getForm(`/template/one?main_id=${ChildID}`, _this, function(res){
                                                 if(MatchName(res.data.name, "标题")){
                                                     let LetterTitleTemplateID = ChildID;
 
@@ -167,67 +167,6 @@ export default {
                     })
                 }
             })
-
-			// postForm(
-			// 	`/data/node`,
-			// 	{ path: NowTab.Path },
-			// 	_this,
-			// 	function (res) {
-			// 		for (let key in res.data.content) {
-			// 			if (GetType(key) === "title") {
-			// 				_this.People = res.data.content[key];
-			// 			}
-			// 		}
-			// 	}
-			// );
-
-			// // 查询当前 tab 的子节点模版
-			// getForm(
-			// 	`/template/one?main_id=${NowTab.TemplateID}`,
-			// 	_this,
-			// 	function (res) {
-			// 		let ChildrenTemplateID = res.data.children_template_limit;
-
-			// 		//最后根据子模板查询 archive 下的数据
-			// 		for (let ChildID of ChildrenTemplateID) {
-			// 			let DataForm = {
-			// 				location_id: 99999999,
-			// 				page_index: 1,
-			// 				page_size: 99999,
-			// 				sort_by: "-show_time",
-			// 				path: NowTab.Path,
-			// 				deep_range: 0,
-			// 				filter_rule: {},
-			// 				order_rule: {
-			// 					method: "show_time",
-			// 					order: "+",
-			// 				},
-			// 				template_id: ChildID,
-			// 			};
-			// 			postForm(`/data/list`, DataForm, _this, function (res) {
-			// 				let List = res.data.list;
-			// 				for (let item of List) {
-			// 					let ItemForm = {
-			// 						Path: item.path,
-			// 						Title: "",
-			// 						TemplateID: item.template_id,
-			// 					};
-			// 					for (let key in item.content) {
-			// 						if (GetType(key) === "title") {
-			// 							ItemForm.Title = item.content[key];
-			// 						}
-			// 					}
-			// 					_this.ContentTotalPages = MergeItem(
-			// 						ItemForm,
-			// 						_this.Contents,
-			// 						_this.ContentTotalPages,
-			// 						16
-			// 					);
-			// 				}
-			// 			});
-			// 		}
-			// 	}
-			// );
 		},
 	},
 	mounted() {
