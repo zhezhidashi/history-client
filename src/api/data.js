@@ -5,8 +5,8 @@ import store from '../store'
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css";
 
-// export const baseUrl = '/api'
-export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
+export const baseUrl = '/api'
+// export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
 
 
 // 向指定的 url 提交数据表单
@@ -41,6 +41,8 @@ export const postForm = (requestUrl, params, This, callback) => {
         }
     })
 }
+
+
 
 // 向指定的 url 获取数据表单
 export const getForm = (requestUrl, This, callback) => {
