@@ -1,6 +1,6 @@
 <template>
 	<div class="Container">
-		<div class="SelectContainer">
+		<!-- <div class="SelectContainer">
 			<el-select v-model="SelectValue" placeholder="请选择">
 				<el-option
 					v-for="item in options"
@@ -10,7 +10,7 @@
 				>
 				</el-option>
 			</el-select>
-		</div>
+		</div> -->
 		<div class="ContentContainer">
 			<input
 				class="SearchContentStyle SearchContent"
@@ -35,27 +35,29 @@ export default {
 	name: "Search",
 	data() {
 		return {
-			options: [
-				{
-					value: "1",
-					label: "姓名",
-				},
-				{
-					value: "2",
-					label: "题名",
-				},
-				{
-					value: "3",
-					label: "主题",
-				},
-			],
-			SelectValue: "1",
+			// options: [
+			// 	{
+			// 		value: "1",
+			// 		label: "标题",
+			// 	},
+			// 	{
+			// 		value: "2",
+			// 		label: "主题",
+			// 	},
+			// ],
+			// SelectValue: "1",
 			Keywords: "",
 		};
 	},
 	methods: {
 		GoToPage(name) {
-			this.$router.push({ name });
+			this.$router.push({ 
+                name,
+                query: {
+                    // Type: this.options[parseInt(this.SelectValue) - 1].label,
+                    Keywords: this.Keywords,
+                }
+            });
 		},
 	},
 };
@@ -82,7 +84,7 @@ export default {
 
 .ContentContainer {
 	position: relative;
-	width: 63vw;
+	width: 79vw;
 	height: 4.5vw;
 	border: 1px solid #dcdfe6;
 	box-sizing: border-box;
@@ -96,6 +98,6 @@ export default {
 
 .SearchContent {
 	position: relative;
-	width: 59vw;
+	width: 71vw;
 }
 </style>

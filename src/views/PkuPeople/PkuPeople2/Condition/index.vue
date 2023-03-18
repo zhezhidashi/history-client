@@ -10,6 +10,30 @@
 			</div>
 		</div>
 
+        <!-- 标题 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">标题</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputTitle"
+					v-model="Arguments.Title"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 主题 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">主题</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputTheme"
+					v-model="Arguments.Theme"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
         <!-- 时间 -->
 		<div class="SearchBlock" style="height: 7vw">
 			<div class="SearchType">时间</div>
@@ -165,6 +189,7 @@ export default {
 .Container {
 	position: relative;
 	width: 12vw;
+    height: auto;
 	/* background-color: lightblue; */
 
 }
@@ -201,7 +226,7 @@ export default {
 .InputTime {
 	width: 4.2vw;
 }
-.InputLocation, .InputPeople, .InputEvent, .InputSource {
+.InputTitle, .InputTheme, .InputLocation, .InputPeople, .InputEvent, .InputSource {
     width: 12vw;
 }
 .FilterButton {

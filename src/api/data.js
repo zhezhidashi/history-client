@@ -101,3 +101,15 @@ export const FromPathGetTitle = (path) => {
     let Result = path.split('/');
     return Result[Result.length - 1];
 }
+
+export const GetFieldInfo = (callback) => {
+    getForm("/field_template/list", this, function(res){
+        let FieldInfoMap = {};
+        let List = res.data;
+        for(let i = 0; i < List.length; i++){
+            let item = List[i];
+            FieldInfoMap[item.main_id.toString()] = item.show_name;
+            if(i === List.length - 1) callback(FieldInfoMap);
+        }
+    })
+} 

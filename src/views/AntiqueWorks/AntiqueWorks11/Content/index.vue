@@ -15,11 +15,11 @@
                         <!-- 鼠标悬停查看详情 -->
                         <div class="ImageHover">
                             <div class="RedButton SeeDetails" @click="
-        									GoToPage('AntiqueWorks31', {
-        										Path: item.Path,
-                                                TemplateID: item.TemplateID,
-        									})
-        								">
+                                GoToPage('AntiqueWorks31', {
+                                    Path: item.Path,
+                                    TemplateID: item.TemplateID,
+                                })
+                            ">
                                 查看古籍
                             </div>
                         </div>
@@ -43,11 +43,11 @@
                         <!-- 鼠标悬停查看详情 -->
                         <div class="ImageHover">
                             <div class="RedButton SeeDetails" @click="
-        									GoToPage('AntiqueWorks32', {
-        										Path: item.Path,
-                                                TemplateID: item.TemplateID,
-        									})
-        								">
+                                GoToPage('AntiqueWorks32', {
+                                    Path: item.Path,
+                                    TemplateID: item.TemplateID,
+                                })
+                            ">
                                 查看特藏
                             </div>
                         </div>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { postForm, getForm, GetType, MergeItem, MatchName } from "@/api/data";
+import { postForm, getForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
 export default {
     name: "Content",
     data() {
@@ -88,83 +88,40 @@ export default {
         GetList(ParentPath, ImageList) {
             let _this = this;
             // 首先查询 archive，获得其模版；
-            let DataForm = {
-                location_id: 99999999,
-                page_index: 1,
-                page_size: 4,
-                sort_by: "-show_time",
-                path: ParentPath,
-                deep_range: 1,
-                filter_rule: {},
-                order_rule: {
-                    method: "show_time",
-                    order: "+",
-                },
-                template_id: 0,
-            };
-            /* 
-            以古籍为例
-            搜索深度为 1 的数据，找到所有 单部古籍 的根节点；但是这个一定要筛掉古籍的根节点（返回结果似乎已经筛掉了）
-            然后遍历列表数据列表，存下来其 Path 的值，并根据每部古籍的模板 ID 获取子模板的ID，
-            然后请求每个子模板ID的数据，获取每个古籍的封面图，记录下来Image.
-            */
-            postForm("/data/list", DataForm, _this, function(res) {
-                let BookList = res.data.list;
-                for (let BookIndex = 0; BookIndex < BookList.length; BookIndex++) {
-                    let BookItem = BookList[BookIndex];
-                    let BookTemplateID = BookItem.template_id;
-                    let BookPath = BookItem.path;
-                    let ItemForm = {
-                        Image: undefined,
-                        Path: BookItem.path,
-                        TemplateID: BookItem.template_id,
-                    }
-
-                    getForm(`/template/one?main_id=${BookTemplateID}`, _this, function(res) {
-                        let FieldTemplateID = res.data.children_template_limit;
-                        for (let FieldIndex = 0; FieldIndex < FieldTemplateID.length; FieldIndex++) {
-                            let FieldID = FieldTemplateID[FieldIndex];
-
-                            getForm(`/template/one?main_id=${FieldID}`, _this, function(res) {
-                                let FieldName = res.data.name;
-                                if (MatchName(FieldName, "图片") && !MatchName(FieldName, "列表")) {
-
-                                    let DataForm = {
-                                        location_id: 99999999,
-                                        page_index: 1,
-                                        page_size: 1,
-                                        sort_by: "-show_time",
-                                        path: BookPath,
-                                        deep_range: 1,
-                                        filter_rule: {},
-                                        order_rule: {
-                                            method: "show_time",
-                                            order: "+",
-                                        },
-                                        template_id: FieldID,
-                                    };
-
-                                    postForm("/data/list", DataForm, _this, function(res) {
-                                        let DataItem = res.data.list[0];
-                                        for (let key in DataItem.content) {
-                                            if (key != "name") {
-                                                ItemForm.Image = DataItem.content[key];
-                                            }
-                                        }
-                                        
-                                        if (ItemForm.Image != undefined) {
-                                            ImageList.push(ItemForm);
-                                        }
-                                    })
-
-                                }
-                            })
+            GetFieldInfo(function (FieldInfoMap) {
+                let DataForm = {
+                    location_id: 99999999,
+                    page_index: 1,
+                    page_size: 4,
+                    sort_by: "-show_time",
+                    path: ParentPath,
+                    deep_range: 1,
+                    filter_rule: {},
+                    order_rule: {
+                        method: "show_time",
+                        order: "+",
+                    },
+                    template_id: 0,
+                };
+                postForm('/data/list', DataForm, _this, function (res) {
+                    let List = res.data.list;
+                    for (let ArchiveIndex = 0; ArchiveIndex < List.length; ArchiveIndex++) {
+                        let item = List[ArchiveIndex];
+                        let ItemForm = {
+                            Path: item.path,
+                            Image: "",
+                            TemplateID: item.template_id,
                         }
-                    })
-
-                }
-
-            });
+                        for (let FieldID in item.content) {
+                            if (MatchName(FieldInfoMap[FieldID], "图片")) {
+                                ItemForm.Image = item.content[FieldID];
+                            }
+                        }
+                        ImageList.push(ItemForm);
+                    }
+                })
+            })
+                    
         },
     },
     mounted() {

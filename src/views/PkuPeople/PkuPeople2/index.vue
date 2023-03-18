@@ -31,6 +31,8 @@ export default {
 				Keywords: "",
 				// 资源类型
                 ResourceType: "",
+                Title: "",
+                Theme: "",
                 // 时间
                 TimeFrom: "",
                 TimeTo: "",
@@ -57,10 +59,12 @@ export default {
 
 <style scoped>
 .PkuPeople2 {
-	min-height: 120vw;
+	min-height: 140vw;
+    height: auto;
 }
 .ConditionResult {
     position: relative;
+    height: auto;
     width: 80vw;
     left: 10vw;
     top: 10vw;

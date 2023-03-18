@@ -13,7 +13,7 @@
 <script>
 import Images from "@/views/AntiqueWorks/AntiqueWorks31/Images";
 import Content from "@/views/AntiqueWorks/AntiqueWorks31/Content";
-import { postForm, getForm, GetType, MatchName } from "@/api/data";
+import { postForm, getForm, GetType, MatchName, GetFieldInfo } from "@/api/data";
 export default {
 	name: "AntiqueWorks31",
 	components: {
@@ -48,103 +48,64 @@ export default {
         GetOtherInfo() {
             let _this = this;
             // 获得该信件的 TemplateID
-            let BookTemplateID = _this.$route.query.TemplateID;
             let BookPath = _this.$route.query.Path;
-            // 存一下 子模板 的 ID, NameZH，以及对应的数据：TemplateID、NameZH、Value
+            
+            // 获取该信件的信息
+            GetFieldInfo(function (FieldInfoMap) {
+                let DataForm = {
+                    path: BookPath,
+                };
 
-            getForm(`/template/one?main_id=${BookTemplateID}`, _this, function(res) {
-                let ChildTemplateID = res.data.children_template_limit;
-                for (let ChildIndex = 0; ChildIndex < ChildTemplateID.length; ChildIndex++) {
-                    getForm(`/template/one?main_id=${ChildTemplateID[ChildIndex]}`, _this, function(res) {
-                        let ChildName = res.data.name;
-                        let ChildID = ChildTemplateID[ChildIndex];
-                        // 找到图片列表
-                        if (MatchName(ChildName, "列表")) {
-                            // 接下来，我们找到图片列表对应的 Path
-                            let DataForm = {
-                                location_id: 99999999,
-                                page_index: 1,
-                                page_size: 99999,
-                                sort_by: "-show_time",
-                                path: BookPath,
-                                deep_range: 0,
-                                filter_rule: {},
-                                order_rule: {
-                                    method: "show_time",
-                                    order: "+",
-                                },
-                                template_id: ChildID,
-                            };
-
-                            postForm(`/data/list`, DataForm, _this, function(res) {
-                                let ImageListPath = res.data.list[0].path;
-
-                                // 找到图片对应的模板ID
-                                getForm(`/template/one?main_id=${ChildID}`, _this, function(res) {
-                                    let ImageListTemplateID = res.data.children_template_limit[0];
-
-                                    let ImageListForm = {
-                                        location_id: 99999999,
-                                        page_index: 1,
-                                        page_size: 99999,
-                                        sort_by: "-show_time",
-                                        path: ImageListPath,
-                                        deep_range: 0,
-                                        filter_rule: {},
-                                        order_rule: {
-                                            method: "show_time",
-                                            order: "+",
-                                        },
-                                        template_id: ImageListTemplateID,
-                                    };
-
-                                    postForm(`/data/list`, ImageListForm, _this, function(res) {
-                                        for (let item of res.data.list) {
-                                            _this.ImageList.push({
-                                                ImageUrl: item.content["img&attr0"],
-                                                Index: _this.ImageList.length,
-                                                ImagePath: item.path,
-                                            });
-                                        }
-                                    })
-                                })
+                postForm('/data/node', DataForm, _this, function (res) {
+                    let item = res.data
+                    for (let FieldID in item.content) {
+                        if(MatchName(FieldInfoMap[FieldID], "标题")){
+                            _this.Title = item.content[FieldID]
+                        }
+                        else if (!MatchName(FieldInfoMap[FieldID], "图片") && !MatchName(FieldInfoMap[FieldID], "节点名称") && !MatchName(FieldInfoMap[FieldID], "标题") && item.content[FieldID] != "" && item.content[FieldID] != 1000000000) {
+                            _this.ContentInfo.push({
+                                NameZH: FieldInfoMap[FieldID],
+                                Value: item.content[FieldID]
                             })
                         }
-                        // 找到普通数据和标题，注意要筛掉封面图片
-                        else if(!MatchName(ChildName, "图片")){
-                            
-                            let DataForm = {
-                                location_id: 99999999,
-                                page_index: 1,
-                                page_size: 99999,
-                                sort_by: "-show_time",
-                                path: BookPath,
-                                deep_range: 0,
-                                filter_rule: {},
-                                order_rule: {
-                                    method: "show_time",
-                                    order: "+",
-                                },
-                                template_id: ChildID,
-                            };
-                            postForm('/data/list', DataForm, _this, function(res){
-                                for(let key in res.data.list[0].content){
-                                    if(key != "name" && MatchName(ChildName, "标题"))
-                                        _this.Title = res.data.list[0].content[key];
-                                    else if(key != "name" && res.data.list[0].content[key].toString() != "" && res.data.list[0].content[key].toString() != "1000000000"){
-                                        _this.ContentInfo.push({
-                                            TemplateID: ChildID,
-                                            NameZH: ChildName,
-                                            Value: res.data.list[0].content[key],
-                                        });
-                                    }
-                                }
-                            })
-
-                        }
-                    })
-                }
+                    }
+                })
             })
+
+            // 获取图片列表
+            GetFieldInfo(function (FieldInfoMap) {
+                let DataForm = {
+                    location_id: 99999999,
+                    page_index: 1,
+                    page_size: 99999,
+                    sort_by: "-show_time",
+                    path: BookPath,
+                    deep_range: 1,
+                    filter_rule: {},
+                    order_rule: {
+                        method: "show_time",
+                        order: "+",
+                    },
+                    template_id: 0,
+                };
+
+                postForm('/data/list', DataForm, _this, function (res) {
+                    let List = res.data.list;
+                    for (let PicIndex = 0; PicIndex < List.length; PicIndex++) {
+                        let item = List[PicIndex];
+                        for (let FieldID in item.content) {
+                            if (MatchName(FieldInfoMap[FieldID], "图片")) {
+                                _this.ImageList.push({
+                                    ImageUrl: item.content[FieldID],
+                                    Index: PicIndex,
+                                    ImagePath: item.path,
+                                })
+                            }
+                        }
+                    }
+                })
+            })
+                  
         },
     },
 	mounted() {

@@ -20,7 +20,7 @@
 
 <script>
 import { throttle } from "lodash";
-import { postForm, getForm, GetType, MergeItem, MatchName } from "@/api/data";
+import { postForm, getForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
 export default {
     name: "Search",
     data() {
@@ -36,11 +36,12 @@ export default {
                 // 	},
                 // ],
             ],
+
         };
     },
     methods: {
         // 人物图片按钮切换
-        ImageShift: throttle(function(d) {
+        ImageShift: throttle(function (d) {
             let Images = document.querySelectorAll(".PeopleImage");
             let Titles = document.querySelectorAll(".PeopleTitle");
 
@@ -82,146 +83,54 @@ export default {
                 },
             });
         },
+
+        GetList() {
+            let _this = this;
+            // 获取字段列表
+            GetFieldInfo(function (FieldInfoMap) {
+                let DataForm = {
+                    location_id: 99999999,
+                    page_index: 1,
+                    page_size: 99999,
+                    sort_by: "-show_time",
+                    path: "root/archives",
+                    deep_range: 1,
+                    filter_rule: {},
+                    order_rule: {
+                        method: "show_time",
+                        order: "+",
+                    },
+                    template_id: 0,
+                };
+                postForm('/data/list', DataForm, _this, function (res) {
+                    let List = res.data.list;
+                    for (let PeopleIndex = 0; PeopleIndex < List.length; PeopleIndex++) {
+                        let item = List[PeopleIndex];
+                        let ItemForm = {
+                            Path: item.path,
+                            Title: "",
+                            Image: ""
+                        }
+                        for (let FieldID in item.content) {
+                            if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                                ItemForm.Title = item.content[FieldID];
+                            }
+                            else if (MatchName(FieldInfoMap[FieldID], "图片")) {
+                                ItemForm.Image = item.content[FieldID];
+                            }
+                        }
+                        _this.TotalPages = MergeItem(ItemForm,
+                            _this.People,
+                            _this.TotalPages,
+                            4
+                        );
+                    }
+                })
+            })
+        },
     },
     mounted() {
-        let _this = this;
-        // 首先查询 archive，获得其模版；
-        let DataForm = {
-            path: "root/archives",
-        };
-        postForm("/data/node", DataForm, _this, function(res) {
-            let ArchiveTemplateID = res.data.template_id;
-
-            //然后查询 People 模板ID
-            getForm(
-                `/template/one?main_id=${ArchiveTemplateID}`,
-                _this,
-                function(res) {
-                    let PeopleTemplateID = res.data.children_template_limit[0];
-
-                    // 查询 People 所在 Path
-                    let DataForm = {
-                        location_id: 99999999,
-                        page_index: 1,
-                        page_size: 99999,
-                        sort_by: "-show_time",
-                        path: "root/archives",
-                        deep_range: 0,
-                        filter_rule: {},
-                        order_rule: {
-                            method: "show_time",
-                            order: "+",
-                        },
-                        template_id: PeopleTemplateID,
-                    };
-
-                    postForm("/data/list", DataForm, _this, function(res) {
-                        for (
-                            let PeopleIndex = 0; PeopleIndex < res.data.list.length; PeopleIndex++
-                        ) {
-                            let PeoplePath = res.data.list[PeopleIndex].path;
-
-                            // 查询 People 拥有的字段的模板
-                            getForm(
-                                `/template/one?main_id=${PeopleTemplateID}`,
-                                _this,
-                                function(res) {
-                                    // Field 意为字段
-                                    let FieldTemplateID =
-                                        res.data.children_template_limit;
-
-                                    let ItemForm = {
-                                        Path: PeoplePath,
-                                        Title: "",
-                                        Image: "",
-                                    };
-
-                                    // 查询每个字段模板信息，如模板名字
-                                    for (
-                                        let i = 0; i < FieldTemplateID.length; i++
-                                    ) {
-                                        let FieldID = FieldTemplateID[i];
-                                        getForm(
-                                            `/template/one?main_id=${FieldID}`,
-                                            _this,
-                                            function(res) {
-                                                let FieldName = res.data.name;
-
-                                                // 查询当前字段所在数据
-                                                let DataForm = {
-                                                    location_id: 99999999,
-                                                    page_index: 1,
-                                                    page_size: 99999,
-                                                    sort_by: "-show_time",
-                                                    path: PeoplePath,
-                                                    deep_range: 0,
-                                                    filter_rule: {},
-                                                    order_rule: {
-                                                        method: "show_time",
-                                                        order: "+",
-                                                    },
-                                                    template_id: FieldID,
-                                                };
-                                                postForm(
-                                                    `/data/list`,
-                                                    DataForm,
-                                                    _this,
-                                                    function(res) {
-                                                        let item =
-                                                            res.data.list[0];
-                                                        for (let key in item.content) {
-                                                            if (
-                                                                GetType(key) !==
-                                                                "name"
-                                                            ) {
-                                                                if (
-                                                                    MatchName(
-                                                                        FieldName,
-                                                                        "图片"
-                                                                    )
-                                                                ) {
-                                                                    ItemForm.Image =
-                                                                        item.content[
-                                                                            key
-                                                                        ];
-                                                                } else if (
-                                                                    MatchName(
-                                                                        FieldName,
-                                                                        "标题"
-                                                                    )
-                                                                ) {
-                                                                    ItemForm.Title =
-                                                                        item.content[
-                                                                            key
-                                                                        ];
-                                                                }
-                                                            }
-                                                        }
-
-                                                        if (
-                                                            i + 1 ===
-                                                            FieldTemplateID.length
-                                                        ) {
-                                                            _this.TotalPages =
-                                                                MergeItem(
-                                                                    ItemForm,
-                                                                    _this.People,
-                                                                    _this.TotalPages,
-                                                                    4
-                                                                );
-                                                        }
-                                                    }
-                                                );
-                                            }
-                                        );
-                                    }
-                                }
-                            );
-                        }
-                    });
-                }
-            );
-        });
+        this.GetList(); 
     },
 };
 </script>
