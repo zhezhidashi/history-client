@@ -42,32 +42,35 @@ export default {
         Arguments: {
             type: Object,
         },
+        NowIndex: Number,
+        TotalPages: Number,
+        SearchResult: Array,
     },
     data() {
         return {
-            NowIndex: 1,
-            TotalPages: 1,
+            // NowIndex: 1,
+            // TotalPages: 1,
             // 访谈列表
-            SearchResult: [
-                {
-                    Title: "季先生之女给季先生的信件",
-                    Description:
-                        "季先生之女给季先生的信件 此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
-                    Image: "PkuPeople2-Image1.jpg",
-                },
-                {
-                    Title: "文艺社给季先生的信",
-                    Description:
-                        "此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
-                    Image: "PkuPeople2-Image2.jpg",
-                },
-            ],
+            // SearchResult: [
+            //     {
+            //         Title: "季先生之女给季先生的信件",
+            //         Description:
+            //             "季先生之女给季先生的信件 此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
+            //         Image: "PkuPeople2-Image1.jpg",
+            //     },
+            //     {
+            //         Title: "文艺社给季先生的信",
+            //         Description:
+            //             "此页是季先生的女儿于1957年2月20日写给季先生的信，内容主要是想在“本周六上午来看您”。",
+            //         Image: "PkuPeople2-Image2.jpg",
+            //     },
+            // ],
         };
     },
     methods: {
         PageShift(d) {
             if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
-                this.NowIndex += d;
+                this.$emit("ChangePages", d);
             } else {
                 this.$message({
                     type: "warning",

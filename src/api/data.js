@@ -113,3 +113,67 @@ export const GetFieldInfo = (callback) => {
         }
     })
 } 
+
+export const GetFilterRule = (Arguments) => {
+    GetFieldInfo(function(FieldInfoMap){
+        let FilterRule = {};
+        for(let ArgName in Arguments){
+            for(let FieldID in FieldInfoMap){
+                if(ArgName === "Keywords"){
+                    FilterRule["all"] = {"has": Arguments[ArgName]};
+                }
+                else if(ArgName === "Title"){
+                    if(MatchName(FieldInfoMap[FieldID], "标题")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "Theme"){
+                    if(MatchName(FieldInfoMap[FieldID], "主题")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                // 
+                else if(ArgName === "TimeFrom"){
+                    if(MatchName(FieldInfoMap[FieldID], "起始时间")){
+                        FilterRule[FieldID.toString()] = {">=": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "TimeTo"){
+                    if(MatchName(FieldInfoMap[FieldID], "终止时间")){
+                        FilterRule[FieldID.toString()] = {"<=": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "Location"){
+                    if(MatchName(FieldInfoMap[FieldID], "地点")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "Language"){
+                    if(MatchName(FieldInfoMap[FieldID], "语言")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "People"){
+                    if(MatchName(FieldInfoMap[FieldID], "人物")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "Event"){
+                    if(MatchName(FieldInfoMap[FieldID], "事件")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+                else if(ArgName === "Source"){
+                    if(MatchName(FieldInfoMap[FieldID], "来源")){
+                        FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
+                    }
+                }
+            }
+        }
+        return FilterRule;
+    })
+}
+
+export const GetTemplateIDList = (ResourceFieldList) => {
+    
+}

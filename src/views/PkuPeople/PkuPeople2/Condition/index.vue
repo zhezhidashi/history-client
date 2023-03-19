@@ -3,10 +3,8 @@
         <!-- 资源类型 -->
         <div class="SearchBlock">
 			<div class="SearchType">资源类型</div>
-			<div v-for="(item, index) in ResourceType" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Resource" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
+			<div v-for="(item, index) in ResourceType" :key="index" class="el-checkbox-group" >
+				<el-checkbox class="SelectItem" v-model="ResourceFieldList" :label="item.Title"></el-checkbox>
 			</div>
 		</div>
 
@@ -65,12 +63,14 @@
 		</div>
 
         <!-- 语种 -->
-        <div class="SearchBlock">
+        <div class="SearchBlock" style="height: 7vw">
 			<div class="SearchType">语种</div>
-			<div v-for="(item, index) in Language" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Language" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputLanguage"
+					v-model="Arguments.Language"
+					placeholder=""
+				/>
 			</div>
 		</div>
 
@@ -99,16 +99,18 @@
 		</div>
 
         <!-- 来源 -->
-        <div class="SearchBlock">
+        <div class="SearchBlock" style="height: 7vw">
 			<div class="SearchType">来源</div>
-			<div v-for="(item, index) in Source" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Source" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputSource"
+					v-model="Arguments.Source"
+					placeholder=""
+				/>
 			</div>
 		</div>
 
-		<div class="RedButton FilterButton">筛选</div>
+		<div class="RedButton FilterButton" @click="FilterButton">筛选</div>
 	</div>
 </template>
 
@@ -119,69 +121,48 @@ export default {
 		Arguments: {
 			type: Object,
 		},
+        ResourceFieldList: {
+            type: Array,
+        },
 	},
 	data() {
 		return {
 			ResourceType: [
 				{
 					Title: "信件信函",
-					Value: "1",
 				},
 				{
 					Title: "书稿",
-					Value: "2",
 				},
 				{
 					Title: "手稿",
-					Value: "3",
 				},
 				{
 					Title: "日记",
-					Value: "4",
 				},
 				{
 					Title: "笔记",
-					Value: "5",
 				},
 				{
 					Title: "公文",
-					Value: "6",
 				},
 				{
 					Title: "会议资料",
-					Value: "7",
 				},
 				{
 					Title: "出版合同",
-					Value: "8",
 				},
 				{
 					Title: "其他",
-					Value: "9",
-				},
-			],
-			Language: [
-				{
-					Title: "中文",
-					Value: "1",
-				},
-				{
-					Title: "英文",
-					Value: "2",
-				},
-			],
-			Source: [
-				{
-					Title: "赠书",
-					Value: "1",
-				},
-				{
-					Title: "馆藏",
-					Value: "2",
 				},
 			],
 		};
 	},
+    methods: {
+        FilterButton(ResourceFieldList){
+            this.$emit(FilterButton, ResourceFieldList)
+        }
+    }
 };
 </script>
 
@@ -226,7 +207,7 @@ export default {
 .InputTime {
 	width: 4.2vw;
 }
-.InputTitle, .InputTheme, .InputLocation, .InputPeople, .InputEvent, .InputSource {
+.InputTitle, .InputTheme, .InputLanguage, .InputLocation, .InputPeople, .InputEvent, .InputSource {
     width: 12vw;
 }
 .FilterButton {
