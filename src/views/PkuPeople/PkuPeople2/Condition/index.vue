@@ -121,9 +121,6 @@ export default {
 		Arguments: {
 			type: Object,
 		},
-        ResourceFieldList: {
-            type: Array,
-        },
 	},
 	data() {
 		return {
@@ -156,11 +153,13 @@ export default {
 					Title: "其他",
 				},
 			],
+            ResourceFieldList: ["信件信函", "书稿", "手稿", "日记", "笔记", "公文", "会议资料", "出版合同", "其他"],
+            // ResourceFieldList: ["信件信函"],
 		};
 	},
     methods: {
-        FilterButton(ResourceFieldList){
-            this.$emit(FilterButton, ResourceFieldList)
+        FilterButton(){
+            this.$emit("FilterButton", this.ResourceFieldList)
         }
     }
 };

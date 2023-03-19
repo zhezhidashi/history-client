@@ -2,7 +2,7 @@
 	<div class="SearchContainer">
         <div class="Choice1Container">古籍</div>
         <div class="Choice2Container" @click="GoToPage('AntiqueWorks12')" >特藏</div>
-		<div class="SelectContainer">
+		<!-- <div class="SelectContainer">
 			<el-select v-model="SelectValue" placeholder="请选择">
 				<el-option
 					v-for="item in options"
@@ -12,7 +12,7 @@
 				>
 				</el-option>
 			</el-select>
-		</div>
+		</div> -->
 		<div class="ContentContainer">
 			<input
 				class="SearchContentStyle SearchContent"
@@ -37,31 +37,36 @@ export default {
 	name: "Search",
 	data() {
 		return {
-			options: [
-				{
-					value: "1",
-					label: "题名",
-				},
-				{
-					value: "2",
-					label: "责任者",
-				},
-				{
-					value: "3",
-					label: "主题词",
-				},
-				{
-					value: "4",
-					label: "来源",
-				},
-			],
-			SelectValue: "1",
+			// options: [
+			// 	{
+			// 		value: "1",
+			// 		label: "题名",
+			// 	},
+			// 	{
+			// 		value: "2",
+			// 		label: "责任者",
+			// 	},
+			// 	{
+			// 		value: "3",
+			// 		label: "主题词",
+			// 	},
+			// 	{
+			// 		value: "4",
+			// 		label: "来源",
+			// 	},
+			// ],
+			// SelectValue: "1",
 			Keywords: "",
 		};
 	},
 	methods: {
 		GoToPage(name) {
-			this.$router.push({ name });
+			this.$router.push({ 
+                name, 
+                query: {
+                    Keywords: this.Keywords,
+                }
+            });
 		},
 	},
 };
@@ -118,7 +123,7 @@ export default {
 
 .ContentContainer {
 	position: relative;
-	width: 49vw;
+	width: 57vw;
 	height: 4.5vw;
 	border: 1px solid #dcdfe6;
     box-sizing: border-box;
@@ -132,6 +137,6 @@ export default {
 
 .SearchContent {
 	position: relative;
-	width: 45vw;
+	width: 53vw;
 }
 </style>

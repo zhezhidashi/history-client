@@ -1,6 +1,6 @@
 <template>
 	<div class="Container">
-		<div class="SelectContainer">
+		<!-- <div class="SelectContainer">
 			<el-select v-model="Arguments.SelectValue" placeholder="请选择">
 				<el-option
 					v-for="item in options"
@@ -10,7 +10,7 @@
 				>
 				</el-option>
 			</el-select>
-		</div>
+		</div> -->
 		<div class="ContentContainer">
 			<input
 				class="SearchContentStyle SearchContent"
@@ -36,28 +36,28 @@ export default {
     },
 	data() {
 		return {
-			options: [
-				{
-					value: "1",
-					label: "姓名",
-				},
-				{
-					value: "2",
-					label: "主题",
-				},
-				{
-					value: "3",
-					label: "专业",
-				},
-				{
-					value: "4",
-					label: "访谈日期",
-				},
-				{
-					value: "5",
-					label: "访谈地点",
-				},
-			],
+			// options: [
+			// 	{
+			// 		value: "1",
+			// 		label: "姓名",
+			// 	},
+			// 	{
+			// 		value: "2",
+			// 		label: "主题",
+			// 	},
+			// 	{
+			// 		value: "3",
+			// 		label: "专业",
+			// 	},
+			// 	{
+			// 		value: "4",
+			// 		label: "访谈日期",
+			// 	},
+			// 	{
+			// 		value: "5",
+			// 		label: "访谈地点",
+			// 	},
+			// ],
 		};
 	},
     methods: {
@@ -93,7 +93,7 @@ export default {
 
 .ContentContainer {
 	position: relative;
-	width: 63vw;
+	width: 80vw;
 	height: 4.5vw;
 	border: 1px solid #dcdfe6;
     box-sizing: border-box;
@@ -107,7 +107,7 @@ export default {
 
 .SearchContent{
     position: relative;
-    width: 59vw;
+    width: 71vw;
 }
 
 </style>

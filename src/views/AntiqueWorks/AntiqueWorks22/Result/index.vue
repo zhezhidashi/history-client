@@ -68,120 +68,44 @@
 
 <script>
 export default {
-	name: "Result",
-	props: {
-		Arguments: {
-			type: Object,
-		},
-	},
-	data() {
-		return {
-			NowIndex: 1,
-			TotalPages: 1,
-			// 搜索结果
-			SearchResult: [
-				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
-					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
-					Image: "AntiqueImage1.jpg",
-				},
-				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
-					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
-					Image: "AntiqueImage2.jpg",
-				},
-				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
-					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
-					Image: "AntiqueImage3.jpg",
-				},
-				{
-					Title: "粵東皇華集：第一卷",
-					Time: "清光绪七至八年（1881-1882）",
-					People: "李调元",
-					VersionType: "刻本",
-					ExternalForm: "线装2册",
-					Language: "汉文",
-					Seal: "张礼千",
-					TypeNumber: "K254.9",
-					Source: "张礼千赠书",
-					Image: "AntiqueImage4.jpg",
-				},
-			],
+    name: "Result",
+    props: {
+        Arguments: {
+            type: Object,
+        },
+        NowIndex: {
+            type: Number,
+        },
+        TotalPages: {
+            type: Number,
+        },
+        SearchResult: {
+            type: Array,
+        },
+        Description: {
+            type: Array,
+        },
+    },
+    data() {
+        return {
 
-			// 搜索条目描述类型
-			Description: [
-				{
-					NameZH: "出版时间",
-					NameEN: "Time",
-				},
-				{
-					NameZH: "主要责任人",
-					NameEN: "People",
-				},
-				{
-					NameZH: "版本类别",
-					NameEN: "VersionType",
-				},
-				{
-					NameZH: "外观形态",
-					NameEN: "ExternalForm",
-				},
-				{
-					NameZH: "古籍语种",
-					NameEN: "Language",
-				},
-				{
-					NameZH: "印章",
-					NameEN: "Seal",
-				},
-				{
-					NameZH: "分类号",
-					NameEN: "TypeNumber",
-				},
-				{
-					NameZH: "来源",
-					NameEN: "Source",
-				},
-			],
-		};
-	},
-	methods: {
-		PageShift(d) {
-			if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
-				this.NowIndex += d;
-			} else {
-				this.$message({
-					type: "warning",
-					message: "已经是第一页或最后一页",
-				});
-			}
-		},
-		GoToPage(name) {
-			this.$router.push({ name });
-		},
-	},
+        };
+    },
+    methods: {
+        PageShift(d) {
+            if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
+                this.$emit("ChangePages", d);
+            } else {
+                this.$message({
+                    type: "warning",
+                    message: "已经是第一页或最后一页",
+                });
+            }
+        },
+        GoToPage(name) {
+            this.$router.push({ name });
+        },
+    },
 };
 </script>
 

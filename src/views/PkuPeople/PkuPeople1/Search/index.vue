@@ -84,7 +84,7 @@ export default {
 
 .ContentContainer {
 	position: relative;
-	width: 79vw;
+	width: 80vw;
 	height: 4.5vw;
 	border: 1px solid #dcdfe6;
 	box-sizing: border-box;

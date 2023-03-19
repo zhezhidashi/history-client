@@ -114,11 +114,15 @@ export const GetFieldInfo = (callback) => {
     })
 } 
 
-export const GetFilterRule = (Arguments) => {
+export const GetFilterRule = (Arguments, callback) => {
     GetFieldInfo(function(FieldInfoMap){
         let FilterRule = {};
         for(let ArgName in Arguments){
             for(let FieldID in FieldInfoMap){
+                if(Arguments[ArgName] === "" || Arguments[ArgName] === undefined){
+                    continue;
+                }
+
                 if(ArgName === "Keywords"){
                     FilterRule["all"] = {"has": Arguments[ArgName]};
                 }
@@ -170,10 +174,22 @@ export const GetFilterRule = (Arguments) => {
                 }
             }
         }
-        return FilterRule;
+        callback(FilterRule);
     })
 }
 
-export const GetTemplateIDList = (ResourceFieldList) => {
-    
+export const GetTemplateIDList = (ResourceFieldList, callback) => {
+    getForm('/template/list', this, function(res){
+        let TemplateIDList = [];
+        let List = res.data;
+        for(let i = 0; i < List.length; i++){
+            let item = List[i];
+            for(let TemplateName of ResourceFieldList){
+                if(item.name === TemplateName){
+                    TemplateIDList.push(item.main_id);
+                }
+            }
+        }
+        callback(TemplateIDList);
+    })
 }

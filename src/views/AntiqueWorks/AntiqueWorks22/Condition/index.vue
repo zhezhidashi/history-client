@@ -1,16 +1,53 @@
 <template>
 	<div class="Container">
-        <!-- 出版者 -->
+        <!-- 标题 -->
         <div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">出版者</div>
+			<div class="SearchType">标题</div>
 			<div class="InputContainer">
 				<input
-					class="AdvancedSearchInput InputPeople"
-					v-model="Arguments.People"
+					class="AdvancedSearchInput InputTitle"
+					v-model="Arguments.Title"
 					placeholder=""
 				/>
 			</div>
 		</div>
+
+        <!-- 作者 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">作者</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputAuthor"
+					v-model="Arguments.Author"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 主题词 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">主题词</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputSubject"
+					v-model="Arguments.Subject"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 来源 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">来源</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputSource"
+					v-model="Arguments.Source"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
 
         <!-- 出版日期 -->
 		<div class="SearchBlock" style="height: 7vw">
@@ -45,14 +82,52 @@
         <!-- 语种 -->
         <div class="SearchBlock">
 			<div class="SearchType">语种</div>
-			<div v-for="(item, index) in Language" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Language" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputLanguage"
+					v-model="Arguments.Language"
+					placeholder=""
+				/>
 			</div>
 		</div>
 
-		<div class="RedButton FilterButton">筛选</div>
+        <!-- 印章 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">印章</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputSeal"
+					v-model="Arguments.Seal"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 版本类别 -->
+        <div class="SearchBlock">
+			<div class="SearchType">版本类别</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputVersionType"
+					v-model="Arguments.VersionType"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 外部形态 -->
+        <div class="SearchBlock">
+			<div class="SearchType">外部形态</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputExternalForm"
+					v-model="Arguments.ExternalForm"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+		<div class="RedButton FilterButton" @click="FilterButton" >筛选</div>
 	</div>
 </template>
 
@@ -66,18 +141,14 @@ export default {
 	},
 	data() {
 		return {
-			Language: [
-				{
-					Title: "中文",
-					Value: "1",
-				},
-				{
-					Title: "英文",
-					Value: "2",
-				},
-			],
+			
 		};
 	},
+    methods: {
+        FilterButton() {
+            this.$emit("FilterButton");
+        }
+    }
 };
 </script>
 
@@ -121,7 +192,7 @@ export default {
 .InputTime {
 	width: 4.2vw;
 }
-.InputPeople, .InputTypeNumber {
+.InputTypeNumber, .InputSeal, .InputEvent, .InputSource, .InputLanguage, .InputVersionType, .InputExternalForm, .InputAuthor, .InputSubject, .InputTitle {
     width: 12vw;
 }
 .FilterButton {

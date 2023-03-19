@@ -20,7 +20,7 @@
 					</div>
 					<div class="TextContainer">
 						<div class="TextTitle" @click="GoToPage('OralHistory3')">{{ item.Title }}</div>
-						<div class="TextTime">{{ item.Time }}</div>
+						<div class="TextTime">{{ item.Time }} ~ {{ item.TimeTo }}</div>
 						<div class="TextLocation">{{ item.Location }}</div>
 					</div>
 				</div>
@@ -55,32 +55,25 @@ export default {
 		Arguments: {
 			type: Object,
 		},
+        NowIndex: {
+            type: Number,
+        },
+        TotalPages: {
+            type: Number,
+        },
+        SearchResult: {
+            type: Array,
+        },
 	},
 	data() {
 		return {
-			NowIndex: 1,
-			TotalPages: 1,
-			// 访谈列表
-			SearchResult: [
-				{
-					Title: "李明滨口述史",
-					Time: "2010/11/8",
-					Location: "访谈地点：外文楼217",
-					Image: "李明滨.jpg",
-				},
-				{
-					Title: "韦旭升口述史",
-					Time: "2010/11/8",
-					Location: "访谈地点：外文楼217",
-					Image: "韦旭升.jpg",
-				},
-			],
+			
 		};
 	},
 	methods: {
 		PageShift(d) {
 			if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
-				this.NowIndex += d;
+				this.$emit("ChangePages", d);
 			} else {
 				this.$message({
 					type: "warning",

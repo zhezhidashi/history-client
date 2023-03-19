@@ -86,7 +86,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id: 0,
+                    template_id_list: [0],
                 };
 
                 postForm('/data/list', DataForm, _this, function (res) {

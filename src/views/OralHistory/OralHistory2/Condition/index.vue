@@ -1,5 +1,42 @@
 <template>
 	<div class="Container">
+        <!-- 姓名 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">姓名</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputName"
+					v-model="Arguments.Name"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 主题 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">主题</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputTheme"
+					v-model="Arguments.Theme"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 专业 -->
+        <div class="SearchBlock" style="height: 7vw">
+			<div class="SearchType">专业</div>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputMajor"
+					v-model="Arguments.Major"
+					placeholder=""
+				/>
+			</div>
+		</div>
+
+        <!-- 访谈时间 -->
 		<div class="SearchBlock" style="height: 7vw">
 			<div class="SearchType">访谈时间</div>
 			<div class="SearchTime">
@@ -16,15 +53,19 @@
 				/>
 			</div>
 		</div>
-		<div class="SearchBlock">
+        <!-- 地点 -->
+        <div class="SearchBlock" style="height: 7vw">
 			<div class="SearchType">访谈地点</div>
-			<div v-for="(item, index) in Locations" :key="index">
-				<el-radio class="SelectItem" v-model="Arguments.Location" :label="item.Value">{{
-					item.Title
-				}}</el-radio>
+			<div class="InputContainer">
+				<input
+					class="AdvancedSearchInput InputLocation"
+					v-model="Arguments.Location"
+					placeholder=""
+				/>
 			</div>
 		</div>
-		<div class="RedButton FilterButton">筛选</div>
+		 
+		<div class="RedButton FilterButton" @click="FilterButton">筛选</div>
 	</div>
 </template>
 
@@ -38,18 +79,23 @@ export default {
 	},
 	data() {
 		return {
-			Locations: [
-				{
-					Title: "外文楼",
-					Value: "1",
-				},
-				{
-					Title: "红楼",
-					Value: "2",
-				},
-			],
+			// Locations: [
+			// 	{
+			// 		Title: "外文楼",
+			// 		Value: "1",
+			// 	},
+			// 	{
+			// 		Title: "红楼",
+			// 		Value: "2",
+			// 	},
+			// ],
 		};
 	},
+    methods: {
+        FilterButton(){
+            this.$emit("FilterButton");
+        }
+    }
 };
 </script>
 
@@ -90,8 +136,12 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 }
-.InputTime{
+.InputTime {
     width: 4.2vw;
+}
+
+.InputName, .InputTheme, .InputMajor, .InputLocation {
+    width: 12vw;
 }
 .FilterButton {
 	position: relative;

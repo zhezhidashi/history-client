@@ -89,6 +89,7 @@ export default {
 .Container {
     position: relative;
     width: 60vw;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;

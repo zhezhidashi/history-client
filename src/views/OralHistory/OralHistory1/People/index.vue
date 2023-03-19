@@ -25,7 +25,7 @@ export default {
     name: "Search",
     data() {
         return {
-            TotalPages: 1,
+            TotalPages: 0,
             NowIndex: 0,
             People: [
                 // [
@@ -97,7 +97,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id: 0,
+                    template_id_list: [0],
                 };
                 postForm('/data/list', DataForm, _this, function (res) {
                     let List = res.data.list;
