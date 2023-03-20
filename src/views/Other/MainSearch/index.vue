@@ -2,8 +2,7 @@
     <div class="Background MainSearch">
         <Search :Arguments="Arguments" @ChangeArguments="ChangeArguments" />
         <div class="ConditionResult">
-            <Condition :Arguments="Arguments" @ChangeArguments="ChangeArguments"
-                @FilterButton="FilterButton" />
+            <Condition :Arguments="Arguments" @ChangeArguments="ChangeArguments" @FilterButton="FilterButton" />
             <Result :Arguments="Arguments" :NowIndex="NowIndex" :TotalPages="TotalPages" :SearchResult="SearchResult"
                 @ChangePages="ChangePages" />
         </div>
@@ -81,55 +80,52 @@ export default {
                 FilterRule = res;
                 GetTemplateIDList(_this.ResourceFieldList, function (res) {
                     TemplateIDList = res;
-                    
+
                     console.log("***", _this.Arguments, _this.ResourceFieldList, FilterRule, TemplateIDList)
 
                     GetFieldInfo(function (FieldInfoMap) {
-                        let PathList = ["root/archives", "root/picture", "root/interview", "root/ancient_book", "root/reservation"];
-                        for(let PathItem of PathList){
-                            let DataForm = {
-                                location_id: 99999999,
-                                page_index: _this.NowIndex,
-                                page_size: 2,
-                                sort_by: "-show_time",
-                                path: PathItem,
-                                deep_range: 0,
-                                filter_rule: FilterRule,
-                                order_rule: {
-                                    method: "show_time",
-                                    order: "+",
-                                },
-                                template_id_list: TemplateIDList,
-                            };
-                            postForm('/data/list', DataForm, _this, function (res) {
-                                let List = res.data.list;
 
-                                _this.TotalPages = res.data.total_page;
-                                for (let PeopleIndex = 0; PeopleIndex < List.length; PeopleIndex++) {
-                                    let item = List[PeopleIndex];
-                                    let ItemForm = {
-                                        Path: item.path,
-                                        Title: "",
-                                        Image: "",
-                                        Description: "",
-                                    }
-                                    for (let FieldID in item.content) {
-                                        if (MatchName(FieldInfoMap[FieldID], "标题")) {
-                                            ItemForm.Title = item.content[FieldID];
-                                        }
-                                        else if (MatchName(FieldInfoMap[FieldID], "图片")) {
-                                            ItemForm.Image = item.content[FieldID];
-                                        }
-                                        else if(MatchName(FieldInfoMap[FieldID], "描述") || MatchName(FieldInfoMap[FieldID], "简介")){
-                                            ItemForm.Description = item.content[FieldID];
-                                        }
-                                    }
-                                    _this.SearchResult.push(ItemForm)
+                        let DataForm = {
+                            location_id: 99999999,
+                            page_index: _this.NowIndex,
+                            page_size: 6,
+                            sort_by: "-show_time",
+                            path: "root",
+                            deep_range: 0,
+                            filter_rule: FilterRule,
+                            order_rule: {
+                                method: "show_time",
+                                order: "+",
+                            },
+                            template_id_list: TemplateIDList,
+                        };
+                        postForm('/data/list', DataForm, _this, function (res) {
+                            let List = res.data.list;
+
+                            _this.TotalPages = res.data.total_page;
+                            for (let PeopleIndex = 0; PeopleIndex < List.length; PeopleIndex++) {
+                                let item = List[PeopleIndex];
+                                let ItemForm = {
+                                    Path: item.path,
+                                    TemplateID: item.template_id,
+                                    Title: "",
+                                    Image: "",
+                                    Description: "",
                                 }
-                            })
-                            
-                        }
-                    
+                                for (let FieldID in item.content) {
+                                    if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                                        ItemForm.Title = item.content[FieldID];
+                                    }
+                                    else if (MatchName(FieldInfoMap[FieldID], "图片")) {
+                                        ItemForm.Image = item.content[FieldID];
+                                    }
+                                    else if (MatchName(FieldInfoMap[FieldID], "描述") || MatchName(FieldInfoMap[FieldID], "简介")) {
+                                        ItemForm.Description = item.content[FieldID];
+                                    }
+                                }
+                                _this.SearchResult.push(ItemForm)
+                            }
+                        })
                     })
 
                 });

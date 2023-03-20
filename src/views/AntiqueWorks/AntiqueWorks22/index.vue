@@ -56,17 +56,17 @@ export default {
             TotalPages: 1,
             // 搜索结果
             SearchResult: [
-                {
-                    Title: "从征缅甸记畧：2卷",
-                    People: "（清）冯鲁严撰",
-                    VersionType: "",
-                    ExternalForm: "线装，外加硬皮重新装订，1册，26.8 x 15cm",
-                    Subject: "笔记，史料，中国，清代",
-                    Language: "汉文",
-                    Seal: "张礼千",
-                    TypeNumber: "",
-                    Image: "AntiqueImage1.jpg",
-                },
+                // {
+                //     Title: "从征缅甸记畧：2卷",
+                //     People: "（清）冯鲁严撰",
+                //     VersionType: "",
+                //     ExternalForm: "线装，外加硬皮重新装订，1册，26.8 x 15cm",
+                //     Subject: "笔记，史料，中国，清代",
+                //     Language: "汉文",
+                //     Seal: "张礼千",
+                //     TypeNumber: "",
+                //     Image: "AntiqueImage1.jpg",
+                // },
             ],
 
             // 搜索条目描述类型
@@ -161,6 +161,8 @@ export default {
                                     Seal: "",
                                     TypeNumber: "",
                                     Image: "",
+                                    Path: item.path,
+                                    TemplateID: item.template_id,
                                 }
                                 for (let FieldID in item.content) {
                                     if (MatchName(FieldInfoMap[FieldID], "标题")) {

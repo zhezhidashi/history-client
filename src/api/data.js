@@ -193,3 +193,20 @@ export const GetTemplateIDList = (ResourceFieldList, callback) => {
         callback(TemplateIDList);
     })
 }
+
+// 获取节点的标题
+export const GetTitle = (Path, callback) =>{
+    GetFieldInfo(function (FieldInfoMap) {
+        let DataForm = {
+            path: Path,
+        };
+        postForm('/data/node', DataForm, this, function (res) {
+            let item = res.data;
+            for (let FieldID in item.content) {
+                if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                    callback(item.content[FieldID]);
+                }
+            }
+        })
+    })
+}

@@ -6,14 +6,14 @@
                     <div class="ImageItem">
                         <!-- 鼠标悬停查看详情 -->
                         <div class="ImageHover">
-                            <div class="RedButton SeeImage" @click="GoToPage('AntiqueWorks31')">
+                            <div class="RedButton SeeImage" @click="GoToPage('AntiqueWorks31', item)">
                                 查看大图
                             </div>
                         </div>
                         <div class="BackgroundImage ImageContainer" :style="`background-image:url(${item.Image})`"></div>
                     </div>
                     <div class="TextContainer">
-                        <div class="TextTitle" @click="GoToPage('AntiqueWorks31')">
+                        <div class="TextTitle" @click="GoToPage('AntiqueWorks31', item)">
                             {{ item.Title }}
                         </div>
                         <div class="TextDescription">
@@ -80,8 +80,13 @@ export default {
                 });
             }
         },
-        GoToPage(name) {
-            this.$router.push({ name });
+        GoToPage(name, item) {
+            this.$router.push({
+                name, query: {
+                    Path: item.Path,
+                    TemplateID: item.TemplateID,
+                }
+            });
         },
     },
 };

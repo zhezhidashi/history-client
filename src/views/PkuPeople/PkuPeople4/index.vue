@@ -79,6 +79,7 @@ export default {
             })
         },
 
+
         GetTabs() {
             let _this = this;
 
@@ -95,7 +96,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id_list: [0],
+                    template_id_list: [],
                 };
 
                 postForm('/data/list', DataForm, _this, function (res) {
@@ -131,7 +132,6 @@ export default {
                 let DataForm = {
                     path: _this.Paths[2],
                 };
-
                 postForm('/data/node', DataForm, _this, function (res) {
                     let item = res.data
                     for (let FieldID in item.content) {
@@ -164,7 +164,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id_list: [0],
+                    template_id_list: [],
                 };
 
                 postForm('/data/list', DataForm, _this, function (res) {

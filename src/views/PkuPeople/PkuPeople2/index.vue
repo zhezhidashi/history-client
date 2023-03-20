@@ -115,6 +115,7 @@ export default {
                                     Title: "",
                                     Image: "",
                                     Description: "",
+                                    TemplateID: item.template_id,
                                 }
                                 for (let FieldID in item.content) {
                                     if (MatchName(FieldInfoMap[FieldID], "标题")) {

@@ -1,7 +1,7 @@
 <template>
     <div class="Background Container">
         <div class="WebPath">
-            <div @click="GoToPage('OralHistory2')" style="cursor: pointer">
+            <div @click="GoToPage('OralHistory1')" style="cursor: pointer">
                 口述档案
             </div>
             &ensp;>&ensp;
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle } from "@/api/data";
 export default {
     name: "OralHistory3",
     data() {
@@ -58,6 +58,7 @@ export default {
             //     // console.log("***", res);
             // });
         },
+
         GetList() {
             let _this = this;
             GetFieldInfo(function (FieldInfoMap) {
@@ -115,7 +116,12 @@ export default {
         this.Path2 = this.$route.query.Path2;
 
         this.GetList();
-
+        
+        let _this = this;
+        // 获取人物名称
+        GetTitle(this.Path2, function(res){
+            _this.PeopleName = res;
+        })
     },
 };
 </script>

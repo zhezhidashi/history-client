@@ -127,9 +127,10 @@ export default {
 
                             _this.TotalPages = res.data.total_page;
                             for (let PeopleIndex = 0; PeopleIndex < List.length; PeopleIndex++) {
-                                let item = List[PeopleIndex];
+                                let item = List[PeopleIndex]
                                 let ItemForm = {
                                     Path: item.path,
+                                    TemplateID: item.template_id,
                                     Title: "",
                                     TimeFrom: "",
                                     TimeTo: "",
@@ -153,7 +154,9 @@ export default {
                                         ItemForm.Image = item.content[FieldID];
                                     }
                                 }
-                                _this.SearchResult.push(ItemForm)
+                                console.log(ItemForm);
+                                _this.SearchResult.push(ItemForm);
+
                             }
                         })
                     })

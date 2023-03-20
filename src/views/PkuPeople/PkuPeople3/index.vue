@@ -13,7 +13,7 @@
 			:ParentPath="ParentPath"
 			:TabPath="TabPath"
 			:TabIndex="TabIndex"
-            :TabName="Tabs[TabIndex][ContentStatus].Title"
+            :TabName="Tabs[TabIndex][ContentStatus % 6].Title"
 			:ContentStatus="ContentStatus"
 			:ContentTotalPages="ContentTotalPages"
 		/>
@@ -134,6 +134,7 @@ export default {
 
 		let _this = this;
         
+        // 得到所有 Tab 的信息
         GetFieldInfo(function(FieldInfoMap){
             let DataForm = {
                 location_id: 99999999,
