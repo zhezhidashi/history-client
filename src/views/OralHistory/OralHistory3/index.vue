@@ -53,9 +53,10 @@ export default {
         },
         DownloadVideo(item) {
             let _this = this;
-            getForm(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
-                // console.log("***", res);
-            });
+            window.open(`https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file?path=${item.Content}`, "_self");
+            // getForm(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
+            //     // console.log("***", res);
+            // });
         },
         GetList() {
             let _this = this;
@@ -72,7 +73,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id_list: [0],
+                    template_id_list: [],
                 };
 
                 postForm('/data/list', DataForm, _this, function (res) {

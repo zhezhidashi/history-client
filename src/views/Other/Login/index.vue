@@ -56,6 +56,7 @@ export default {
                     });
                     _this.$store.commit("setToken", res.data);
                     _this.$router.push({ name: "Home" });
+                    window.localStorage.setItem('token', token)
                 }
             });
 		},

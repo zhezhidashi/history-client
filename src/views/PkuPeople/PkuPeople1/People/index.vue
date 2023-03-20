@@ -100,7 +100,7 @@ export default {
                         method: "show_time",
                         order: "+",
                     },
-                    template_id_list: [0],
+                    template_id_list: [],
                 };
                 postForm('/data/list', DataForm, _this, function (res) {
                     let List = res.data.list;
