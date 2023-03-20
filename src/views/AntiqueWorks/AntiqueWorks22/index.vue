@@ -123,14 +123,14 @@ export default {
             let FilterRule = {}
             let TemplateIDList = [];
 
-            GetFilterRule(_this.Arguments, function (res) {
+            GetFilterRule(_this, _this.Arguments, function (res) {
                 FilterRule = res;
                 GetTemplateIDList(_this.ResourceFieldList, function (res) {
                     TemplateIDList = res;
 
                     console.log("***", _this.Arguments, _this.ResourceFieldList, FilterRule, TemplateIDList)
 
-                    GetFieldInfo(function (FieldInfoMap) {
+                    GetFieldInfo(_this, function (FieldInfoMap) {
                         let DataForm = {
                             location_id: 99999999,
                             page_index: _this.NowIndex,

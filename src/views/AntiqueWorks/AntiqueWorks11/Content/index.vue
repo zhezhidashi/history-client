@@ -88,7 +88,7 @@ export default {
         GetList(ParentPath, ImageList) {
             let _this = this;
             // 首先查询 archive，获得其模版；
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,

@@ -61,7 +61,7 @@ export default {
 
         GetList() {
             let _this = this;
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,
@@ -119,7 +119,7 @@ export default {
         
         let _this = this;
         // 获取人物名称
-        GetTitle(this.Path2, function(res){
+        GetTitle(this, this.Path2, function(res){
             _this.PeopleName = res;
         })
     },

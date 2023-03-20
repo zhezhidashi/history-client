@@ -86,14 +86,14 @@ export default {
                     LetterTemplateID: item.TemplateID,
                 }
 
-                GetTitle(query.Path1, function (res) {
+                GetTitle(_this, query.Path1, function (res) {
                     query.PeopleName = res;
-                    GetTitle(query.Path2, function (res) {
+                    GetTitle(_this, query.Path2, function (res) {
                         query.TabName = res;
 
 
                         // 计算 TabIndex 和 ContentStatus
-                        GetFieldInfo(function (FieldInfoMap) {
+                        GetFieldInfo(_this, function (FieldInfoMap) {
                             let DataForm = {
                                 location_id: 99999999,
                                 page_index: 1,
@@ -121,7 +121,7 @@ export default {
                                     }
                                 }
 
-                                GetTitle(query.Path3, function (res) {
+                                GetTitle(_this, query.Path3, function (res) {
                                     query.LetterName = res;
                                     console.log("&&&", query);
                                     _this.$router.push({

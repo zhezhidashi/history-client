@@ -51,7 +51,7 @@ export default {
             let BookPath = _this.$route.query.Path;
             
             // 获取该信件的信息
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     path: BookPath,
                 };
@@ -73,7 +73,7 @@ export default {
             })
 
             // 获取图片列表
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,

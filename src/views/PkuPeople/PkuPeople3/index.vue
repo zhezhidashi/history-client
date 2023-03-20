@@ -84,7 +84,7 @@ export default {
 			// 修改 TabPath
 			_this.TabPath = NowTab.Path;
 
-            GetFieldInfo(function(FieldInfoMap){
+            GetFieldInfo(_this, function(FieldInfoMap){
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,
@@ -135,7 +135,7 @@ export default {
 		let _this = this;
         
         // 得到所有 Tab 的信息
-        GetFieldInfo(function(FieldInfoMap){
+        GetFieldInfo(_this, function(FieldInfoMap){
             let DataForm = {
                 location_id: 99999999,
                 page_index: 1,

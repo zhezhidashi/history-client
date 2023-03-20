@@ -83,7 +83,7 @@ export default {
         GetTabs() {
             let _this = this;
 
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,
@@ -128,7 +128,7 @@ export default {
             let LetterTemplateID = _this.$route.query.LetterTemplateID;
 
             // 获取该信件的信息
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     path: _this.Paths[2],
                 };
@@ -151,7 +151,7 @@ export default {
             })
 
             // 获取图片列表
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,

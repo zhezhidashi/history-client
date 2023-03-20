@@ -102,8 +102,8 @@ export const FromPathGetTitle = (path) => {
     return Result[Result.length - 1];
 }
 
-export const GetFieldInfo = (callback) => {
-    getForm("/field_template/list", this, function(res){
+export const GetFieldInfo = (This, callback) => {
+    getForm("/field_template/list", This, function(res){
         let FieldInfoMap = {};
         let List = res.data;
         for(let i = 0; i < List.length; i++){
@@ -114,8 +114,8 @@ export const GetFieldInfo = (callback) => {
     })
 } 
 
-export const GetFilterRule = (Arguments, callback) => {
-    GetFieldInfo(function(FieldInfoMap){
+export const GetFilterRule = (This, Arguments, callback) => {
+    GetFieldInfo(This, function(FieldInfoMap){
         let FilterRule = {};
         for(let ArgName in Arguments){
             for(let FieldID in FieldInfoMap){
@@ -195,8 +195,8 @@ export const GetTemplateIDList = (ResourceFieldList, callback) => {
 }
 
 // 获取节点的标题
-export const GetTitle = (Path, callback) =>{
-    GetFieldInfo(function (FieldInfoMap) {
+export const GetTitle = (This, Path, callback) =>{
+    GetFieldInfo(This, function (FieldInfoMap) {
         let DataForm = {
             path: Path,
         };

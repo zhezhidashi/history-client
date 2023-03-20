@@ -84,7 +84,7 @@ export default {
         GetList() {
             let _this = this;
             // 获取字段列表
-            GetFieldInfo(function (FieldInfoMap) {
+            GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
                     page_index: 1,
