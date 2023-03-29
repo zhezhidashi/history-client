@@ -2,7 +2,7 @@
     <div class="Background MainSearch">
         <Search :Arguments="Arguments" @ChangeArguments="ChangeArguments" />
         <div class="ConditionResult">
-            <Condition :Arguments="Arguments" @ChangeArguments="ChangeArguments" @FilterButton="FilterButton" />
+            <Condition :Arguments="Arguments" @ChangeArguments="ChangeArguments" :ResourceFieldList="ResourceFieldList" @FilterButton="FilterButton" />
             <Result :Arguments="Arguments" :NowIndex="NowIndex" :TotalPages="TotalPages" :SearchResult="SearchResult"
                 @ChangePages="ChangePages" />
         </div>

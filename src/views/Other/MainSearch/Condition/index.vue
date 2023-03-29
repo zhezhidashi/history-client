@@ -10,16 +10,12 @@
             </div>
         </div>
         <div class="SearchBlock" style="height: 7vw">
-			<div class="SearchType">语种</div>
-			<div class="InputContainer">
-				<input
-					class="AdvancedSearchInput InputLanguage"
-					v-model="Arguments.Language"
-					placeholder=""
-				/>
-			</div>
-		</div>
-        <div class="RedButton FilterButton" @click="FilterButton" >筛选</div>
+            <div class="SearchType">语种</div>
+            <div class="InputContainer">
+                <input class="AdvancedSearchInput InputLanguage" v-model="Arguments.Language" placeholder="" />
+            </div>
+        </div>
+        <div class="RedButton FilterButton" @click="FilterButton">筛选</div>
     </div>
 </template>
 
@@ -30,14 +26,20 @@ export default {
         Arguments: {
             type: Object,
         },
+        ResourceFieldList: {
+            type: Array,
+        },
     },
     data() {
         return {
-            FilterButton() {
-                this.$emit("FilterButton", this.ResourceFieldList);
-            }
+
         };
     },
+    methods: {
+        FilterButton() {
+            this.$emit("FilterButton", this.ResourceFieldList);
+        }
+    }
 };
 </script>
 
