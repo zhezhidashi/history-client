@@ -24,6 +24,13 @@
                     </div>
                 </div>
             </div>
+            <div class="ShiftContainer">
+                <img @click="PageShift(-1)" class="ShiftLeft" src="ShiftLeft.svg" alt="" />
+                <div class="ShiftPages">
+                    {{ NowIndex }} &emsp; / &emsp; {{ TotalPages }}
+                </div>
+                <img @click="PageShift(1)" class="ShiftRight" src="ShiftRight.svg" alt="" />
+            </div>
         </div>
     </div>
 </template>
@@ -45,6 +52,9 @@ export default {
             PeopleName: "",
             Path1: "",
             Path2: "",
+
+            TotalPages: 0,
+            NowIndex: 1,
         };
     },
     methods: {
@@ -59,13 +69,15 @@ export default {
             // });
         },
 
-        GetList() {
+        GetList(PageIndex) {
+            
             let _this = this;
+            _this.Videos = [];
             GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     location_id: 99999999,
-                    page_index: 1,
-                    page_size: 99999,
+                    page_index: PageIndex,
+                    page_size: 3,
                     sort_by: "-show_time",
                     path: _this.Path2,
                     deep_range: 1,
@@ -79,6 +91,8 @@ export default {
 
                 postForm('/data/list', DataForm, _this, function (res) {
                     let List = res.data.list;
+
+                    _this.TotalPages = res.data.total_page;
                     for (let VideoIndex = 0; VideoIndex < List.length; VideoIndex++) {
                         let item = List[VideoIndex];
                         let ItemForm = {
@@ -109,17 +123,30 @@ export default {
                     }
                 })
             })
-        }
+        },
+
+        PageShift(d) {
+            if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
+                this.NowIndex += d;
+                this.GetList(this.NowIndex);
+
+            } else {
+                this.$message({
+                    type: "warning",
+                    message: "已经是第一页或最后一页",
+                });
+            }
+        },
     },
     mounted() {
         this.Path1 = this.$route.query.Path1;
         this.Path2 = this.$route.query.Path2;
 
-        this.GetList();
-        
+        this.GetList(1);
+
         let _this = this;
         // 获取人物名称
-        GetTitle(this, this.Path2, function(res){
+        GetTitle(this, this.Path2, function (res) {
             _this.PeopleName = res;
         })
     },
@@ -129,11 +156,11 @@ export default {
 <style scoped>
 .Container {
     position: relative;
-    height: 70vw;
+    height: 160vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     /* background: lightgreen; */
 }
 
@@ -141,25 +168,20 @@ export default {
     position: relative;
     font-size: 1.2vw;
     width: 50vw;
-    line-height: 400%;
+    line-height: 600%;
     display: flex;
+    /* background-color: lightyellow; */
 }
 
 .VideoBlock {
     position: relative;
-    height: auto;
+    height: 152vw;
     width: 80vw;
     display: flex;
     flex-direction: column;
     /* justify-content: space-evenly; */
     align-items: center;
-}
-
-.VideoItem {
-    position: relative;
-    width: 50vw;
-    height: 4.5vw;
-    /* background: red; */
+    /* background-color: lightblue; */
 }
 
 .ItemContainer {
@@ -169,8 +191,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    /* background: lightblue; */
+    margin-bottom: 2vw;
+    /* justify-content: space-between; */
+    /* background: lightgreen; */
 }
 
 .InfoContainer {
@@ -196,4 +219,5 @@ export default {
     line-height: 200%;
     /* background: lightgreen; */
 }
+
 </style>

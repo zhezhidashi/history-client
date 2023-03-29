@@ -182,7 +182,7 @@ export default {
                                     if (MatchName(FieldInfoMap[FieldID], "主题词")) {
                                         ItemForm.Subject = item.content[FieldID];
                                     }
-                                    if (MatchName(FieldInfoMap[FieldID], "语言")) {
+                                    if (MatchName(FieldInfoMap[FieldID], "语种")) {
                                         ItemForm.Language = item.content[FieldID];
                                     }
                                     if (MatchName(FieldInfoMap[FieldID], "印章")) {

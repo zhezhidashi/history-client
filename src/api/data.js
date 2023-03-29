@@ -139,12 +139,12 @@ export const GetFilterRule = (This, Arguments, callback) => {
                 // 
                 else if(ArgName === "TimeFrom"){
                     if(MatchName(FieldInfoMap[FieldID], "起始时间")){
-                        FilterRule[FieldID.toString()] = {">=": Arguments[ArgName]};
+                        FilterRule[FieldID.toString()] = {">=": parseInt(Arguments[ArgName])};
                     }
                 }
                 else if(ArgName === "TimeTo"){
-                    if(MatchName(FieldInfoMap[FieldID], "终止时间")){
-                        FilterRule[FieldID.toString()] = {"<=": Arguments[ArgName]};
+                    if(MatchName(FieldInfoMap[FieldID], "结束时间")){
+                        FilterRule[FieldID.toString()] = {"<=": parseInt(Arguments[ArgName])};
                     }
                 }
                 else if(ArgName === "Location"){
@@ -153,7 +153,7 @@ export const GetFilterRule = (This, Arguments, callback) => {
                     }
                 }
                 else if(ArgName === "Language"){
-                    if(MatchName(FieldInfoMap[FieldID], "语言")){
+                    if(MatchName(FieldInfoMap[FieldID], "语种")){
                         FilterRule[FieldID.toString()] = {"has": Arguments[ArgName]};
                     }
                 }
@@ -190,7 +190,13 @@ export const GetTemplateIDList = (ResourceFieldList, callback) => {
                 }
             }
         }
-        callback(TemplateIDList);
+        if(TemplateIDList.length === 0){
+            callback([1000000000])
+        }
+        else{
+            callback(TemplateIDList);
+        }
+        
     })
 }
 

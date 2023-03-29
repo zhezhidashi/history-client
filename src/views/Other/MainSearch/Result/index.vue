@@ -16,8 +16,6 @@
                         <div class="TextTitle" @click="GoToPage(item)">
                             {{ item.Title }}
                         </div>
-                        <div class="TextTime">{{ item.Time }}</div>
-                        <div class="TextLocation">{{ item.Location }}</div>
                     </div>
                 </div>
             </div>

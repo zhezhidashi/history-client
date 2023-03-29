@@ -73,6 +73,7 @@ export default {
         },
         FilterButton(ResourceFieldList) {
             this.ResourceFieldList = ResourceFieldList;
+            console.log("***", this.Arguments, this.ResourceFieldList)
             this.GetList();
         },
 
@@ -88,7 +89,7 @@ export default {
                 GetTemplateIDList(_this.ResourceFieldList, function (res) {
                     TemplateIDList = res;
                     
-                    console.log("***", _this.Arguments, _this.ResourceFieldList, FilterRule, TemplateIDList)
+                    console.log("###", _this.Arguments, _this.ResourceFieldList, FilterRule, TemplateIDList)
 
                     GetFieldInfo(_this, function (FieldInfoMap) {
                         let DataForm = {
