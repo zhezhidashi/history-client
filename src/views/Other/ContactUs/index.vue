@@ -32,12 +32,13 @@
 			>
 			</el-input>
 
-			<div class="RedButton SubmitButton">提交</div>
+			<div class="RedButton SubmitButton" @click="PostFeedback">提交</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { postForm } from "@/api/data";
 export default {
 	name: "ContactUs",
 	data() {
@@ -47,6 +48,33 @@ export default {
 			ContentText: "",
 		};
 	},
+    methods: {
+        PostFeedback(){
+            let myDate = new Date();
+            let DataForm = {
+                path: 'root/feedback_list/' + myDate.getTime(),
+                template_id: 7,
+                content: {
+                    "7": this.NameText,
+                    "8": this.ContactText,
+                    "9": this.ContentText
+                }
+            }
+            // console.log(DataForm);
+            let _this = this;
+            postForm('/data/add', DataForm, _this, function(res){
+                if(res.code == 0){
+                    _this.$message({
+                        message: '提交成功',
+                        type: 'success'
+                    });
+                }
+                _this.NameText = "";
+                _this.ContactText = "";
+                _this.ContentText = "";
+            })
+        },
+    }
 };
 </script>
 
