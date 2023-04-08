@@ -74,6 +74,35 @@ export const getForm = (requestUrl, This, callback) => {
     })
 }
 
+// 下载视频
+export const downloadVideo = (requestUrl, This, callback) => {
+    nprogress.start();
+    store.commit('getToken')
+    const TokenValue = store.state.user.token
+    console.log("下载视频的请求  " + requestUrl);
+    axios.request({
+        url: baseUrl + requestUrl,
+        method: 'get',
+        headers: {
+            token: TokenValue
+        }
+    }).then( res => {
+        nprogress.done()
+        console.log('getForm 的 response', res);
+        if (res.status === 200 && res.code === undefined) { 
+            callback(res) 
+        }
+        else {
+            This.$message({
+                message: res.data.msg,
+                type: 'error'
+            });
+        }
+    })
+}
+
+
+
 // 提取字段种类
 export const GetType = (words) => {
     let Result = words.split('&');

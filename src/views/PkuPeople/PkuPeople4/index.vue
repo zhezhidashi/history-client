@@ -75,6 +75,7 @@ export default {
                     Path: this.Paths[0],
                     TabIndex: this.TabIndex,
                     ContentStatus: this.ContentStatus,
+                    PeopleName: this.WebPath[1],
                 }
             })
         },
@@ -139,7 +140,14 @@ export default {
                         if (MatchName(FieldInfoMap[FieldID], "简介") || MatchName(FieldInfoMap[FieldID], "描述")) {
                             _this.Description = item.content[FieldID];
                         }
-                        else if (!MatchName(FieldInfoMap[FieldID], "图片") && !MatchName(FieldInfoMap[FieldID], "节点名称") && !MatchName(FieldInfoMap[FieldID], "标题") && item.content[FieldID] != "" && item.content[FieldID] != 1000000000) {
+                        else if (
+                            !MatchName(FieldInfoMap[FieldID], "图片") && 
+                            !MatchName(FieldInfoMap[FieldID], "节点名称") && 
+                            !MatchName(FieldInfoMap[FieldID], "标题") && 
+                            !MatchName(FieldInfoMap[FieldID], "起始时间") &&
+                            !MatchName(FieldInfoMap[FieldID], "结束时间") &&
+                            item.content[FieldID] != "" && 
+                            item.content[FieldID] != 1000000000) {
                             _this.ContentInfo.push({
                                 NameZH: FieldInfoMap[FieldID],
                                 Value: item.content[FieldID]

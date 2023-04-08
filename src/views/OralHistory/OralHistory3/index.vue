@@ -13,7 +13,7 @@
                 <div class="ItemContainer">
                     <div class="InfoContainer">
                         <div class="TimeLocation">
-                            访谈时间：{{ item.Time1 }} ~ {{ item.Time2 }} &emsp; 访谈地点：{{ item.Location }}
+                            访谈时间：{{ item.Time }} &emsp; 访谈地点：{{ item.Location }}
                         </div>
                     </div>
                     <div class="IntroContainer">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle, downloadVideo } from "@/api/data";
 export default {
     name: "OralHistory3",
     data() {
@@ -63,10 +63,29 @@ export default {
         },
         DownloadVideo(item) {
             let _this = this;
-            window.open(`https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file?path=${item.Content}`, "_self");
-            // getForm(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
-            //     // console.log("***", res);
-            // });
+            // window.open(`https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file?path=${item.Content}`, "_self");
+            downloadVideo(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
+                if(res.status === 200){
+                    let blob = new Blob([res.data], {
+                    type: 'accept: application/json'
+                    });
+                    let fileName = item.Content;
+                    // for IE
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(blob, fileName);
+                    } else {
+                        // for Non-IE
+                        let objectUrl = URL.createObjectURL(blob);
+                        let link = document.createElement("a");
+                        link.href = objectUrl;
+                        link.setAttribute("download", fileName);
+                        document.body.appendChild(link);
+                        link.click();
+                        window.URL.revokeObjectURL(link.href);
+                    }
+                }
+                
+            });
         },
 
         GetList(PageIndex) {
@@ -96,18 +115,14 @@ export default {
                     for (let VideoIndex = 0; VideoIndex < List.length; VideoIndex++) {
                         let item = List[VideoIndex];
                         let ItemForm = {
-                            Time1: undefined,
-                            Time2: undefined,
+                            Time: undefined,
                             Location: undefined,
                             Description: undefined,
                             Content: undefined,
                         };
                         for (let FieldID in item.content) {
-                            if (MatchName(FieldInfoMap[FieldID], "起始时间")) {
-                                ItemForm.Time1 = item.content[FieldID];
-                            }
-                            else if (MatchName(FieldInfoMap[FieldID], "结束时间")) {
-                                ItemForm.Time2 = item.content[FieldID];
+                            if (FieldInfoMap[FieldID] === "时间") {
+                                ItemForm.Time = item.content[FieldID];
                             }
                             else if (MatchName(FieldInfoMap[FieldID], "地点")) {
                                 ItemForm.Location = item.content[FieldID];

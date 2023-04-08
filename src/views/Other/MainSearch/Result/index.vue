@@ -250,7 +250,8 @@ export default {
 /* 标题 */
 .TextTitle {
     font-size: 1.5vw;
-    line-height: 300%;
+    line-height: 150%;
+    margin-bottom: 1vw;
     cursor: pointer;
 }
 

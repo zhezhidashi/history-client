@@ -229,7 +229,8 @@ export default {
 .TextTitle {
     position: relative;
     font-size: 1.5vw;
-    line-height: 300%;
+    line-height: 150%;
+    margin-bottom: 1vw;
     cursor: pointer;
 }
 
