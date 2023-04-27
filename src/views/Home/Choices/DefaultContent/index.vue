@@ -33,7 +33,7 @@ export default {
 					image: "HomeImage2.jpg",
 				},
 				{
-					title: "口述/访谈",
+					title: "印象/事纪",
 					name: "OralHistory1",
 					path: "/OralHistory1",
 					image: "HomeImage3.jpg",

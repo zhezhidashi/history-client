@@ -1,6 +1,5 @@
 <template>
 	<div class="ContentContainer">
-		<div class="ContentTitle">{{ People }}</div>
 		<div class="ItemPart">
 			<div class="ItemBlock">
 				<div v-for="(item, index) in Contents[NowIndex]" :key="index">
@@ -27,6 +26,13 @@
 				</div>
 			</div>
 		</div>
+        <div class="ShiftContainer">
+            <img @click="PageShift(-1)" class="ShiftLeft" src="ShiftLeft.svg" alt="" />
+            <div class="ShiftPages">
+                {{ NowIndex + 1 }} &emsp; / &emsp; {{ ContentTotalPages }}
+            </div>
+            <img @click="PageShift(1)" class="ShiftRight" src="ShiftRight.svg" alt="" />
+        </div>
 	</div>
 </template>
 
@@ -65,6 +71,9 @@ export default {
 				},
 			});
 		},
+        PageShift(d) {
+            this.NowIndex = (this.NowIndex + d + this.ContentTotalPages) % this.ContentTotalPages;
+        }
 	},
 };
 </script>
@@ -72,11 +81,13 @@ export default {
 <style scoped>
 .ContentContainer {
 	position: relative;
-	width: 80vw;
+    margin-right: 2vw;
+	width: 75vw;
 	height: 70vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+    align-items: center;
 }
 .ContentTitle {
 	position: relative;
@@ -89,7 +100,7 @@ export default {
 }
 .ItemPart {
 	position: relative;
-	width: 80vw;
+	width: 75vw;
 	height: 55vw;
 	/* background-color: lightblue; */
 	display: flex;
@@ -98,7 +109,7 @@ export default {
 }
 .ItemBlock {
 	position: relative;
-	width: 37vw;
+	width: 36vw;
 	height: 55vw;
 	/* background-color: lightgreen; */
 

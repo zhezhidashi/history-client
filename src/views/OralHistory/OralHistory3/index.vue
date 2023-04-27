@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle, downloadVideo } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle, downloadVideo, baseUrl } from "@/api/data";
 export default {
     name: "OralHistory3",
     data() {
@@ -63,6 +63,13 @@ export default {
         },
         DownloadVideo(item) {
             let _this = this;
+            // let url = baseUrl + `/file/download/media_file?path=${item.Content}`;
+            let url = `https://room_dev_client.pacificsilkroad.cn/api-service/file/download/media_file?path=${item.Content}`
+            let link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", item.Content);
+            link.click();
+
             // window.open(`https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file?path=${item.Content}`, "_self");
             downloadVideo(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
                 if(res.status === 200){

@@ -16,6 +16,7 @@
 .Container {
 	position: relative;
 	width: auto;
+    height: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -40,6 +41,7 @@
 .Footer {
 	position: relative;
 	display: flex;
+    height: auto;
 	justify-content: center;
 	align-items: center;
 	background: #9B0000;

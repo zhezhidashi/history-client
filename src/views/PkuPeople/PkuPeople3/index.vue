@@ -1,22 +1,28 @@
 <template>
 	<div class="Background PkuPeople3Container">
-		<TabChoices
-			:Tabs="Tabs"
-			:TabIndex="TabIndex"
-			:ContentStatus="ContentStatus"
-			@ChangeTabIndex="ChangeTabIndex"
-			@ChangeContentStatus="ChangeContentStatus"
-		/>
-		<Content
-			:Contents="Contents"
-			:People="People"
-			:ParentPath="ParentPath"
-			:TabPath="TabPath"
-			:TabIndex="TabIndex"
-            :TabName="Tabs[TabIndex][ContentStatus % 6].Title"
-			:ContentStatus="ContentStatus"
-			:ContentTotalPages="ContentTotalPages"
-		/>
+        <div class="TabAndContentContainer">
+            <TabChoices
+                :Tabs="Tabs"
+                :TabIndex="TabIndex"
+                :ContentStatus="ContentStatus"
+                :People="People"
+                :PeopleImage="PeopleImage"
+                :PeopleIntro="PeopleIntro"
+                @ChangeTabIndex="ChangeTabIndex"
+                @ChangeContentStatus="ChangeContentStatus"
+            />
+            <Content
+                :Contents="Contents"
+                :People="People"
+                :ParentPath="ParentPath"
+                :TabPath="TabPath"
+                :TabIndex="TabIndex"
+                :TabName="Tabs[TabIndex][ContentStatus % 6].Title"
+                :ContentStatus="ContentStatus"
+                :ContentTotalPages="ContentTotalPages"
+            />
+        </div>
+		
 	</div>
 </template>
 
@@ -43,6 +49,31 @@ export default {
 				// 		TemplateID: "",
 				// 		Path: "",
 				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
 				// ],
 			],
 			// 页码
@@ -56,14 +87,17 @@ export default {
 			// Contents[x][y].ItemID 是在数据库中的主键
 			Contents: [
 				// [
-				// 	{
-				// 		Title: "季先生之女给季先生的信件",
-				// 		Path: "",
-				// 		TemplateID: 0,
-				// 	},
+				// 	// {
+				// 	// 	Title: "季先生之女给季先生的信件",
+				// 	// 	Path: "",
+				// 	// 	TemplateID: 0,
+				// 	// },
+                    
 				// ],
 			],
 			People: "",
+            PeopleImage: "https://room_dev_client.pacificsilkroad.cn/img-service/1/p6d3cO3UFG.jpg",
+            PeopleIntro: "伟大的人，太伟大了",
 			ContentTotalPages: 0,
 
 			// 选中 Tab 的 Path
@@ -125,6 +159,51 @@ export default {
                 })
             })
         },
+
+        GetList(){
+            let _this = this;
+            GetFieldInfo(_this, function(FieldInfoMap){
+                let DataForm = {
+                    location_id: 99999999,
+                    page_index: 1,
+                    page_size: 99999,
+                    sort_by: "-show_time",
+                    path: _this.ParentPath,
+                    deep_range: 1,
+                    filter_rule: {},
+                    order_rule: {
+                        method: "show_time",
+                        order: "+",
+                    },
+                    template_id_list: [],
+                };
+
+                postForm('/data/list', DataForm, _this, function(res){
+                    let List = res.data.list;
+                    for (let TabIndex = 0; TabIndex < List.length; TabIndex++) {
+                        let item = List[TabIndex];
+                        let ItemForm = {
+                            Path: item.path,
+                            Title: "",
+                            TemplateID: res.data.template_id,
+                        }
+                        for (let FieldID in item.content) {
+                            
+                            if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                                ItemForm.Title = item.content[FieldID];
+                            }
+                        }
+                        _this.TabTotalPages = MergeItem(ItemForm, _this.Tabs, _this.TabTotalPages, 6);
+                    }
+                    _this.ChangeTabIndex(_this.TabIndex);
+                    _this.ChangeContentStatus(_this.ContentStatus);
+                    
+                })
+            })
+        },
+       
+
+    
 	},
 	mounted() {
 		this.ParentPath = this.$route.query.Path;
@@ -132,48 +211,7 @@ export default {
 		this.ContentStatus = parseInt(this.$route.query.ContentStatus);
         this.People = this.$route.query.PeopleName;
 
-		let _this = this;
-        
-        // 得到所有 Tab 的信息
-        GetFieldInfo(_this, function(FieldInfoMap){
-            let DataForm = {
-                location_id: 99999999,
-                page_index: 1,
-                page_size: 99999,
-                sort_by: "-show_time",
-                path: _this.ParentPath,
-                deep_range: 1,
-                filter_rule: {},
-                order_rule: {
-                    method: "show_time",
-                    order: "+",
-                },
-                template_id_list: [],
-            };
-
-            postForm('/data/list', DataForm, _this, function(res){
-                let List = res.data.list;
-                for (let TabIndex = 0; TabIndex < List.length; TabIndex++) {
-                    let item = List[TabIndex];
-                    let ItemForm = {
-                        Path: item.path,
-                        Title: "",
-                        TemplateID: res.data.template_id,
-                    }
-                    for (let FieldID in item.content) {
-                        
-                        if (MatchName(FieldInfoMap[FieldID], "标题")) {
-                            ItemForm.Title = item.content[FieldID];
-                        }
-                    }
-                    _this.TabTotalPages = MergeItem(ItemForm, _this.Tabs, _this.TabTotalPages, 6);
-                }
-                _this.ChangeTabIndex(_this.TabIndex);
-                _this.ChangeContentStatus(_this.ContentStatus);
-                
-            })
-        })
-
+        this.GetList();
 		
     },
 };
@@ -187,5 +225,14 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.TabAndContentContainer{
+    position: relative;
+    width: 100vw;
+    height: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 </style>

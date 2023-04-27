@@ -85,7 +85,7 @@ export const downloadVideo = (requestUrl, This, callback) => {
         method: 'get',
         headers: {
             token: TokenValue
-        }
+        },
     }).then( res => {
         nprogress.done()
         console.log('getForm 的 response', res);
