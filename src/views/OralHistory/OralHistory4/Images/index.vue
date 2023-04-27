@@ -32,7 +32,7 @@
                 width="100%"
                 controls="true"
                 controlslist="nodownload"
-                autoplay="false"
+                autoplay="autoplay"
             >
                 <source :src="Media.Url" type="audio/mp3" />
                 <source :src="Media.Url" type="audio/mpeg" />
@@ -46,7 +46,7 @@
                 width="100%"
                 controls="true"
                 controlslist="nodownload"
-                autoplay="false"
+                autoplay="autoplay"
             >
                 <source :src="Media.Url" type="video/mp4" />
                 <!-- <source src="movie.mp4" type="video/mp4" />

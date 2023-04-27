@@ -6,14 +6,14 @@
                     <div class="ImageItem">
                         <!-- 鼠标悬停查看详情 -->
                         <div class="ImageHover">
-                            <div class="RedButton SeeVideo" @click="GoToPage('OralHistory3', item)">
+                            <div class="RedButton SeeVideo" @click="GoToPage('OralHistory4', item)">
                                 查看详情
                             </div>
                         </div>
                         <div class="BackgroundImage ImageContainer" :style="`background-image:url(${item.Image})`"></div>
                     </div>
                     <div class="TextContainer">
-                        <div class="TextTitle" @click="GoToPage('OralHistory3', item)">{{ item.Title }}</div>
+                        <div class="TextTitle" @click="GoToPage('OralHistory4', item)">{{ item.Title }}</div>
                         <div class="TextTime">{{ item.TimeFrom }} ~ {{ item.TimeTo }}</div>
                         <div class="TextLocation">{{ item.Location }}</div>
                     </div>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle } from "@/api/data";
 export default {
     name: "Result",
     props: {
@@ -66,17 +67,69 @@ export default {
             }
         },
         GoToPage(name, item) {
+            let _this = this;
             let PathList = item.Path.split("/");
-            let Path = PathList[0] + '/' + PathList[1] + '/' + PathList[2];
+            let query = {
+                TabIndex: 0,
+                ContentStatus: 0,
+                Path1: PathList[0] + "/" + PathList[1] + "/" + PathList[2],
+                Path2: PathList[0] + "/" + PathList[1] + "/" + PathList[2] + "/" + PathList[3],
+                Path3: PathList[0] + "/" + PathList[1] + "/" + PathList[2] + "/" + PathList[3] + "/" + PathList[4],
+                PeopleName: "",
+                TabName: "",
+                LetterName: "",
+                LetterTemplateID: item.TemplateID,
+            }
 
-            this.$router.push({
-                name,
-                query: {
-                    Path1: "root/interview",
-                    Path2: Path,
-                    TemplateID: item.TemplateID,
-                },
-            });
+            GetTitle(_this, query.Path1, function (res) {
+                query.PeopleName = res;
+                GetTitle(_this, query.Path2, function (res) {
+                    query.TabName = res;
+
+
+                    // 计算 TabIndex 和 ContentStatus
+                    GetFieldInfo(_this, function (FieldInfoMap) {
+                        let DataForm = {
+                            location_id: 99999999,
+                            page_index: 1,
+                            page_size: 99999,
+                            sort_by: "-show_time",
+                            path: query.Path1,
+                            deep_range: 1,
+                            filter_rule: {},
+                            order_rule: {
+                                method: "show_time",
+                                order: "+",
+                            },
+                            template_id_list: [],
+                        };
+                        postForm('/data/list', DataForm, _this, function (res) {
+                            let List = res.data.list;
+                            for (let TabIndex = 0; TabIndex < List.length; TabIndex++) {
+                                let item = List[TabIndex];
+                                for (let FieldID in item.content) {
+
+                                    if (MatchName(FieldInfoMap[FieldID], "标题") && item.content[FieldID] === query.TabName) {
+                                        query.TabIndex = TabIndex / 6;
+                                        query.ContentStatus = TabIndex;
+                                    }
+                                }
+                            }
+
+                            GetTitle(_this, query.Path3, function (res) {
+                                query.LetterName = res;
+                                console.log("&&&", query);
+                                _this.$router.push({
+                                    name: name,
+                                    query: query,
+                                });
+                            })
+
+                        })
+                    })
+                })
+            })
+        
         },
     },
 };
