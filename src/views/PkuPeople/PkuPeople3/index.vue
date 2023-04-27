@@ -96,8 +96,8 @@ export default {
 				// ],
 			],
 			People: "",
-            PeopleImage: "https://room_dev_client.pacificsilkroad.cn/img-service/1/p6d3cO3UFG.jpg",
-            PeopleIntro: "伟大的人，太伟大了",
+            PeopleImage: "",
+            PeopleIntro: "",
 			ContentTotalPages: 0,
 
 			// 选中 Tab 的 Path
@@ -203,6 +203,27 @@ export default {
         },
        
 
+        GetPageInfo(){
+            let _this = this;
+            GetFieldInfo(_this, function(FieldInfoMap){
+                let DataForm = {
+                    path: _this.ParentPath,
+                }
+                postForm('/data/node', DataForm, _this, function(res){
+                    for(let FieldID in res.data.content){
+                        if(MatchName(FieldInfoMap[FieldID], "标题")){
+                            _this.People = res.data.content[FieldID];
+                        }
+                        else if(MatchName(FieldInfoMap[FieldID], "简介")){
+                            _this.PeopleIntro = res.data.content[FieldID];
+                        }
+                        else if(MatchName(FieldInfoMap[FieldID], "图片")){
+                            _this.PeopleImage = res.data.content[FieldID];
+                        }
+                    }
+                })
+            })
+        },
     
 	},
 	mounted() {
@@ -212,7 +233,7 @@ export default {
         this.People = this.$route.query.PeopleName;
 
         this.GetList();
-		
+		this.GetPageInfo();
     },
 };
 </script>

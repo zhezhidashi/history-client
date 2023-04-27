@@ -103,6 +103,15 @@ const routes = [
                 component: () => import('@/views/OralHistory/OralHistory3')
             },
             {
+                path: '/OralHistory4',
+                name: 'OralHistory4',
+                meta: {
+                    title: '口述/访谈',
+                    PageType: 1,
+                },
+                component: () => import('@/views/OralHistory/OralHistory4')
+            },
+            {
                 // 古籍
                 path: '/AntiqueWorks11',
                 name: 'AntiqueWorks11',

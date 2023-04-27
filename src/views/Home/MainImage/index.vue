@@ -126,4 +126,5 @@ export default {
     height: 3vw;
     top: 8vw;
     right: 5vw;
-}</style>
+}
+</style>

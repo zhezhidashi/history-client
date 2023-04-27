@@ -27,13 +27,13 @@ export default {
 					image: "HomeImage1.jpg",
 				},
 				{
-					title: "照片/图像",
+					title: "印象/事纪",
 					name: "",
 					path: "",
 					image: "HomeImage2.jpg",
 				},
 				{
-					title: "印象/事纪",
+					title: "口述/访谈",
 					name: "OralHistory1",
 					path: "/OralHistory1",
 					image: "HomeImage3.jpg",

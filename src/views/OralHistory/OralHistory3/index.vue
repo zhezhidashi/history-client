@@ -1,111 +1,174 @@
 <template>
-    <div class="Background Container">
-        <div class="WebPath">
-            <div @click="GoToPage('OralHistory1')" style="cursor: pointer">
-                口述档案
-            </div>
-            &ensp;>&ensp;
-            <div>{{ PeopleName }}</div>
+	<div class="Background OralHistory3Container">
+        <div class="TabAndContentContainer">
+            <TabChoices
+                :Tabs="Tabs"
+                :TabIndex="TabIndex"
+                :ContentStatus="ContentStatus"
+                :People="People"
+                :PeopleImage="PeopleImage"
+                :PeopleIntro="PeopleIntro"
+                @ChangeTabIndex="ChangeTabIndex"
+                @ChangeContentStatus="ChangeContentStatus"
+            />
+            <Content
+                :Contents="Contents"
+                :People="People"
+                :ParentPath="ParentPath"
+                :TabPath="TabPath"
+                :TabIndex="TabIndex"
+                :TabName="Tabs[TabIndex][ContentStatus % 6].Title"
+                :ContentStatus="ContentStatus"
+                :ContentTotalPages="ContentTotalPages"
+            />
         </div>
-        <div class="VideoBlock">
-            <div v-for="(item, index) in Videos" :key="index">
-                <el-button @click="DownloadVideo(item)">下载</el-button>
-                <div class="ItemContainer">
-                    <div class="InfoContainer">
-                        <div class="TimeLocation">
-                            访谈时间：{{ item.Time }} &emsp; 访谈地点：{{ item.Location }}
-                        </div>
-                    </div>
-                    <div class="IntroContainer">
-                        简介：
-                        <div v-for="(line, index) in item.Description" :key="index">
-                            &emsp;&emsp;{{ line }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ShiftContainer">
-                <img @click="PageShift(-1)" class="ShiftLeft" src="ShiftLeft.svg" alt="" />
-                <div class="ShiftPages">
-                    {{ NowIndex }} &emsp; / &emsp; {{ TotalPages }}
-                </div>
-                <img @click="PageShift(1)" class="ShiftRight" src="ShiftRight.svg" alt="" />
-            </div>
-        </div>
-    </div>
+		
+	</div>
 </template>
 
 <script>
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetTitle, downloadVideo, baseUrl } from "@/api/data";
+import TabChoices from "./TabChoices";
+import Content from "./Content";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
 export default {
-    name: "OralHistory3",
-    data() {
-        return {
-            Videos: [
-                // {
-                //   Time: "2010年11月18日14:00",
-                //   Location: "北京大学民主楼法语系会议室",
-                //   Description: [],
-                //   Content: "李明滨访谈录音.mp3",
-                // },
-            ],
-            PeopleName: "",
-            Path1: "",
-            Path2: "",
+	name: "OralHistory3",
+	components: {
+		TabChoices,
+		Content,
+	},
+	data() {
+		return {
+			// 父节点
+			ParentPath: "",
+			ParentTemplateID: "",
 
-            TotalPages: 0,
-            NowIndex: 1,
-        };
-    },
-    methods: {
-        GoToPage(name) {
-            this.$router.push({ name });
-        },
-        DownloadVideo(item) {
-            let _this = this;
-            // let url = baseUrl + `/file/download/media_file?path=${item.Content}`;
-            let url = `https://room_dev_client.pacificsilkroad.cn/api-service/file/download/media_file?path=${item.Content}`
-            let link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", item.Content);
-            link.click();
+			Tabs: [
+				// [
+				// 	{
+				// 		Title: "信件信函",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+                //     {
+				// 		Title: "信件",
+				// 		TemplateID: "",
+				// 		Path: "",
+				// 	},
+				// ],
+			],
+			// 页码
+			TabIndex: 0,
+			// 记录点击某个Tab后的状态
+			ContentStatus: 0,
 
-            // window.open(`https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file?path=${item.Content}`, "_self");
-            downloadVideo(`/file/download/media_file?path=${item.Content}`, _this, function (res) {
-                if(res.status === 200){
-                    let blob = new Blob([res.data], {
-                    type: 'accept: application/json'
-                    });
-                    let fileName = item.Content;
-                    // for IE
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, fileName);
-                    } else {
-                        // for Non-IE
-                        let objectUrl = URL.createObjectURL(blob);
-                        let link = document.createElement("a");
-                        link.href = objectUrl;
-                        link.setAttribute("download", fileName);
-                        document.body.appendChild(link);
-                        link.click();
-                        window.URL.revokeObjectURL(link.href);
-                    }
-                }
-                
-            });
-        },
+			// Tabs 的页码
+			TabTotalPages: 0,
 
-        GetList(PageIndex) {
-            
-            let _this = this;
-            _this.Videos = [];
-            GetFieldInfo(_this, function (FieldInfoMap) {
+			// Contents[x][y].ItemID 是在数据库中的主键
+			Contents: [
+				// [
+				// 	// {
+				// 	// 	Title: "季先生之女给季先生的信件",
+				// 	// 	Path: "",
+				// 	// 	TemplateID: 0,
+				// 	// },
+                    
+				// ],
+			],
+			People: "",
+            PeopleImage: "",
+            PeopleIntro: "",
+			ContentTotalPages: 0,
+
+			// 选中 Tab 的 Path
+			TabPath: "",
+		};
+	},
+	methods: {
+		ChangeTabIndex(index) {
+			this.TabIndex = index;
+		},
+		ChangeContentStatus(index) {
+			let _this = this;
+			_this.ContentStatus = index;
+			let NowTab = _this.Tabs[_this.TabIndex][_this.ContentStatus % 6];
+            // 清空内容
+            _this.Contents = [];
+
+			// 修改 TabPath
+			_this.TabPath = NowTab.Path;
+
+            GetFieldInfo(_this, function(FieldInfoMap){
                 let DataForm = {
                     location_id: 99999999,
-                    page_index: PageIndex,
-                    page_size: 3,
+                    page_index: 1,
+                    page_size: 99999,
                     sort_by: "-show_time",
-                    path: _this.Path2,
+                    path: _this.TabPath,
+                    deep_range: 1,
+                    filter_rule: {},
+                    order_rule: {
+                        method: "show_time",
+                        order: "+",
+                    },
+                    template_id_list: [],
+                };
+                postForm('/data/list', DataForm, _this, function (res) {
+                    let List = res.data.list;
+                    for (let LetterIndex = 0; LetterIndex < List.length; LetterIndex++) {
+                        let item = List[LetterIndex];
+                        let ItemForm = {
+                            Path: item.path,
+                            Title: "",
+                            TemplateID: item.template_id
+                        }
+                        for (let FieldID in item.content) {
+                            
+                            if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                                ItemForm.Title = item.content[FieldID];
+                            }
+                        }
+                        console.log("***", ItemForm);
+                        _this.ContentTotalPages = MergeItem(
+                            ItemForm,
+                            _this.Contents,
+                            _this.ContentTotalPages,
+                            16
+                        );
+                    }
+                })
+            })
+        },
+
+        GetList(){
+            let _this = this;
+            GetFieldInfo(_this, function(FieldInfoMap){
+                let DataForm = {
+                    location_id: 99999999,
+                    page_index: 1,
+                    page_size: 99999,
+                    sort_by: "-show_time",
+                    path: _this.ParentPath,
                     deep_range: 1,
                     filter_rule: {},
                     order_rule: {
@@ -115,131 +178,81 @@ export default {
                     template_id_list: [],
                 };
 
-                postForm('/data/list', DataForm, _this, function (res) {
+                postForm('/data/list', DataForm, _this, function(res){
                     let List = res.data.list;
-
-                    _this.TotalPages = res.data.total_page;
-                    for (let VideoIndex = 0; VideoIndex < List.length; VideoIndex++) {
-                        let item = List[VideoIndex];
+                    for (let TabIndex = 0; TabIndex < List.length; TabIndex++) {
+                        let item = List[TabIndex];
                         let ItemForm = {
-                            Time: undefined,
-                            Location: undefined,
-                            Description: undefined,
-                            Content: undefined,
-                        };
+                            Path: item.path,
+                            Title: "",
+                            TemplateID: res.data.template_id,
+                        }
                         for (let FieldID in item.content) {
-                            if (FieldInfoMap[FieldID] === "时间") {
-                                ItemForm.Time = item.content[FieldID];
-                            }
-                            else if (MatchName(FieldInfoMap[FieldID], "地点")) {
-                                ItemForm.Location = item.content[FieldID];
-                            }
-                            else if (MatchName(FieldInfoMap[FieldID], "简介")) {
-                                ItemForm.Description = item.content[FieldID].split("$$$");
-                            }
-                            else if (MatchName(FieldInfoMap[FieldID], "视频") || MatchName(FieldInfoMap[FieldID], "音频")) {
-                                ItemForm.Content = item.content[FieldID];
+                            
+                            if (MatchName(FieldInfoMap[FieldID], "标题")) {
+                                ItemForm.Title = item.content[FieldID];
                             }
                         }
-                        _this.Videos.push(ItemForm);
+                        _this.TabTotalPages = MergeItem(ItemForm, _this.Tabs, _this.TabTotalPages, 6);
+                    }
+                    _this.ChangeTabIndex(_this.TabIndex);
+                    _this.ChangeContentStatus(_this.ContentStatus);
+                    
+                })
+            })
+        },
+       
+
+        GetPageInfo(){
+            let _this = this;
+            GetFieldInfo(_this, function(FieldInfoMap){
+                let DataForm = {
+                    path: _this.ParentPath,
+                }
+                postForm('/data/node', DataForm, _this, function(res){
+                    for(let FieldID in res.data.content){
+                        if(MatchName(FieldInfoMap[FieldID], "标题")){
+                            _this.People = res.data.content[FieldID];
+                        }
+                        else if(MatchName(FieldInfoMap[FieldID], "简介")){
+                            _this.PeopleIntro = res.data.content[FieldID];
+                        }
+                        else if(MatchName(FieldInfoMap[FieldID], "图片")){
+                            _this.PeopleImage = res.data.content[FieldID];
+                        }
                     }
                 })
             })
         },
+    
+	},
+	mounted() {
+		this.ParentPath = this.$route.query.Path;
+		this.TabIndex = parseInt(this.$route.query.TabIndex);
+		this.ContentStatus = parseInt(this.$route.query.ContentStatus);
 
-        PageShift(d) {
-            if (this.NowIndex + d > 0 && this.NowIndex + d <= this.TotalPages) {
-                this.NowIndex += d;
-                this.GetList(this.NowIndex);
-
-            } else {
-                this.$message({
-                    type: "warning",
-                    message: "已经是第一页或最后一页",
-                });
-            }
-        },
-    },
-    mounted() {
-        this.Path1 = this.$route.query.Path1;
-        this.Path2 = this.$route.query.Path2;
-
-        this.GetList(1);
-
-        let _this = this;
-        // 获取人物名称
-        GetTitle(this, this.Path2, function (res) {
-            _this.PeopleName = res;
-        })
+        this.GetList();
+		this.GetPageInfo();
     },
 };
 </script>
 
 <style scoped>
-.Container {
+.OralHistory3Container {
+	position: relative;
+	width: 100vw;
+	height: 80vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.TabAndContentContainer{
     position: relative;
-    height: 160vw;
+    width: 100vw;
+    height: 80vw;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
-    /* background: lightgreen; */
+    flex-direction: row;
+    justify-content: space-between;
 }
-
-.WebPath {
-    position: relative;
-    font-size: 1.2vw;
-    width: 50vw;
-    line-height: 600%;
-    display: flex;
-    /* background-color: lightyellow; */
-}
-
-.VideoBlock {
-    position: relative;
-    height: 152vw;
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-evenly; */
-    align-items: center;
-    /* background-color: lightblue; */
-}
-
-.ItemContainer {
-    position: relative;
-    width: 50vw;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2vw;
-    /* justify-content: space-between; */
-    /* background: lightgreen; */
-}
-
-.InfoContainer {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.TimeLocation {
-    position: relative;
-    font-size: 1.2vw;
-    line-height: 200%;
-}
-
-.IntroContainer {
-    position: relative;
-    width: 100%;
-    height: auto;
-    font-size: 1.2vw;
-    line-height: 200%;
-    /* background: lightgreen; */
-}
-
 </style>

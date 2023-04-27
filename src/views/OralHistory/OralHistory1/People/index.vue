@@ -43,9 +43,10 @@ export default {
             this.$router.push({
                 name,
                 query: {
-                    Path1: "root/interview",
-                    Path2: item.Path,
-                    TemplateID: item.TemplateID,
+                    Path: item.Path,
+                    TabIndex: 0,
+                    ContentStatus: 0,
+                    PeopleName: item.Title,
                 },
             });
         },
