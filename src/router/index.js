@@ -173,6 +173,67 @@ const routes = [
             },
 
             {
+                // 印像
+                path: '/Events11',
+                name: 'Events11',
+                meta: {
+                    title: '印像',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events11')
+            },
+            {
+                // 事纪
+                path: '/Events12',
+                name: 'Events12',
+                meta: {
+                    title: '事纪',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events12')
+            },
+            {
+                // 印象搜索页
+                path: '/Events21',
+                name: 'Events21',
+                meta: {
+                    title: '印像',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events21')
+            },
+            {
+                // 事纪搜索页
+                path: '/Events22',
+                name: 'Events22',
+                meta: {
+                    title: '事纪',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events22')
+            },
+            {
+                // 印像详情页
+                path: '/Events31',
+                name: 'Events31',
+                meta: {
+                    title: '印像',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events31')
+            },
+            {
+                // 事纪详情页
+                path: '/Events32',
+                name: 'Events32',
+                meta: {
+                    title: '事纪',
+                    PageType: 1,
+                },
+                component: () => import('@/views/Events/Events32')
+            },
+
+            {
                 path: '/ContactUs',
                 name: 'ContactUs',
                 meta: {

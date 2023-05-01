@@ -28,8 +28,8 @@ export default {
 				},
 				{
 					title: "印象/事纪",
-					name: "",
-					path: "",
+					name: "Events11",
+					path: "/Events11",
 					image: "HomeImage2.jpg",
 				},
 				{
