@@ -47,8 +47,9 @@ export default {
                 username: _this.Username,
                 password: _this.Password
             }
-
+            
             postForm(url, DataForm, _this, function (res) {
+                console.log("***", res);
                 if(res.code === 0){
                     _this.$message({
                         message: res.msg,
@@ -56,7 +57,6 @@ export default {
                     });
                     _this.$store.commit("setToken", res.data);
                     _this.$router.push({ name: "Home" });
-                    window.localStorage.setItem('token', token)
                 }
             });
 		},

@@ -12,7 +12,7 @@
 <script>
 import TabChoices from "./TabChoices";
 import Images from "./Images";
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, getMediaUrl } from "@/api/data";
 export default {
     name: "OralHistory4",
     components: {
@@ -41,8 +41,10 @@ export default {
             WebPath: ["档案/手稿"],
             // Type为 0 是音频，Type 为 1 是视频
             Media: {
-                Url: "movie.mp4",
-                Type: 1,
+                Url: "",
+                Type: 0,
+                // Url: "https://room_dev_api_doc.pacificsilkroad.cn/file/download/media_file/m91oK2J31N.mp3/eyJhbGciOiJIUzUxMiIsImlhdCI6MTY4NDIwNjY4MSwiZXhwIjoxNjg0MjkzMDgxfQ.eyJ1c2VybmFtZSI6Im5hZG1pbiIsImNyZWF0ZV90aW1lIjoiMjAyMy0wNS0xNiAxMToxMToyMS40MTU2MTIifQ.Ssrlejy8T_aTrZ5gtSsay0qGmBeKBvQWbhL73-HxhS35f4dvYWcsLvSDPoPZP7IzicVswZPqSh1GVHPMSl_W8w",
+                // Type: 0,
                 // Url: "李明滨访谈录音.mp3",
                 // Type: 0,
             },
@@ -202,6 +204,10 @@ export default {
         this.WebPath.push(this.$route.query.PeopleName);
         this.WebPath.push(this.$route.query.TabName);
         this.WebPath.push(this.$route.query.LetterName);
+        this.Media.Url = getMediaUrl(this.$route.query.MediaPath);
+        this.Media.Type = parseInt(this.$route.query.MediaType);
+
+        console.log("***", this.Media);
 
         let _this = this;
 

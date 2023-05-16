@@ -91,6 +91,8 @@ export default {
 				// 	// 	Title: "季先生之女给季先生的信件",
 				// 	// 	Path: "",
 				// 	// 	TemplateID: 0,
+                //  //  MediaType: 0,
+                //  //  MediaPath: "",
 				// 	// },
                     
 				// ],
@@ -140,13 +142,24 @@ export default {
                         let ItemForm = {
                             Path: item.path,
                             Title: "",
-                            TemplateID: item.template_id
+                            TemplateID: item.template_id,
+                            MediaType: 0,
+                            MediaPath: "",
                         }
                         for (let FieldID in item.content) {
                             
                             if (MatchName(FieldInfoMap[FieldID], "标题")) {
                                 ItemForm.Title = item.content[FieldID];
                             }
+                            else if (MatchName(FieldInfoMap[FieldID], "音频")){
+                                ItemForm.MediaType = 0;
+                                ItemForm.MediaPath = item.content[FieldID];
+                            }
+                            else if (MatchName(FieldInfoMap[FieldID], "视频")){
+                                ItemForm.MediaType = 1;
+                                ItemForm.MediaPath = item.content[FieldID];
+                            }
+                            
                         }
                         console.log("***", ItemForm);
                         _this.ContentTotalPages = MergeItem(

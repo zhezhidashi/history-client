@@ -67,7 +67,9 @@ export default {
                     PeopleName: this.People,
                     TabName: this.TabName,
                     LetterName: item.Title,
-                    LetterTemplateID: item.TemplateID
+                    LetterTemplateID: item.TemplateID,
+                    MediaType: item.MediaType,
+                    MediaPath: item.MediaPath,
 				},
 			});
 		},
