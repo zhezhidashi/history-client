@@ -13,7 +13,7 @@
                         <div class="BackgroundImage ImageContainer" :style="`background-image:url(${item.Image})`"></div>
                     </div>
                     <div class="TextContainer">
-                        <div class="TextTitle" @click="GoToPage('Events31', item)">
+                        <div class="TextTitle" @click="GoToPage('Events32', item)">
                             {{ item.Title }}
                         </div>
                         <div class="TextDescription">

@@ -72,36 +72,12 @@ export default {
             // 搜索条目描述类型
             Description: [
                 {
-                    NameZH: "作者",
-                    NameEN: "People",
-                },
-                {
-                    NameZH: "版本类别",
-                    NameEN: "VersionType",
-                },
-                {
-                    NameZH: "外观形态",
-                    NameEN: "ExternalForm",
-                },
-                {
-                    NameZH: "主题词",
-                    NameEN: "Subject",
-                },
-                {
-                    NameZH: "印像语种",
-                    NameEN: "Language",
-                },
-                {
-                    NameZH: "印章",
-                    NameEN: "Seal",
-                },
-                {
-                    NameZH: "分类号",
-                    NameEN: "TypeNumber",
+                    NameZH: "时间",
+                    NameEN: "Time",
                 },
             ],
 
-            ResourceFieldList: ["列表：古籍"],
+            ResourceFieldList: ["列表：印像"],
         };
     },
     methods: {
@@ -136,7 +112,7 @@ export default {
                             page_index: _this.NowIndex,
                             page_size: 5,
                             sort_by: "-show_time",
-                            path: "root/ancient_book",
+                            path: "root/picture",
                             deep_range: 0,
                             filter_rule: FilterRule,
                             order_rule: {
@@ -155,13 +131,7 @@ export default {
                                 let item = List[PeopleIndex];
                                 let ItemForm = {
                                     Title: "",
-                                    People: "",
-                                    VersionType: "",
-                                    ExternalForm: "",
-                                    Subject: "",
-                                    Language: "",
-                                    Seal: "",
-                                    TypeNumber: "",
+                                    Time: "",
                                     Image: "",
                                     Path: item.path,
                                     TemplateID: item.template_id,
@@ -170,26 +140,8 @@ export default {
                                     if (MatchName(FieldInfoMap[FieldID], "标题")) {
                                         ItemForm.Title = item.content[FieldID];
                                     }
-                                    if (MatchName(FieldInfoMap[FieldID], "作者")) {
-                                        ItemForm.People = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "版本类别")) {
-                                        ItemForm.VersionType = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "外观形态")) {
-                                        ItemForm.ExternalForm = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "主题词")) {
-                                        ItemForm.Subject = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "语种")) {
-                                        ItemForm.Language = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "印章")) {
-                                        ItemForm.Seal = item.content[FieldID];
-                                    }
-                                    if (MatchName(FieldInfoMap[FieldID], "分类号")) {
-                                        ItemForm.TypeNumber = item.content[FieldID];
+                                    if (MatchName(FieldInfoMap[FieldID], "时间")) {
+                                        ItemForm.Time = item.content[FieldID];
                                     }
                                     if (MatchName(FieldInfoMap[FieldID], "图片")) {
                                         ItemForm.Image = item.content[FieldID];

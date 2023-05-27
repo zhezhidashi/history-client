@@ -1,56 +1,38 @@
 <template>
 	<div>
-		<div class="Events31Container">
-			<Images
-				:ImageList="ImageList"
-				:Title="Title"
-			/>
-			<Content :ContentInfo="ContentInfo" :Title="Title" />
-		</div>
+        <div class="OriginalUrlContainer">
+            <el-button @click="OpenWeb" class="OriginalUrl" plain>查看原文</el-button>
+            <!-- <el-button type="info">成功按钮</el-button> -->
+        </div>
+        
+        <div class="WebImageContainer">
+            <img class="WebImage" :src="WebImage" alt="">
+        </div>
 	</div>
 </template>
 
 <script>
-import Images from "@/views/Events/Events31/Images";
-import Content from "@/views/Events/Events31/Content";
+
 import { postForm, getForm, GetType, MatchName, GetFieldInfo } from "@/api/data";
 export default {
 	name: "Events32",
-	components: {
-		Images,
-		Content,
-	},
 	data() {
 		return {
-			ImageList: [
-				// {
-				//     ImageUrl: "印像详情01.jpg",
-				//     Index: 0,
-				//     Path: "0",
-				// },
-			],
-
-			// 中英文对应
-			InfoMap: {},
-
-			ContentInfo: [
-				// {
-				// 	NameZH: "主要责任人",
-				// 	NameEN: "People",
-				//     Value: "（清）冯鲁严撰"
-				// },
-			],
-
+            // 原文网址
+			OriginalUrl: "",
+            // 标题
 			Title: "",
+            // 快照
+            WebImage: "",
 		};
 	},
 	methods: {
         GetOtherInfo() {
             let _this = this;
-            // 获得该信件的 TemplateID
+            // 获得该事纪的 TemplateID
             let BookPath = _this.$route.query.Path;
             
-            // 获取该信件的信息
+            // 获取该事纪的信息
             GetFieldInfo(_this, function (FieldInfoMap) {
                 let DataForm = {
                     path: BookPath,
@@ -62,18 +44,11 @@ export default {
                         if(MatchName(FieldInfoMap[FieldID], "标题")){
                             _this.Title = item.content[FieldID]
                         }
-                        else if (
-                            !MatchName(FieldInfoMap[FieldID], "图片") && 
-                            !MatchName(FieldInfoMap[FieldID], "节点名称") && 
-                            !MatchName(FieldInfoMap[FieldID], "标题") && 
-                            !MatchName(FieldInfoMap[FieldID], "起始时间") &&
-                            !MatchName(FieldInfoMap[FieldID], "结束时间") &&
-                            item.content[FieldID] != "" && 
-                            item.content[FieldID] != 1000000000) {
-                            _this.ContentInfo.push({
-                                NameZH: FieldInfoMap[FieldID],
-                                Value: item.content[FieldID]
-                            })
+                        else if (MatchName(FieldInfoMap[FieldID], "原文网址")){
+                            _this.OriginalUrl = item.content[FieldID];
+                        }
+                        else if (MatchName(FieldInfoMap[FieldID], "网页快照")){
+                            _this.WebImage = item.content[FieldID];
                         }
                     }
                 })
@@ -112,8 +87,11 @@ export default {
                     }
                 })
             })
-                  
         },
+
+        OpenWeb(){
+            window.open(this.OriginalUrl);
+        }
     },
 	mounted() {
 		this.GetOtherInfo();
@@ -122,13 +100,19 @@ export default {
 </script>
 
 <style scoped>
-.Events31Container {
-	position: relative;
-	width: 100%;
-	height: 80vw;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
+.OriginalUrlContainer{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+.OriginalUrl{
+    width: 45vw;
+    font-size: 1.5vw;
+}
+.WebImageContainer{
+    width: 100vw;
+}
+.WebImage{
+    width: 100%;
 }
 </style>
