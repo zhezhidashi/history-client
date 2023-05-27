@@ -123,8 +123,8 @@ export default {
         },
     },
     mounted() {
-        this.GetList("root/ancient_book", this.Images1);
-        this.GetList("root/reservation", this.Images2);
+        this.GetList("root/picture", this.Images1);
+        this.GetList("root/event", this.Images2);
     },
 };
 </script>

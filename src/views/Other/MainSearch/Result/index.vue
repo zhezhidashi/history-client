@@ -210,7 +210,22 @@ export default {
                 
             }
             else if (PathList[1] === "picture") {
-
+                this.$router.push({
+                    name: "Events31",
+                    query: {
+                        Path: item.Path,
+                        TemplateID: item.TemplateID,
+                    }
+                })
+            }
+            else if(PathList[1] === "event"){
+                this.$router.push({
+                    name: "Events32",
+                    query: {
+                        Path: item.Path,
+                        TemplateID: item.TemplateID,
+                    }
+                })
             }
             else if (PathList[1] === "ancient_book") {
                 this.$router.push({

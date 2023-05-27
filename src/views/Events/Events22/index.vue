@@ -136,7 +136,7 @@ export default {
                             page_index: _this.NowIndex,
                             page_size: 5,
                             sort_by: "-show_time",
-                            path: "root/reservation",
+                            path: "root/event",
                             deep_range: 1,
                             filter_rule: FilterRule,
                             order_rule: {
