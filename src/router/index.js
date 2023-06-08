@@ -193,7 +193,7 @@ const routes = [
                 component: () => import('@/views/Events/Events12')
             },
             {
-                // 印象搜索页
+                // 印像搜索页
                 path: '/Events21',
                 name: 'Events21',
                 meta: {

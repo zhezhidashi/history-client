@@ -5,8 +5,8 @@ import store from '../store'
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css";
 
-export const baseUrl = '/api'
-// export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
+// export const baseUrl = '/api'
+export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
 
 
 // 向指定的 url 提交数据表单
@@ -14,7 +14,7 @@ export const postForm = (requestUrl, params, This, callback) => {
     nprogress.start();
     console.log('postForm 的表单', requestUrl, params)
     store.commit('getToken')
-    const TokenValue = store.state.user.token;
+    const TokenValue = store.state.user.myToken;
     axios.request({
         url: baseUrl + requestUrl,
         method: 'post',
@@ -48,7 +48,7 @@ export const postForm = (requestUrl, params, This, callback) => {
 export const getForm = (requestUrl, This, callback) => {
     nprogress.start();
     store.commit('getToken')
-    const TokenValue = store.state.user.token
+    const TokenValue = store.state.user.myToken;
     axios.request({
         url: baseUrl + requestUrl,
         method: 'get',
@@ -78,7 +78,8 @@ export const getForm = (requestUrl, This, callback) => {
 export const getMediaUrl = (MediaPath) => {
     store.commit('getToken')
     const TokenValue = store.state.user.token
-    return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath + "/" + TokenValue;
+    // return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath + "/" + TokenValue;
+    return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath
 }
 
 
@@ -223,5 +224,12 @@ export const GetTitle = (This, Path, callback) =>{
                 }
             }
         })
+    })
+}
+
+// 获取子节点个数的Map
+export const GetChildCountMap = (This, Path, callback) => {
+    getForm(`/data/path/nodes_number?path=${Path}`, This, function(res){
+        callback(res.data.nodes_number_info);
     })
 }

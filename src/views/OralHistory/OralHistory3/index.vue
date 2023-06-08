@@ -29,7 +29,7 @@
 <script>
 import TabChoices from "./TabChoices";
 import Content from "./Content";
-import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo } from "@/api/data";
+import { getForm, postForm, GetType, MergeItem, MatchName, GetFieldInfo, GetChildCountMap } from "@/api/data";
 export default {
 	name: "OralHistory3",
 	components: {
@@ -41,6 +41,9 @@ export default {
 			// 父节点
 			ParentPath: "",
 			ParentTemplateID: "",
+
+            // 每个 Tab 的子节点个数
+            ChildCountMap: {},
 
 			Tabs: [
 				// [
@@ -199,6 +202,7 @@ export default {
                             Path: item.path,
                             Title: "",
                             TemplateID: res.data.template_id,
+                            ChildNum: _this.ChildCountMap[item.path],
                         }
                         for (let FieldID in item.content) {
                             
@@ -244,8 +248,12 @@ export default {
 		this.TabIndex = parseInt(this.$route.query.TabIndex);
 		this.ContentStatus = parseInt(this.$route.query.ContentStatus);
 
-        this.GetList();
-		this.GetPageInfo();
+        let _this = this;
+        GetChildCountMap(this, this.ParentPath, function(ChildCountMap){
+            _this.ChildCountMap = ChildCountMap;
+            _this.GetList();
+		    _this.GetPageInfo();
+        })
     },
 };
 </script>

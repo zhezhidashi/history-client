@@ -1,19 +1,19 @@
 import Cookie from 'js-cookie'
 export default {
     state: {
-        token: undefined
+        myToken: undefined
     },
     mutations: {
         setToken(state, val) {
-            state.token = val
-            Cookie.set('token', val)
+            state.myToken = val
+            Cookie.set('myToken', val)
         },
         clearToken(state) {
-            state.token = undefined
-            Cookie.remove('token')
+            state.myToken = undefined
+            Cookie.remove('myToken')
         },
         getToken(state) {
-            state.token = state.token || Cookie.get("token")
+            state.myToken = state.myToken || Cookie.get("myToken")
         }
     }
 }

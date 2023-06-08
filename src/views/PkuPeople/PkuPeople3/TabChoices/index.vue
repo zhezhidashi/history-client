@@ -31,7 +31,7 @@
             "
             @click="ChangeContentStatus(6 * TabIndex + index)"
           >
-            {{ item.Title }}
+            {{ item.Title }} ({{ item.ChildNum }})
           </div>
         </div>
       </div>

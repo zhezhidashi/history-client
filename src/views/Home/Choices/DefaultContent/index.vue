@@ -27,7 +27,7 @@ export default {
 					image: "HomeImage1.jpg",
 				},
 				{
-					title: "印象/事纪",
+					title: "印像/事纪",
 					name: "Events11",
 					path: "/Events11",
 					image: "HomeImage2.jpg",
