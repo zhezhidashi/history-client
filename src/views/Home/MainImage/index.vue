@@ -47,7 +47,7 @@ export default {
     },
     mounted() {
         this.$store.commit('getToken')
-        const TokenValue = this.$store.state.user.token;
+        const TokenValue = this.$store.state.user.myToken;
         if (TokenValue != undefined) {
             this.LogStatus = "登出";
         } else {

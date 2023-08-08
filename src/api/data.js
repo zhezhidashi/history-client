@@ -5,8 +5,10 @@ import store from '../store'
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css";
 
-// export const baseUrl = '/api'
-export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
+export const baseUrl = '/api'
+// export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
+// export const baseUrl = "http://162.105.209.91/api-service"
+// export const baseUrl = "http://xks.pku.edu.cn/api-service"
 
 
 // 向指定的 url 提交数据表单
@@ -14,7 +16,7 @@ export const postForm = (requestUrl, params, This, callback) => {
     nprogress.start();
     console.log('postForm 的表单', requestUrl, params)
     store.commit('getToken')
-    const TokenValue = store.state.user.myToken;
+    const TokenValue = store.state.user.myToken || "visitor";
     axios.request({
         url: baseUrl + requestUrl,
         method: 'post',
@@ -26,12 +28,13 @@ export const postForm = (requestUrl, params, This, callback) => {
         nprogress.done()
         console.log('postForm 的 response', res);
         if (res.code === 0) { callback(res) }
-        else if(res.code === 403){
-            console.log(This)
-            This.$message({
-                message: "请重新登录",
-                type: 'error'
-            });
+        else if(res.code === 403 || res.code === 400){
+            // This.$message({
+            //     message: "请登录",
+            //     type: 'error'
+            // });
+            store.commit('clearToken');
+            This.$router.push({name: 'Login'})
         }
         else {
             This.$message({
@@ -48,7 +51,7 @@ export const postForm = (requestUrl, params, This, callback) => {
 export const getForm = (requestUrl, This, callback) => {
     nprogress.start();
     store.commit('getToken')
-    const TokenValue = store.state.user.myToken;
+    const TokenValue = store.state.user.myToken || "visitor";
     axios.request({
         url: baseUrl + requestUrl,
         method: 'get',
@@ -59,11 +62,13 @@ export const getForm = (requestUrl, This, callback) => {
         nprogress.done()
         console.log('getForm 的 response', res);
         if (res.code === 0) { callback(res) }
-        else if(res.code === 403){
-            This.$message({
-                message: "请登录",
-                type: 'error'
-            });
+        else if(res.code === 403 || res.code === 400){
+            // This.$message({
+            //     message: "请登录",
+            //     type: 'error'
+            // });
+            store.commit('clearToken');
+            This.$router.push({name: 'Login'})
         }
         else {
             This.$message({
@@ -76,10 +81,11 @@ export const getForm = (requestUrl, This, callback) => {
 
 // 返回播放媒体的 url
 export const getMediaUrl = (MediaPath) => {
-    store.commit('getToken')
-    const TokenValue = store.state.user.token
+    // store.commit('getToken')
+    // const TokenValue = store.state.user.token
     // return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath + "/" + TokenValue;
-    return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath
+    // return "https://room_dev_client.pacificsilkroad.cn/api-service" + "/file/download/media_file/" + MediaPath
+    return "http://xks.pku.edu.cn/api-service" + "/file/download/media_file/" + MediaPath
 }
 
 
