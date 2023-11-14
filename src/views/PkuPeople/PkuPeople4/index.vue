@@ -5,7 +5,7 @@
         <div class="ImageContentContainer">
             <Images :ImageList="ImageList" :WebPath="WebPath" :Description="Description" :Paths="Paths" :TabIndex="TabIndex"
                 :ContentStatus="ContentStatus" />
-            <Content :ContentInfo="ContentInfo" />
+            <Content :ContentInfo="ContentInfo" :PDFUrl="PDFUrl" />
         </div>
     </div>
 </template>
@@ -61,6 +61,8 @@ export default {
                 // 	Value: "",
                 // },
             ],
+
+            PDFUrl: "",
         };
     },
     methods: {
@@ -139,6 +141,9 @@ export default {
 
                         if (MatchName(FieldInfoMap[FieldID], "简介") || MatchName(FieldInfoMap[FieldID], "描述")) {
                             _this.Description = item.content[FieldID];
+                        }
+                        else if (MatchName(FieldInfoMap[FieldID], "PDF") || MatchName(FieldInfoMap[FieldID], "pdf")) {
+                            _this.PDFUrl = item.content[FieldID];
                         }
                         else if (
                             !MatchName(FieldInfoMap[FieldID], "图片") && 

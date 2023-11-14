@@ -6,17 +6,32 @@
 				<div class="ItemValue">{{ item.Value }}</div>
 			</div>
 		</div>
+        <el-button @click="downloadPDF">下载PDF</el-button>
 	</div>
 </template>
 
 <script>
+import { getMediaUrl } from "@/api/data"
 export default {
 	name: "Content",
-	props: ["ContentInfo", "Title"],
+	props: ["ContentInfo", "Title", "PDFUrl"],
 	data() {
 		return {};
 	},
-	methods: {},
+	methods: {
+        // 下载PDF
+        downloadPDF() {
+            if(this.PDFUrl == null || this.PDFUrl == "" || this.PDFUrl == undefined){
+                this.$message({
+                    message: "暂无PDF",
+                    type: "warning",
+                });
+            }
+            else {
+                window.open(getMediaUrl(this.PDFUrl))
+            }
+        },
+    },
 };
 </script>
 

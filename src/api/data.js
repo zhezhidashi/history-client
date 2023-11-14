@@ -5,10 +5,10 @@ import store from '../store'
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css";
 
-export const baseUrl = '/api'
+// export const baseUrl = '/api'
 // export const baseUrl = 'https://room_dev_client.pacificsilkroad.cn/api-service'
 // export const baseUrl = "http://162.105.209.91/api-service"
-// export const baseUrl = "http://xks.pku.edu.cn/api-service"
+export const baseUrl = "http://xks.pku.edu.cn/api-service"
 
 
 // 向指定的 url 提交数据表单

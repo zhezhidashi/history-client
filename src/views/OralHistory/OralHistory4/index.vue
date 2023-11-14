@@ -79,7 +79,6 @@ export default {
             })
         },
 
-
         GetTabs() {
             let _this = this;
 

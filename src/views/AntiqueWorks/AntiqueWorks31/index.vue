@@ -5,7 +5,7 @@
 				:ImageList="ImageList"
 				:Title="Title"
 			/>
-			<Content :ContentInfo="ContentInfo" :Title="Title" />
+			<Content :ContentInfo="ContentInfo" :Title="Title" :PDFUrl="PDFUrl" />
 		</div>
 	</div>
 </template>
@@ -42,6 +42,8 @@ export default {
 			],
 
 			Title: "",
+
+            PDFUrl: "",
 		};
 	},
 	methods: {
@@ -61,6 +63,9 @@ export default {
                     for (let FieldID in item.content) {
                         if(MatchName(FieldInfoMap[FieldID], "标题")){
                             _this.Title = item.content[FieldID]
+                        }
+                        else if (MatchName(FieldInfoMap[FieldID], "PDF") || MatchName(FieldInfoMap[FieldID], "pdf")) {
+                            _this.PDFUrl = item.content[FieldID];
                         }
                         else if (
                             !MatchName(FieldInfoMap[FieldID], "图片") && 
